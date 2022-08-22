@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+
+    <h1 id="main">hey bro</h1>
+
+    <div id="message-to-show">
+
+    </div>
+
+    <input type="text" id="input-text">
+    <button onclick="sendMessage()" id="btn-send">Send</button>
+
+    
+    <script>
+        number_one = document.getElementById('main')
+        var wsStart = 'ws://'
+        var endpoint = wsStart + window.location.host + window.location.pathname
+        var socket = new WebSocket(endpoint)
+        console.log(endpoint)
+        
+
+        function sendMessage() {
+            
+            let message = document.getElementById('input-text').value
+            socket.send(message)
+            document.getElementById('input-text').value = ''
+        }
+        
+
+
+        socket.onopen = function (e) {
+            console.log('open', e);
+            socket.send('Hi there!');
+        }
+
+
+        socket.onmessage = function (e) {
+
+            let div = document.getElementById('message-to-show')
+
+            let p = document.createElement("p");
+            p.innerHTML = e.data;
+            div.append(p);
+
+
+            // console.log('message', e)
+            // number_one.innerHTML = e.data
+            // socket.send(115)
+
+        }
+    </script>
+</body>
+
+</html>

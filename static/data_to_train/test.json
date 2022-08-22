@@ -1,0 +1,76 @@
+{"intents": [
+    {"tag": "greeting",
+     "patterns": ["Hi", "Hey", "Is anyone there?", "Hello", "Hay"],
+     "responses": ["Hello", "Hi", "Hi there"]
+    },
+    {"tag": "goodbye",
+     "patterns": ["Bye", "See you later", "Goodbye"],
+     "responses": ["See you later", "Have a nice day", "Bye! Come back again"]
+    },
+    {"tag": "thanks",
+     "patterns": ["Thanks", "Thank you", "That's helpful", "Thanks for the help"],
+     "responses": ["Happy to help!", "Any time!", "My pleasure", "You're most welcome!"]
+    },
+    {"tag": "about",
+     "patterns": ["Who are you?", "What are you?", "Who you are?" ],
+     "responses": ["I.m Selene, your bot assistant", "I'm Selene, an Artificial Intelligent bot", "Some people call me 'The Moon'"]
+    },
+    {"tag": "name",
+    "patterns": ["what is your name", "what should I call you", "whats your name?"],
+    "responses": ["You can call me Selene.", "I'm Selene!", "Just call me as Selene"]
+    },
+    {"tag": "help",
+    "patterns": ["Could you help me?", "give me a hand please", "Can you help?", "What can you do for me?", "I need a support", "I need a help", "support me please"],
+    "responses": ["You can ask anything about the menu, and once you are ready you can order your meal"]
+    },
+    {"tag": "createaccount",
+    "patterns": ["I need to create a new account", "how to open a new account", "I want to create an account", "can you create an account for me", "how to open a new account"],
+    "responses": ["You can just easily create a new account from our web site", "Just go to our web site and follow the guidelines to create a new account"]
+    },
+    {"tag": "complaint",
+    "patterns": ["have a complaint", "I want to raise a complaint", "there is a complaint about a service"],
+    "responses": ["Please provide us your complaint in order to assist you", "Please mention your complaint, we will reach you and sorry for any inconvenience caused"]
+    },
+    {"tag": "menu",
+    "patterns": ["I want to see the menu", "I want to see the menu of the day", "I need the menu", 
+    "Menu, please", "can you show me the menu", "show me the menu", "menu", "is there a menu to see?", 
+    "what is todays menu", "let me see the menu", "I want the menu", "see menu", "menu now", "I want the menu"],
+    "responses": ["Here is the menu of the day: Chicken, Pizza, Pasta,  Salad,  Soup"]
+    },
+    {"tag": "order",
+    "patterns": ["I would like to order", "I want to order", "I will order", "can you take my order?",
+    "I want to have", "I'd order", "I'd like to order", "Can I order?", "Order"],
+    "responses": ["Go ahead, tell us what you want to order", "What would you like to order?", "What would you like to have?", "What would you like to order?"]
+    },
+    {"tag": "Chicken",
+    "patterns": ["Chicken", "I want the chicken", "I'd like to have the chicken", "Chicken", "Chicken, please"],
+    "responses": ["You have order chicken, It'll be ready in 15 minutes, thank you for your order"]
+    },
+    {"tag": "Pizza",
+    "patterns": ["Pizza", "I want the pizza", "I'd like to have the pizza", "Pizza", "Pizza, please"],
+    "responses": ["You have order Pizza, It'll be ready in 15 minutes, thank you for your order"]
+    },
+    {"tag": "Pasta",
+    "patterns": ["Pasta", "I want the pasta", "I'd like to have the pasta", "Pasta", "Pasta, please"],
+    "responses": ["You have order Pasta, It'll be ready in 15 minutes, thank you for your order"]
+    },
+    {"tag": "Salad",
+    "patterns": ["Salad", "I want the salad", "I'd like to have the salad", "Salad", "Salad, please"],
+    "responses": ["You have order salad, It'll be ready in 15 minutes, thank you for your order"]
+    },
+    {"tag": "Soup",
+    "patterns": ["Soup", "I want the soup", "I'd like to have the soup", "Soup", "Soup, please"],
+    "responses": ["You have order Soup, It'll be ready in 15 minutes, thank you for your order"]
+    },
+    {"tag": "Wikipedia",
+    "patterns": ["I would like to know something", "I want to ask a question", "May I ask a question?", 
+    "can you answer me something", "I got a question", "I want to know something", "I want to know", "I want to know something", 
+    "I want to know something about", "I want to know about", "I want to know about", "I got a question for you",
+    "I'd like to ask you something", "Can I ask you something", "I have a question", "I have a question for you", 
+    "question", "I wanna ask i question", "do you mind if I ask you something", "I need to ask you a question",
+    "I want to ask you a question", "I want to know about something", "I'd like to know about a topic", "I want to ask about a topic",
+    "Can I ask about a topic?", "May I ask for a topic?"],
+    "responses": ["Go ahead, ask me a about a topic you'd like to know about it, e.i: if you want to know about python you can write something like this: Python (programming language)"]
+    }
+]
+}
