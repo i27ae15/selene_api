@@ -1,0 +1,108 @@
+{"intents": [
+    {
+    "Node": "Make appointment",
+    "patterns": ["I want to make an appointment", "I want to schedule an appointment", "I want to book an appointment", "Appointment", "Book an appointment", "Schedule an appointment", "Make an appointment", "I want to make an appointment with a doctor", "I want to schedule an appointment with a doctor", "I want to book an appointment with a doctor", "Appointment with a doctor", "Book an appointment with a doctor", "Schedule an appointment with a doctor", "Make an appointment with a doctor"],
+    "responses": [
+    {
+        "type": "text",
+        "settings": {},
+        "text": "Of course, what day and time would you like to schedule your appointment?"
+    }
+    ],
+     "steps": [
+        {
+            "node": "step_1 - select day and time",
+            "patterns": [],
+            "responses": [
+                {
+                    "type": "input-field",
+                    "settings": {
+                        "type": "date",
+                        "label": "Select a date",
+                        "name": "date"
+                    },
+                    "text": null
+                }
+            ]
+        },
+        {
+            "node": "step_2 - select doctor",
+            "patterns": [],
+            "responses": [
+                {
+                    "type": "button",
+                    "settings": {
+                        "type": "select",
+                        "label": "Select a doctor",
+                        "name": "doctor",
+                        "options": [
+                            {
+                                "label": "Dr. John Doe",
+                                "value": "Dr. John Doe"
+                            },
+                            {
+                                "label": "Dr. Jane Salazar",
+                                "value": "Dr. Jane Salazar"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "node": "step_3 - confirm email",
+            "patterns": [],
+            "responses": [
+                {
+                    "type": "selene-input",
+                    "settings": {
+                        "input_type": "email",
+                        "name": "email"
+                    },
+                    "text": "Please enter your email address so we can send you a confirmation."
+                }
+            ],
+            "to_do_after":{
+            "functions_to_call":[
+                {
+                    "name": "generate_code_and_send_email",
+                    "parameters": [
+                        {
+                            "name": "email",
+                            "value": "email",
+                            "email": "@input"
+                        }
+                    ]
+                }
+            ]
+            }
+        },
+        {
+            "to_do_before": {
+                "type": "send_message",
+                "message": "We have sent you an email with a code, please enter it below to confirm it is you!",
+                "to_wait": "1000"
+            },
+            "tag": "step_4 - confirm appointment",
+            "patterns": [],
+            "random_response": false,
+            "responses": [
+                {
+                    "type": "input",
+                    "settings": {
+                        "input_type": "text",
+                        "name": "code"
+                    }
+                }
+            ],
+            "to_do_after": {
+                "type": "send_message",
+                "message": "Thank you for confirming your appointment!",
+                "to_wait": "1000",
+                "end_conversation": true
+            }
+        }
+     ]
+    }
+]
+}
