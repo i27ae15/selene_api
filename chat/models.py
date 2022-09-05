@@ -4,6 +4,7 @@ from django.utils import timezone
 
 from selene_models.models import SeleneModel, SeleneBot, Context
 
+
 class Interaction(models.Model):
 
     selene_bot = models.ForeignKey(SeleneBot, on_delete=models.CASCADE)

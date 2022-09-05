@@ -3,6 +3,7 @@ from rest_framework.response import Response
 
 from .training import train
 
+
 class TrainingAPI(APIView):
 
     def get(self, request):

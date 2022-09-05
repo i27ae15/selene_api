@@ -34,35 +34,31 @@ def call_wikipedia(query):
 
 class PracticeConsumer(AsyncConsumer):
 
-    wikipedia = False
+    current_step = None
+    
+    
 
 
     async def websocket_connect(self,event):
         # when websocket connects
         print("connected", event)
 
-        await self.send({"type": "websocket.accept",
-                         })
-
-
-
-        await self.send({"type":"websocket.send",
-                         "text":0})
+        await self.send({"type": "websocket.accept"})
+        await self.send({"type":"websocket.send", "text":0})
  
 
     async def websocket_receive(self, event):
         # when messages is received from websocket
-
-
         # here we need to write the selene response
+        
+        
         TEXT = event.get("text")
 
         # this is the text that selene has to process to be able to send back to the client
-        response = selene_response(text=TEXT, look_in_wikipedia=self.wikipedia)
+        response = selene_response(text=TEXT)
 
         if type(response) == str:
-            await self.send({"type": "websocket.send",
-                             "text": response})
+            await self.send({"type": "websocket.send", "text": response})
             self.wikipedia = False
         else:
 
@@ -73,6 +69,8 @@ class PracticeConsumer(AsyncConsumer):
                 await self.send({"type":"websocket.send",
                                 "text":r})
 
+    
+    
     async def websocket_disconnect(self, event):
         # when websocket disconnects
         print("disconnected", event)
@@ -85,6 +83,7 @@ def selene_response(text:str, look_in_wikipedia:bool=False):
     if(look_in_wikipedia):
         return call_wikipedia(text.lower())
 
+    # this should call the model that has the responses and return the response
     with open("static/data_to_train/test.json") as file:
         data = json.load(file)
 

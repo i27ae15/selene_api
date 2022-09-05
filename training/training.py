@@ -22,15 +22,12 @@ def train(data_to_train_model:dict):
             training_sentences.append(pattern)
             training_labels.append(intent['node'])
         
-
-
         responses.append(intent['responses'])
         
         if intent['tag'] not in labels:
             labels.append(intent['tag'])
             
     num_classes = len(labels)
-
 
     lbl_encoder = LabelEncoder()
     lbl_encoder.fit(training_labels)

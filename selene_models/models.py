@@ -1,8 +1,12 @@
+# python
 import secrets
+import datetime
 
+# django
 from django.db import models
-
 from django.utils import timezone
+
+
 
 class SeleneModel(models.Model):
 
@@ -47,17 +51,30 @@ class SeleneBot(models.Model):
         super().save(*args, **kwargs)
 
 
-class Context(models.Model):
+class SeleneNode(models.Model):
     # Foreign keys -----------------------------------------
     model = models.ForeignKey(SeleneModel, on_delete=models.CASCADE)
     # ------------------------------------------------------
 
-    data_trained_with = models.JSONField() # should this be a file field?
+    data_trained_with:dict = models.JSONField()
+    do_after:dict = models.JSONField()
+    do_before:dict = models.JSONField()
+    
+    name:str = models.CharField(max_length=255)
 
-    name = models.CharField(max_length=255)
+    created_at:datetime.datetime = models.DateTimeField()
+    updated_at:datetime.datetime = models.DateTimeField()
+    
+    responses_raw_text:str = models.TextField()
+    random_response:bool = models.BooleanField(default=True)
+    
 
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    @property
+    def responses(self) -> list:
+        return self.responses_raw_text.split(',')
+    
+    @
+    
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -67,3 +84,8 @@ class Context(models.Model):
         super().save(*args, **kwargs)
 
 
+
+class SeleneChildNode(models.Model):
+    # Foreign keys -----------------------------------------
+    model = models.ForeignKey(SeleneModel, on_delete=models.CASCADE)
+    # ------------------------------------------------------
