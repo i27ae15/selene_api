@@ -73,7 +73,10 @@ class SeleneNode(models.Model):
     def responses(self) -> list:
         return self.responses_raw_text.split(',')
     
-    @
+    
+    @property
+    def childs(self) -> list:
+        return self.selenechildnode.all()
     
 
     def save(self, *args, **kwargs):
