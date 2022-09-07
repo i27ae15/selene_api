@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import SeleneModel, SeleneBot, SeleneNode
 
-# Register your models here.
+admin.site.register(SeleneModel)
+admin.site.register(SeleneBot)
+admin.site.register(SeleneNode)

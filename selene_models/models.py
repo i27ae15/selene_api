@@ -9,9 +9,9 @@ from django.utils import timezone
 
 class SeleneModel(models.Model):
 
-    created_at:datetime.datetime = models.DateTimeField(read_only=True)
+    created_at:datetime.datetime = models.DateTimeField()
 
-    model = models.FileField(upload_to='models')
+    model_path = models.CharField(default='', max_length=256)
 
     name:str = models.CharField(max_length=255)
 
@@ -44,9 +44,9 @@ class SeleneBot(models.Model):
 
     active:bool = models.BooleanField(default=True)
 
-    created_at:datetime.datetime = models.DateTimeField(read_only=True)
+    created_at:datetime.datetime = models.DateTimeField()
 
-    token:str = models.CharField(max_length=255, read_only=True) # token is used to authenticate the bot with the server
+    token:str = models.CharField(max_length=255, ) # token is used to authenticate the bot with the server
     updated_at:datetime.datetime = models.DateTimeField()
 
     @property
@@ -69,33 +69,27 @@ class SeleneNode(models.Model):
     # object and then, the model is created, at that point the model field got associeted with the model object
     model:SeleneModel = models.ForeignKey(SeleneModel, null=True, default=None, on_delete=models.CASCADE)
     
-    head = models.ForeignKey('self', null=True, blank=True, default=None, on_delete=models.CASCADE, related_name='head')
-    parent = models.ForeignKey('self', null=True, blank=True, default=None, on_delete=models.CASCADE, related_name='children')
-    next = models.ForeignKey('self', null=True, blank=True, default=None, on_delete=models.CASCADE, related_name='previousnode')
+    head_id = models.IntegerField(null=True, default=None)
+    parent_id = models.IntegerField(null=True, default=None)
+    next_id = models.IntegerField(null=True, default=None)
     # ------------------------------------------------------
         
     block_step:bool = models.BooleanField(default=True)
     
-    created_at:datetime.datetime = models.DateTimeField(read_only=True)
+    created_at:datetime.datetime = models.DateTimeField(null=True, default=None)
     
-    do_after:dict = models.JSONField()
-    do_before:dict = models.JSONField()
+    do_after:dict = models.JSONField(null=True, default=dict)
+    do_before:dict = models.JSONField(null=True, default=dict)
     
     name:str = models.CharField(max_length=255)
 
-    updated_at:datetime.datetime = models.DateTimeField()
+    updated_at:datetime.datetime = models.DateTimeField(null=True, default=None)
     
     random_response:bool = models.BooleanField(default=True)
-    responses_raw_text:str = models.TextField()
+    responses:dict = models.JSONField(default=dict)
     
     patterns_raw_text:str = models.TextField()
 
-
-    @property
-    def responses(self) -> list:
-        return self.responses_raw_text.split(',')
-    
-    
     @property
     def patterns(self) -> list:
         return self.patterns_raw_text.split(',')
@@ -104,13 +98,33 @@ class SeleneNode(models.Model):
     @property
     def childs(self) -> list:
         return self.selenechildnode.all()
+
+    
+    @property
+    def head(self) -> 'SeleneNode':
+        self.objects.get(id=self.head_id)
+
+
+    @property
+    def parent(self) -> 'SeleneNode':
+        return self.objects.get(id=self.parent_id)
+    
+
+    @property
+    def next(self) -> 'SeleneNode':
+        return self.objects.get(id=self.next_id)
+
     
 
     def save(self, *args, **kwargs):
         if not self.pk:
             self.created_at = timezone.now()
+            print('-'*50)
+            print('saving the model')
+            print('-'*50)
         else:
             self.updated_at = timezone.now()
+
         super().save(*args, **kwargs)
 
 

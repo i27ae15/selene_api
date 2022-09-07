@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'chat',
     'training',
     'register',
+    'selene_models',
 
     # 3rd party apps
 

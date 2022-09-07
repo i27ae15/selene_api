@@ -1,33 +1,34 @@
+import datetime
 from django.db import models
 
 from django.utils import timezone
 
-from selene_models.models import SeleneModel, SeleneBot, Context
+from selene_models.models import SeleneModel, SeleneBot, SeleneNode
 
 
 class Interaction(models.Model):
 
-    selene_bot = models.ForeignKey(SeleneBot, on_delete=models.CASCADE)
+    selene_bot:SeleneBot = models.ForeignKey(SeleneBot, on_delete=models.CASCADE)
 
-    started_at = models.DateTimeField()
-    finished_at = models.DateTimeField()
-    is_client_satified = models.BooleanField()
+    started_at:datetime.datetime = models.DateTimeField()
+    finished_at:datetime.datetime = models.DateTimeField()
+    is_client_satified:bool = models.BooleanField()
 
 
 class MessageSent(models.Model):
 
     # Foreign keys -----------------------------------------
-    context = models.ForeignKey(Context, on_delete=models.CASCADE)
+    node:SeleneNode = models.ForeignKey(SeleneNode, on_delete=models.CASCADE)
 
-    interaction = models.ForeignKey(Interaction, on_delete=models.CASCADE)
+    interaction:Interaction = models.ForeignKey(Interaction, on_delete=models.CASCADE)
 
 
     # ------------------------------------------------------
 
-    message = models.TextField()
+    message:str = models.TextField()
 
-    sender = models.CharField(max_length=255)
-    sent_at = models.DateTimeField()
+    sender:str = models.CharField(max_length=255)
+    sent_at:datetime.datetime = models.DateTimeField()
 
     understood_within_context = models.BooleanField()
 
