@@ -98,16 +98,25 @@ ASGI_APPLICATION = 'selene_api.routing.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'de3dsj6s7f3b8t',
-        'USER': 'kpcnnpynnggxcg',
-        'PASSWORD': 'dd16a9c7c6b84a782a56fa747dba488e6a21729474e6827fff0753494be0d0cb',
-        'HOST': 'ec2-34-193-44-192.compute-1.amazonaws.com',
-        'PORT': '5432',
+import sys
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase'
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'de3dsj6s7f3b8t',
+            'USER': 'kpcnnpynnggxcg',
+            'PASSWORD': 'dd16a9c7c6b84a782a56fa747dba488e6a21729474e6827fff0753494be0d0cb',
+            'HOST': 'ec2-34-193-44-192.compute-1.amazonaws.com',
+            'PORT': '5432',
+        }
+    }
 
 REST_FRAMEWORK = {
    'DEFAULT_AUTHENTICATION_CLASSES': (

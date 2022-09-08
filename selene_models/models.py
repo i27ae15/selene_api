@@ -9,15 +9,15 @@ from django.utils import timezone
 
 class SeleneModel(models.Model):
 
-    created_at:datetime.datetime = models.DateTimeField()
+    created_at:datetime.datetime = models.DateTimeField(null=True, default=None)
 
     model_path = models.CharField(default='', max_length=256)
 
     name:str = models.CharField(max_length=255)
 
-    updated_at:datetime.datetime = models.DateTimeField()
+    updated_at:datetime.datetime = models.DateTimeField(null=True, default=None)
 
-    data_trained_with:dict = models.JSONField()
+    main_tags:dict = models.JSONField(default=list)
 
 
     @property
@@ -30,9 +30,16 @@ class SeleneModel(models.Model):
     
     
     def save(self, *args, **kwargs):
-        if not self.id:
+        
+        if not self.pk:
             self.created_at = timezone.now()
-        self.updated_at = timezone.now()
+        else:
+            self.updated_at = timezone.now()
+        
+        print('----------')
+        print(self.updated_at)
+        print('----------')
+
         return super().save(*args, **kwargs)
 
 
@@ -88,13 +95,8 @@ class SeleneNode(models.Model):
     random_response:bool = models.BooleanField(default=True)
     responses:dict = models.JSONField(default=dict)
     
-    patterns_raw_text:str = models.TextField()
+    patterns:dict = models.JSONField(default=list)
 
-    @property
-    def patterns(self) -> list:
-        return self.patterns_raw_text.split(',')
-    
-    
     @property
     def childs(self) -> list:
         return self.selenechildnode.all()
@@ -119,9 +121,6 @@ class SeleneNode(models.Model):
     def save(self, *args, **kwargs):
         if not self.pk:
             self.created_at = timezone.now()
-            print('-'*50)
-            print('saving the model')
-            print('-'*50)
         else:
             self.updated_at = timezone.now()
 

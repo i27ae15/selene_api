@@ -12,10 +12,10 @@ class TrainingAPI(APIView):
     
     def post(self, request):
         """Endpoint for training a model"""
-        data_to_create_train_model = request.data
+        data_to_create_model = request.data['data_to_create_model']
+        model_name = request.data['model_name']
 
-
-        train(data_to_create_train_model)
+        train(data_to_create_model, model_name)
 
 
         return Response({"message": "Model train successfully!"})
