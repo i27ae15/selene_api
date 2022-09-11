@@ -6,7 +6,7 @@ from channels.auth import AuthMiddlewareStack
 from channels.security.websocket import AllowedHostsOriginValidator, OriginValidator
 
 from django.urls import path
-from chat.consumers import PracticeConsumer
+from chat.consumers import SeleneChat
 
 
 application = ProtocolTypeRouter({
@@ -14,7 +14,7 @@ application = ProtocolTypeRouter({
         AuthMiddlewareStack(
             URLRouter([
             
-            path('chat/testing/', PracticeConsumer())
+            path('chat/testing/', SeleneChat())
             ])
         )
     )

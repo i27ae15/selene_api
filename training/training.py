@@ -13,6 +13,9 @@ from keras.preprocessing.text import Tokenizer
 from keras_preprocessing.sequence import pad_sequences
 from sklearn.preprocessing import LabelEncoder
 
+# pickle
+import pickle
+
 # models
 from selene_models.models import SeleneModel, SeleneNode
 from selene_models.serializers import SeleneModelSerializer, SeleneNodeSerializer
@@ -22,19 +25,20 @@ def train(data_to_train_model:dict, model_name=str):
     training_sentences = []
     training_labels = []
     labels = []
-    responses = []
 
     nodes:list[SeleneNode] = []
     main_tags = []
     previous_node:SeleneNode = None
     head_node:SeleneNode = None
 
+    local_training_sentences = []
+
     for node in data_to_train_model['intents']:
         for pattern in node['patterns']:
             training_sentences.append(pattern)
+            local_training_sentences.append(pattern)
+
             training_labels.append(node['node'])
-        
-        responses.append(node['responses'])
         
         if node['node'] not in labels:
             labels.append(node['node'])
@@ -43,30 +47,37 @@ def train(data_to_train_model:dict, model_name=str):
             
         data_to_serialize = {
             'name': node['node'],
-            'patterns_raw_text': ','.join(training_sentences),
-            'responses_raw_text': responses,
+            'patterns': local_training_sentences,
+            'responses': node['responses'],
             'random_response': data_to_train_model['random_response'] if 'random_response' in data_to_train_model else True,
         }
 
         
+        print('-----------------')
+        print('patterns', data_to_serialize['responses'])
+        print('-----------------')
+
+
         serializer = SeleneNodeSerializer(data=data_to_serialize)
 
         if serializer.is_valid():
             serializer.save()
 
+            local_training_sentences = []
+            
             head_node:SeleneNode = serializer.instance
 
             nodes.append(serializer.instance)
 
             if not node.get('steps'):
-                break
+                continue
 
             for step in node['steps']:
 
                 data_to_serialize = {
                     'name': step['name'],
-                    'patterns_raw_text': ','.join(step['patterns']),
-                    'responses_raw_text': ','.join(step['responses']),
+                    'patterns': step['patterns'],
+                    'responses': step['responses'],
                     'parent_id': previous_node.id if previous_node else head_node.id,
                     'head_id': head_node.id,
                     'do_after': step['do_after'],
@@ -78,8 +89,7 @@ def train(data_to_train_model:dict, model_name=str):
                 for pattern in step['patterns']:
                     training_sentences.append(pattern)
                     training_labels.append(node['node'])
-                
-                responses.append(node['responses'])
+
                 
                 if node['node'] not in labels:
                     labels.append(node['node'])
@@ -158,8 +168,20 @@ def train(data_to_train_model:dict, model_name=str):
     history = model.fit(padded_sequences, np.array(training_labels), epochs=epochs)
 
     # to save the trained model
-    model_path = f"selene_models_saved/model_{secrets.token_hex()}/{model_name}"
-    model.save(model_path)
+    model_path = f"selene_models_saved/model_{secrets.token_hex(16)}/"
+
+
+    model.save(model_path + 'model')
+
+
+    # to save the fitted tokenizer
+    with open(model_path + 'tokenizer.pickle', 'wb') as handle:
+        pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        
+    # to save the fitted label encoder
+    with open(model_path + 'label_encoder.pickle', 'wb') as ecn_file:
+        pickle.dump(lbl_encoder, ecn_file, protocol=pickle.HIGHEST_PROTOCOL)
+
 
     model_serializer = SeleneModelSerializer(data={
         'name': model_name,
@@ -178,13 +200,3 @@ def train(data_to_train_model:dict, model_name=str):
         print(model_serializer.errors)
         print('-----------------')
     
-    #NOTE: Investigate about the tokenizers
-    import pickle
-
-    # to save the fitted tokenizer
-    with open('tokenizer.pickle', 'wb') as handle:
-        pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
-        
-    # to save the fitted label encoder
-    with open('label_encoder.pickle', 'wb') as ecn_file:
-        pickle.dump(lbl_encoder, ecn_file, protocol=pickle.HIGHEST_PROTOCOL)

@@ -6,7 +6,6 @@ import datetime
 from django.db import models
 from django.utils import timezone
 
-
 class SeleneModel(models.Model):
 
     created_at:datetime.datetime = models.DateTimeField(null=True, default=None)
@@ -24,10 +23,15 @@ class SeleneModel(models.Model):
     def active_bots(self):
         return self.selenebot_set.filter(is_active=True)
 
+    
+    @property
+    def nodes(self) -> 'list[SeleneNode]':
+        return self.selenenode_set.all()
+
 
     def __str__(self):
-        return self.name
-    
+        return f'{self.id} - {self.name}'
+        
     
     def save(self, *args, **kwargs):
         
@@ -53,7 +57,7 @@ class SeleneBot(models.Model):
 
     created_at:datetime.datetime = models.DateTimeField()
 
-    token:str = models.CharField(max_length=255, ) # token is used to authenticate the bot with the server
+    token:str = models.CharField(max_length=255) # token is used to authenticate the bot with the server
     updated_at:datetime.datetime = models.DateTimeField()
 
     @property
@@ -93,9 +97,11 @@ class SeleneNode(models.Model):
     updated_at:datetime.datetime = models.DateTimeField(null=True, default=None)
     
     random_response:bool = models.BooleanField(default=True)
-    responses:dict = models.JSONField(default=dict)
+    responses:list = models.JSONField(default=list)
     
-    patterns:dict = models.JSONField(default=list)
+    patterns:list = models.JSONField(default=list)
+
+    response_time_wait:int = models.IntegerField(default=0)
 
     @property
     def childs(self) -> list:

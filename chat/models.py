@@ -22,7 +22,6 @@ class MessageSent(models.Model):
 
     interaction:Interaction = models.ForeignKey(Interaction, on_delete=models.CASCADE)
 
-
     # ------------------------------------------------------
 
     message:str = models.TextField()
