@@ -22,16 +22,16 @@ from selene_models.serializers import SeleneModelSerializer, SeleneNodeSerialize
 
 def train(data_to_train_model:dict, model_name=str):
 
-    training_sentences = []
-    training_labels = []
-    labels = []
+    training_sentences:list[str] = []
+    training_labels:list[str] = []
+    labels:list[str] = []
 
     nodes:list[SeleneNode] = []
-    main_tags = []
+    main_tags:list[str] = []
     previous_node:SeleneNode = None
     head_node:SeleneNode = None
 
-    local_training_sentences = []
+    local_training_sentences:list[str] = []
 
     for node in data_to_train_model['intents']:
         for pattern in node['patterns']:
@@ -52,39 +52,36 @@ def train(data_to_train_model:dict, model_name=str):
             'random_response': data_to_train_model['random_response'] if 'random_response' in data_to_train_model else True,
         }
 
-        
-        print('-----------------')
-        print('patterns', data_to_serialize['responses'])
-        print('-----------------')
 
+        main_node_serializer = SeleneNodeSerializer(data=data_to_serialize)
 
-        serializer = SeleneNodeSerializer(data=data_to_serialize)
-
-        if serializer.is_valid():
-            serializer.save()
-
-            local_training_sentences = []
+        if main_node_serializer.is_valid():
+            main_node_serializer.save()
             
-            head_node:SeleneNode = serializer.instance
+            # aparently this lines does a shit
+            local_training_sentences:list[str] = []
+            
+            head_node:SeleneNode = main_node_serializer.instance
 
-            nodes.append(serializer.instance)
+            nodes.append(main_node_serializer.instance)
 
             if not node.get('steps'):
                 continue
 
             for step in node['steps']:
-
+                step:dict
                 data_to_serialize = {
-                    'name': step['name'],
+                    'name': step['node'],
                     'patterns': step['patterns'],
                     'responses': step['responses'],
-                    'parent_id': previous_node.id if previous_node else head_node.id,
                     'head_id': head_node.id,
-                    'do_after': step['do_after'],
-                    'do_before': step['do_before'],
-                    'block_step': step['block_step'],
-                    'random_response': step['random_response'],
+                    'do_after': step.get('do_after', {}),
+                    'do_before': step.get('do_before', {}),
+                    'block_step': step.get('block_step', True),
+                    'random_response': step.get('random_response', False),
+                    'next_node_on_option': step.get('next_node_on_option', {})
                 }
+
 
                 for pattern in step['patterns']:
                     training_sentences.append(pattern)
@@ -97,106 +94,110 @@ def train(data_to_train_model:dict, model_name=str):
                 # we append the current node to the list to be able to set the model that is attached to the node, 
                 # model that is created at the end of this function
 
-                serializer = SeleneNodeSerializer(data=data_to_serialize)
+                sub_node_serializer = SeleneNodeSerializer(data=data_to_serialize)
 
-                if serializer.is_valid():
-                    serializer.save()
+                if sub_node_serializer.is_valid():
+                    sub_node_serializer.save()
+                    node_instance:SeleneNode = sub_node_serializer.instance
+
+                    if not head_node.next_node_on_option:
+                        # setting the value by default for the head_node
+                        head_node.set_default_next_node(node_instance.name)
 
 
-                    if previous_node is not None:
-                        previous_node.next_id = serializer.instance.id
-                        previous_node.save()
+                    if previous_node is not None and not previous_node.next_node_on_option:
+                        previous_node.set_default_next_node(node_instance.name)
                     
-                    previous_node = serializer.instance
-                    nodes.append(serializer.instance)
+                    previous_node = sub_node_serializer.instance
+                    nodes.append(node_instance)
 
                 else:
                     print('-------------------------------')
-                    print(serializer.errors)
+                    print(sub_node_serializer.errors)
                     print('-------------------------------')
                     return 'error'
 
         else:
             print('-----------------')
-            print(serializer.errors)
+            print(main_node_serializer.errors)
             print('-----------------')
             return 'error'
                 
-    line = str()
-    for node in nodes:
-        line += f'{node.id} <- '
+    # line = str()
+    # for node in nodes:
+    #     line += f'{node.id} <- '
 
-    line += 'None'
+    # line += 'None'
 
-    reversed_nodes = nodes[::-1]
+    # reversed_nodes = nodes[::-1]
 
-    reversed_line = str()
-    for node in reversed_nodes:
-        reversed_line += f'{node.id} <- '
+    # reversed_line = str()
+    # for node in reversed_nodes:
+    #     reversed_line += f'{node.id} <- '
     
-    reversed_line += 'None'
+    # reversed_line += 'None'
             
-    num_classes = len(labels)
+    # num_classes = len(labels)
 
-    lbl_encoder = LabelEncoder()
-    lbl_encoder.fit(training_labels)
-    training_labels = lbl_encoder.transform(training_labels)
+    # lbl_encoder = LabelEncoder()
+    # lbl_encoder.fit(training_labels)
+    # training_labels = lbl_encoder.transform(training_labels)
 
-    vocab_size = 1000
-    embedding_dim = 16
-    max_len = 20
-    oov_token = "<OOV>"
+    # vocab_size = 1000
+    # embedding_dim = 16
+    # max_len = 20
+    # oov_token = "<OOV>"
 
-    tokenizer = Tokenizer(num_words=vocab_size, oov_token=oov_token)
-    tokenizer.fit_on_texts(training_sentences)
-    word_index = tokenizer.word_index
-    sequences = tokenizer.texts_to_sequences(training_sentences)
-    padded_sequences = pad_sequences(sequences, truncating='post', maxlen=max_len)
-
-
-    model = Sequential()
-    model.add(Embedding(vocab_size, embedding_dim, input_length=max_len))
-    model.add(GlobalAveragePooling1D())
-    model.add(Dense(16, activation='relu'))
-    model.add(Dense(16, activation='relu'))
-    model.add(Dense(num_classes, activation='softmax'))
-
-    model.compile(loss='sparse_categorical_crossentropy', 
-                optimizer=tf.keras.optimizers.Adam(learning_rate=0.01), metrics=['accuracy'])
-
-    epochs = 100
-    history = model.fit(padded_sequences, np.array(training_labels), epochs=epochs)
-
-    # to save the trained model
-    model_path = f"selene_models_saved/model_{secrets.token_hex(16)}/"
+    # tokenizer = Tokenizer(num_words=vocab_size, oov_token=oov_token)
+    # tokenizer.fit_on_texts(training_sentences)
+    # word_index = tokenizer.word_index
+    # sequences = tokenizer.texts_to_sequences(training_sentences)
+    # padded_sequences = pad_sequences(sequences, truncating='post', maxlen=max_len)
 
 
-    model.save(model_path + 'model')
+    # model = Sequential()
+    # model.add(Embedding(vocab_size, embedding_dim, input_length=max_len))
+    # model.add(GlobalAveragePooling1D())
+    # model.add(Dense(16, activation='relu'))
+    # model.add(Dense(16, activation='relu'))
+    # model.add(Dense(num_classes, activation='softmax'))
+
+    # model.compile(loss='sparse_categorical_crossentropy', 
+    #             optimizer=tf.keras.optimizers.Adam(learning_rate=0.01), metrics=['accuracy'])
+
+    # epochs = 100
+    # history = model.fit(padded_sequences, np.array(training_labels), epochs=epochs)
+
+    # # to save the trained model
+    # model_path = f"selene_models_saved/model_{secrets.token_hex(16)}/"
 
 
-    # to save the fitted tokenizer
-    with open(model_path + 'tokenizer.pickle', 'wb') as handle:
-        pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    # model.save(model_path + 'model')
+
+
+    # # to save the fitted tokenizer
+    # with open(model_path + 'tokenizer.pickle', 'wb') as handle:
+    #     pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
         
-    # to save the fitted label encoder
-    with open(model_path + 'label_encoder.pickle', 'wb') as ecn_file:
-        pickle.dump(lbl_encoder, ecn_file, protocol=pickle.HIGHEST_PROTOCOL)
+    # # to save the fitted label encoder
+    # with open(model_path + 'label_encoder.pickle', 'wb') as ecn_file:
+    #     pickle.dump(lbl_encoder, ecn_file, protocol=pickle.HIGHEST_PROTOCOL)
 
 
-    model_serializer = SeleneModelSerializer(data={
-        'name': model_name,
-        'model_path': model_path,
-        'main_tags': main_tags,
-    })
+    # model_serializer = SeleneModelSerializer(data={
+    #     'name': model_name,
+    #     'model_path': model_path,
+    #     'main_tags': main_tags,
+    # })
 
-    if model_serializer.is_valid():
-        model_serializer.save()
+    # if model_serializer.is_valid():
+    #     model_serializer.save()
 
-        for node in nodes:
-            node.model = model_serializer.instance
-            node.save()
-    else:
-        print('-----------------')
-        print(model_serializer.errors)
-        print('-----------------')
+    #     for node in nodes:
+    #         node.model = model_serializer.instance
+    #         node.save()
+    # else:
+    #     print('-----------------')
+    #     print(model_serializer.errors)
+    #     print('-----------------')
     

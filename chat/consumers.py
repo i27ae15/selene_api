@@ -1,5 +1,7 @@
 # python
 import time
+import json
+import re
 
 import asyncio
 from channels.consumer import AsyncConsumer
@@ -27,8 +29,36 @@ os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 django.setup()
 
 
+def check_variable(variable, variable_type) -> bool:
+    if variable_type == 'int':
+        try:
+            variable = int(variable)
+        except:
+            return False
+    elif variable_type == 'float':
+        try:
+            variable = float(variable)
+        except:
+            return False
+    elif variable_type == 'str':
+        try:
+            variable = str(variable)
+        except:
+            return False
+    elif variable_type == 'email':
+        # check if the contend of variable is an email
+        regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        if not (re.fullmatch(regex, variable)):
+            return False    
+            
+    return True
+
+
+
 class SeleneChat(AsyncConsumer):
 
+    in_step = False
+    parent_node:SeleneNode = None
     current_node:SeleneNode = None
     selene_model_object:SeleneModel = None
     tf_model:keras.models.Model = None
@@ -36,6 +66,13 @@ class SeleneChat(AsyncConsumer):
     variables = dict()
     is_input = False
     input_object = dict()
+    options = list()
+
+    name_to_save_variable:str = None
+    variable_type_to_wait:str = None
+    response_on_failure:str = None
+    
+    response_validators = dict()
 
 
     def __init__(self) -> None:
@@ -48,89 +85,194 @@ class SeleneChat(AsyncConsumer):
         super().__init__()
 
 
-    async def websocket_connect(self,event):
-        # when websocket connects
+    async def websocket_connect(self, event):
 
         # when connections occurs, the model is loaded
-        print("connected", event)
-
-        self.selene_model_object:SeleneModel = SeleneModel.objects.get(id=1)
+        self.selene_model_object:SeleneModel = SeleneModel.objects.get(id=6)
         self.tf_model = keras.models.load_model(self.selene_model_object.model_path + 'model')
 
+
         await self.send({"type": "websocket.accept"})
-        await self.send({"type":"websocket.send", "text":0})
+        # await self.send({"type":"websocket.send", "text":'there'})
  
 
     async def websocket_receive(self, event):
-        # when messages is received from websocket
-        # here we need to write the selene response
+
+        proper_response = False
+        object_dict:dict = json.loads(event['text'])
+
+        MESSAGE = object_dict.get("message")
+
+        selene_node:SeleneNode = None
+        if not self.in_step:
+            selene_node = self.get_selene_node(MESSAGE)
         
-        TEXT = event.get("text")
 
-        if TEXT == 'Hi there!':
-            await self.send({"type":"websocket.send", "text":'Hi there!'})
-        else:
+        if not self.parent_node or self.current_node and self.current_node != selene_node and selene_node is not None:
 
-            # this is the text that selene has to process to be able to send back to the client
-            if self.is_input:
-                self.variables[f"@V{self.input_object['name']}"] = TEXT
+            if self.parent_node is None:
+                self.parent_node = selene_node
+            
+            self.current_node = selene_node
+
+            print('-'*50)
+            print('parent node: ', self.parent_node.name)
+            print('-'*50)
+
+
+            func = [{"name": "send_email","parameters": {
+                "send_to": "andresruse18@gmail.com",
+                "subject": "New conversation initiated",
+                "html": "<h1>f'A new conversation has initated with Selene'<h1>",
+                }}]
+
+            function_res = self.model_action(func)     
+
+            if function_res:
+                for res in function_res:
+
+                    res_object = {'responses': [{'message': res, 'type': 'text'}]}
+                    
+                    await self.send(json.dumps(res_object))        
+   
+
+        # this is the text that selene has to process to be able to send back to the client
+        if self.is_input:
+
+            if self.options:
+                # here, depending on the option, the node must go the selected node
+                self.options.index(MESSAGE)
+                # when is_option is active, the text will be an integer, that will be the index of the option
+                pass
+            # we need to check the variable introduced
+            if not check_variable(MESSAGE, self.variable_type_to_wait):
+                res_object = {'responses': [{'message': self.response_on_failure, 'type': 'text'}]}
+                await self.send({"type":"websocket.send", "text":json.dumps(res_object)})
+            else:
+
+                self.variables[f"@V{self.name_to_save_variable}"] = MESSAGE
                 self.is_input = False
+                self.name_to_save_variable = None
                 self.input_object = dict()
 
+                proper_response = True
 
-                function_res = self.model_action(self.current_node.do_after['functions_to_call'])
+                print('-'*50)
+                print(self.variables)
+                print('-'*50)
+
+        else:
+
+            if selene_node.name != 'not_found':
+
+                waiting_time = selene_node.response_time_wait
+                time.sleep(waiting_time)
+
+
+                response_object = self.get_selene_response(selene_node)
+                
+                await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})
+                proper_response = True
+
+            else:
+                await self.send({"type":"websocket.send", "text":'Sorry, I do not understand'})   
+        
+
+        if proper_response:
+            functions_to_call = self.current_node.do_after.get('functions_to_call')
+
+            if functions_to_call:
+
+                function_res = self.model_action(functions_to_call)
                 if function_res:
                     for res in function_res:
                         await self.send(res)
 
-            else:
-                selene_node = self.get_selene_node(TEXT)
-                self.current_node = selene_node
+                
+            # check if the current node has a next node, or a following step
 
+            print('-'*50)
+            print('next node:', self.current_node.next)
+            print('-'*50)
 
-                if selene_node.name != 'not_found':
+            if self.current_node.next:
+                self.in_step = True
 
-                    # func = [{"name": "print_message", "parameters": {"message": "Sending message"}}, 
-                    #         {"name": "send_email","parameters": {
-                    #                     "send_to": "andresruse18@gmail.com",
-                    #                     "subject": "Hello there",
-                    #                     "html": "<h1>f'Hello @Vperson_name'<h1>",
-                    #                 }}]
-
-            
-
-                    # function_res = self.model_action(func)                
-                    # if function_res:
-                    #     for res in function_res:
-                    #         await self.send(res)
-
-
-                    waiting_time = selene_node.response_time_wait
-
-
-                    for response in selene_node.responses:
-
-                        time.sleep(waiting_time)
-                        await self.send({"type":"websocket.send", "text":response['text']})
-
-                        if response['type'] == 'input':
-                            self.is_input = True
-                            break
+                if not self.is_input:
+                    self.current_node = self.current_node.next
                     
+                    # do before
 
-                        # if not self.is_input:
-                        #     function_res = self.model_action(func)                
-                        #     if function_res:
-                        #         for res in function_res:
-                        #             await self.send(res)
+                    response_object = self.get_selene_response(self.current_node)
 
-                else:
-                    await self.send({"type":"websocket.send", "text":'Sorry, I do not understand'})   
+                    print('-'*50)
+                    print('response_object: ', response_object)
+                    print('-'*50)
+
+                    await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})
+                    
+                    # do after
+            
+            else:
+                if self.in_step:
+                    self.in_step = False
+
+                    response_object =[{'message': 'Thank you for your time, I hope I have been able to help you', 'type': 'text'}, 
+                                      {'message': 'If you have any other questions, please do not hesitate to tell me about it', 'type': 'text'}]
+
+                    await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})
+
+                    #we need to print a message saying that the conversation has ended within the current node
         
-        
+
     async def websocket_disconnect(self, event):
         # when websocket disconnects
         print("disconnected", event)
+
+
+    def get_selene_response(self, selene_node:SeleneNode) -> dict:
+        response_object = list()
+
+        for response in selene_node.responses:
+            
+            # this is two properties will cover a simple text response
+            current_response = {
+                "message": response['text'],
+                "type": response['type'],
+            }
+
+            # if the response type is an image then we need to add the url, title and description field from the properties object
+            if response['type'] == 'media':
+                current_response['url'] = response['properties']['url']
+                current_response['title'] = response['properties']['title']
+                current_response['description'] = response['properties']['description']
+
+            elif response['type'] == 'input':
+                # field and actions for the general response of type input
+                self.is_input = True
+                self.name_to_save_variable = response['properties']['input_name']
+                current_response['input_type'] = response['properties']['input_type']
+
+                if current_response['input_type'] == 'options':
+                    # when a option is active, a special function will manage the value that comes from the client
+                    current_response['options'] = response['properties']['options']                    
+                    self.options = response['properties']['options']
+                
+                elif current_response['input_type'] == 'selene_input':
+                    # fields and actions for the response of type selene_input
+                    self.response_on_failure = response['properties']['if_failure']
+
+                    if current_response['properties']['data_wait'] == 'raw_text':
+                        self.response_validators['max_length'] = response['properties']['max_length']
+
+                    elif current_response['properties']['data_wait'] == 'number':
+                        self.response_validators['min_value'] = response['properties']['min_value']
+                        self.response_validators['max_value'] = response['properties']['max_value']
+
+
+            response_object.append(current_response)
+
+        return response_object
 
 
     def get_selene_node(self, text:str) -> SeleneNode:
@@ -164,7 +306,8 @@ class SeleneChat(AsyncConsumer):
             func = self.SELENE_FUNCTIONS[function['name']]
             if function['name'] == 'print_message':
                 response.append(func(**function['parameters']))
-
+            else:
+                func(**function['parameters'])
 
         return response
     

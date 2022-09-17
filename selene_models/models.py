@@ -39,10 +39,6 @@ class SeleneModel(models.Model):
             self.created_at = timezone.now()
         else:
             self.updated_at = timezone.now()
-        
-        print('----------')
-        print(self.updated_at)
-        print('----------')
 
         return super().save(*args, **kwargs)
 
@@ -81,8 +77,6 @@ class SeleneNode(models.Model):
     model:SeleneModel = models.ForeignKey(SeleneModel, null=True, default=None, on_delete=models.CASCADE)
     
     head_id = models.IntegerField(null=True, default=None)
-    parent_id = models.IntegerField(null=True, default=None)
-    next_id = models.IntegerField(null=True, default=None)
     # ------------------------------------------------------
         
     block_step:bool = models.BooleanField(default=True)
@@ -93,15 +87,25 @@ class SeleneNode(models.Model):
     do_before:dict = models.JSONField(null=True, default=dict)
     
     name:str = models.CharField(max_length=255)
+    next_node_on_option :dict = models.JSONField(default=dict)
+    """
+        this will be a dictionary with the following structure:
 
-    updated_at:datetime.datetime = models.DateTimeField(null=True, default=None)
-    
-    random_response:bool = models.BooleanField(default=True)
-    responses:list = models.JSONField(default=list)
-    
+        {
+            'response[str]': node_id[int]  
+        }
+
+        So, this dicitonary will only be used when there are options on the response object
+    """
+
     patterns:list = models.JSONField(default=list)
 
+    random_response:bool = models.BooleanField(default=True)
+    responses:list = models.JSONField(default=list)
     response_time_wait:int = models.IntegerField(default=0)
+    
+    updated_at:datetime.datetime = models.DateTimeField(null=True, default=None)
+
 
     @property
     def childs(self) -> list:
@@ -110,19 +114,25 @@ class SeleneNode(models.Model):
     
     @property
     def head(self) -> 'SeleneNode':
-        self.objects.get(id=self.head_id)
-
-
-    @property
-    def parent(self) -> 'SeleneNode':
-        return self.objects.get(id=self.parent_id)
+        node = None
+        try: node = SeleneNode.objects.get(id=self.head_id)
+        except: pass
+        return node
     
 
-    @property
-    def next(self) -> 'SeleneNode':
-        return self.objects.get(id=self.next_id)
+    def next(self, option:str='next_node') -> 'SeleneNode':
+        node_name:str = self.next_node_on_option.get(option)
 
+        if node_name:
+            return SeleneNode.objects.get(name=node_name)
+        else:
+            return None
     
+    
+    def set_default_next_node(self, node_name:str):
+        self.next_node_on_option['next_node'] = node_name
+        self.save()
+
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -132,4 +142,7 @@ class SeleneNode(models.Model):
 
         super().save(*args, **kwargs)
 
+
+    def __str__(self) -> str:
+        return f'{self.id} - {self.name}'
 
