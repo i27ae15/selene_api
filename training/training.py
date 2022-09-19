@@ -79,7 +79,8 @@ def train(data_to_train_model:dict, model_name=str):
                     'do_before': step.get('do_before', {}),
                     'block_step': step.get('block_step', True),
                     'random_response': step.get('random_response', False),
-                    'next_node_on_option': step.get('next_node_on_option', {})
+                    'next_node_on_option': step.get('next_node_on_option', {}),
+                    'end_steps': step.get('end_steps', False),
                 }
 
 
@@ -105,7 +106,7 @@ def train(data_to_train_model:dict, model_name=str):
                         head_node.set_default_next_node(node_instance.name)
 
 
-                    if previous_node is not None and not previous_node.next_node_on_option:
+                    if previous_node is not None and not previous_node.next_node_on_option and previous_node.end_steps is False:
                         previous_node.set_default_next_node(node_instance.name)
                     
                     previous_node = sub_node_serializer.instance
@@ -123,81 +124,81 @@ def train(data_to_train_model:dict, model_name=str):
             print('-----------------')
             return 'error'
                 
-    # line = str()
-    # for node in nodes:
-    #     line += f'{node.id} <- '
+    line = str()
+    for node in nodes:
+        line += f'{node.id} <- '
 
-    # line += 'None'
+    line += 'None'
 
-    # reversed_nodes = nodes[::-1]
+    reversed_nodes = nodes[::-1]
 
-    # reversed_line = str()
-    # for node in reversed_nodes:
-    #     reversed_line += f'{node.id} <- '
+    reversed_line = str()
+    for node in reversed_nodes:
+        reversed_line += f'{node.id} <- '
     
-    # reversed_line += 'None'
+    reversed_line += 'None'
             
-    # num_classes = len(labels)
+    num_classes = len(labels)
 
-    # lbl_encoder = LabelEncoder()
-    # lbl_encoder.fit(training_labels)
-    # training_labels = lbl_encoder.transform(training_labels)
+    lbl_encoder = LabelEncoder()
+    lbl_encoder.fit(training_labels)
+    training_labels = lbl_encoder.transform(training_labels)
 
-    # vocab_size = 1000
-    # embedding_dim = 16
-    # max_len = 20
-    # oov_token = "<OOV>"
+    vocab_size = 1000
+    embedding_dim = 16
+    max_len = 20
+    oov_token = "<OOV>"
 
-    # tokenizer = Tokenizer(num_words=vocab_size, oov_token=oov_token)
-    # tokenizer.fit_on_texts(training_sentences)
-    # word_index = tokenizer.word_index
-    # sequences = tokenizer.texts_to_sequences(training_sentences)
-    # padded_sequences = pad_sequences(sequences, truncating='post', maxlen=max_len)
-
-
-    # model = Sequential()
-    # model.add(Embedding(vocab_size, embedding_dim, input_length=max_len))
-    # model.add(GlobalAveragePooling1D())
-    # model.add(Dense(16, activation='relu'))
-    # model.add(Dense(16, activation='relu'))
-    # model.add(Dense(num_classes, activation='softmax'))
-
-    # model.compile(loss='sparse_categorical_crossentropy', 
-    #             optimizer=tf.keras.optimizers.Adam(learning_rate=0.01), metrics=['accuracy'])
-
-    # epochs = 100
-    # history = model.fit(padded_sequences, np.array(training_labels), epochs=epochs)
-
-    # # to save the trained model
-    # model_path = f"selene_models_saved/model_{secrets.token_hex(16)}/"
+    tokenizer = Tokenizer(num_words=vocab_size, oov_token=oov_token)
+    tokenizer.fit_on_texts(training_sentences)
+    word_index = tokenizer.word_index
+    sequences = tokenizer.texts_to_sequences(training_sentences)
+    padded_sequences = pad_sequences(sequences, truncating='post', maxlen=max_len)
 
 
-    # model.save(model_path + 'model')
+    model = Sequential()
+    model.add(Embedding(vocab_size, embedding_dim, input_length=max_len))
+    model.add(GlobalAveragePooling1D())
+    model.add(Dense(16, activation='relu'))
+    model.add(Dense(16, activation='relu'))
+    model.add(Dense(num_classes, activation='softmax'))
+
+    model.compile(loss='sparse_categorical_crossentropy', 
+                optimizer=tf.keras.optimizers.Adam(learning_rate=0.01), metrics=['accuracy'])
+
+    epochs = 100
+    history = model.fit(padded_sequences, np.array(training_labels), epochs=epochs)
+
+    # to save the trained model
+    model_path = f"selene_models_saved/model_{secrets.token_hex(16)}/"
 
 
-    # # to save the fitted tokenizer
-    # with open(model_path + 'tokenizer.pickle', 'wb') as handle:
-    #     pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    model.save(model_path + 'model')
+
+
+    # to save the fitted tokenizer
+    with open(model_path + 'tokenizer.pickle', 'wb') as handle:
+        pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
         
-    # # to save the fitted label encoder
-    # with open(model_path + 'label_encoder.pickle', 'wb') as ecn_file:
-    #     pickle.dump(lbl_encoder, ecn_file, protocol=pickle.HIGHEST_PROTOCOL)
+    # to save the fitted label encoder
+    with open(model_path + 'label_encoder.pickle', 'wb') as ecn_file:
+        pickle.dump(lbl_encoder, ecn_file, protocol=pickle.HIGHEST_PROTOCOL)
 
 
-    # model_serializer = SeleneModelSerializer(data={
-    #     'name': model_name,
-    #     'model_path': model_path,
-    #     'main_tags': main_tags,
-    # })
+    model_serializer = SeleneModelSerializer(data={
+        'name': model_name,
+        'model_path': model_path,
+        'main_tags': main_tags,
+    })
 
-    # if model_serializer.is_valid():
-    #     model_serializer.save()
+    if model_serializer.is_valid():
+        model_serializer.save()
 
-    #     for node in nodes:
-    #         node.model = model_serializer.instance
-    #         node.save()
-    # else:
-    #     print('-----------------')
-    #     print(model_serializer.errors)
-    #     print('-----------------')
+        for node in nodes:
+            node.model = model_serializer.instance
+            node.save()
+    else:
+        print('-----------------')
+        print(model_serializer.errors)
+        print('-----------------')
     

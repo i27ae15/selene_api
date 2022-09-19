@@ -86,13 +86,15 @@ class SeleneNode(models.Model):
     do_after:dict = models.JSONField(null=True, default=dict)
     do_before:dict = models.JSONField(null=True, default=dict)
     
+    end_steps:bool = models.BooleanField(default=False)
+
     name:str = models.CharField(max_length=255)
     next_node_on_option :dict = models.JSONField(default=dict)
     """
         this will be a dictionary with the following structure:
 
         {
-            'response[str]': node_id[int]  
+            'option[str]': node_name[str]  
         }
 
         So, this dicitonary will only be used when there are options on the response object
@@ -105,6 +107,7 @@ class SeleneNode(models.Model):
     response_time_wait:int = models.IntegerField(default=0)
     
     updated_at:datetime.datetime = models.DateTimeField(null=True, default=None)
+
 
 
     @property

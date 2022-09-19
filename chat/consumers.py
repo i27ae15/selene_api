@@ -28,6 +28,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rest.settings')
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 django.setup()
 
+CURRENT_MODEL = 14
+
 
 def check_variable(variable, variable_type) -> bool:
     if variable_type == 'int':
@@ -66,7 +68,7 @@ class SeleneChat(AsyncConsumer):
     variables = dict()
     is_input = False
     input_object = dict()
-    options = list()
+    options = False
 
     name_to_save_variable:str = None
     variable_type_to_wait:str = None
@@ -88,7 +90,7 @@ class SeleneChat(AsyncConsumer):
     async def websocket_connect(self, event):
 
         # when connections occurs, the model is loaded
-        self.selene_model_object:SeleneModel = SeleneModel.objects.get(id=6)
+        self.selene_model_object:SeleneModel = SeleneModel.objects.get(id=CURRENT_MODEL)
         self.tf_model = keras.models.load_model(self.selene_model_object.model_path + 'model')
 
 
@@ -139,11 +141,6 @@ class SeleneChat(AsyncConsumer):
         # this is the text that selene has to process to be able to send back to the client
         if self.is_input:
 
-            if self.options:
-                # here, depending on the option, the node must go the selected node
-                self.options.index(MESSAGE)
-                # when is_option is active, the text will be an integer, that will be the index of the option
-                pass
             # we need to check the variable introduced
             if not check_variable(MESSAGE, self.variable_type_to_wait):
                 res_object = {'responses': [{'message': self.response_on_failure, 'type': 'text'}]}
@@ -191,23 +188,25 @@ class SeleneChat(AsyncConsumer):
                 
             # check if the current node has a next node, or a following step
 
+            option_to_look_up = 'next_node'
+
+            if self.options:
+                option_to_look_up = MESSAGE
+                self.options = False
+
             print('-'*50)
-            print('next node:', self.current_node.next)
+            print('next node:', self.current_node.next(option_to_look_up))
             print('-'*50)
 
-            if self.current_node.next:
+            if self.current_node.next(option_to_look_up):
                 self.in_step = True
 
                 if not self.is_input:
-                    self.current_node = self.current_node.next
+                    self.current_node = self.current_node.next(option_to_look_up)
                     
                     # do before
 
                     response_object = self.get_selene_response(self.current_node)
-
-                    print('-'*50)
-                    print('response_object: ', response_object)
-                    print('-'*50)
 
                     await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})
                     
@@ -256,21 +255,31 @@ class SeleneChat(AsyncConsumer):
                 if current_response['input_type'] == 'options':
                     # when a option is active, a special function will manage the value that comes from the client
                     current_response['options'] = response['properties']['options']                    
-                    self.options = response['properties']['options']
+                    self.variable_type_to_wait = 'str'
+                    self.options = True
                 
                 elif current_response['input_type'] == 'selene_input':
                     # fields and actions for the response of type selene_input
-                    self.response_on_failure = response['properties']['if_failure']
+                    self.response_on_failure = response['properties'].get('if_failure') if response['properties'].get('if_failure') else 'please enter a valid value'
+                    current_response['type'] = 'text'
 
-                    if current_response['properties']['data_wait'] == 'raw_text':
-                        self.response_validators['max_length'] = response['properties']['max_length']
+                    if response['properties'].get('variable_type'):
+                        if response['properties']['variable_type'] == 'raw_text':
+                            self.response_validators['max_length'] = response['properties']['max_length']
+                            self.variable_type_to_wait = 'str'
 
-                    elif current_response['properties']['data_wait'] == 'number':
-                        self.response_validators['min_value'] = response['properties']['min_value']
-                        self.response_validators['max_value'] = response['properties']['max_value']
-
+                        elif response['properties']['variable_type'] == 'number':
+                            self.response_validators['min_value'] = response['properties']['min_value']
+                            self.response_validators['max_value'] = response['properties']['max_value']
+                            self.variable_type_to_wait = 'int'
+                    else:
+                        self.variable_type_to_wait = 'str'
 
             response_object.append(current_response)
+
+        print('-'*50)
+        print('response_object: ', response_object)
+        print('-'*50)
 
         return response_object
 
