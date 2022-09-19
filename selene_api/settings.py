@@ -111,13 +111,24 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ['BATABASE_NAME'],
-            'USER': os.environ['DATABASE_USER'],
-            'PASSWORD': os.environ['BATABASE_PASS'],
-            'HOST': os.environ['DATABASE_HOST'],
+            'NAME': 'd3bv8nf0lhvfqg',
+            'USER': 'mslqpaplyatmhs',
+            'PASSWORD': '689b7fdc724266e924c7dfc8de0dbb9cbf97d8369c296e3356513889f61bee21',
+            'HOST': 'ec2-34-231-42-166.compute-1.amazonaws.com',
             'PORT': '5432',
         }
     }
+
+# DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME': os.environ['BATABASE_NAME'],
+#             'USER': os.environ['DATABASE_USER'],
+#             'PASSWORD': os.environ['BATABASE_PASS'],
+#             'HOST': '',
+#             'PORT': '5432',
+#         }
+#     }
 
 REST_FRAMEWORK = {
    'DEFAULT_AUTHENTICATION_CLASSES': (

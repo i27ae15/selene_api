@@ -3,28 +3,32 @@ import time
 import json
 import re
 import requests
-
-import asyncio
-from channels.consumer import AsyncConsumer
-from random import randint
-from time import sleep
-
-
 import json 
-import numpy as np
-from tensorflow import keras
-from sklearn.preprocessing import LabelEncoder
+import os
 
-import random
+# numpy
+import numpy as np
+
+# tensorflow
+from tensorflow import keras
 import pickle
 
-from .models import SeleneModel, SeleneNode
+#import
+import django 
+
+# django-channels
+from channels.consumer import AsyncConsumer
+
+# models
+from .models import SeleneModel, SeleneNode, Interaction, MessageSent
+
+# serializers
+from .serializers import InteractionSerializer, MessageSentSerializer
+
+# utils
 
 from utils.send_email import SendEmail
 
-
-import os
-import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rest.settings')
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 django.setup()
@@ -57,12 +61,11 @@ def check_variable(variable, variable_type) -> bool:
     return True
 
 
-
 class SeleneChat(AsyncConsumer):
 
     def __init__(self) -> None:
         
-        self.SELENE_FUNCTIONS = {
+        self.selene_functions = {
             'print_message': self.print_message,
             'to_wait': self.to_wait,
             'send_email': SendEmail,
@@ -85,7 +88,11 @@ class SeleneChat(AsyncConsumer):
         self.response_on_failure:str = None
         
         self.response_validators:dict = dict()
-    
+        
+        # intilize the current selene-bot interaction
+        
+        self.interaction:Interaction = Interaction.objects.create()
+           
         super().__init__()
 
 
@@ -106,6 +113,8 @@ class SeleneChat(AsyncConsumer):
         object_dict:dict = json.loads(event['text'])
 
         MESSAGE = object_dict.get("message")
+        
+        # save current message
 
         selene_node:SeleneNode = None
         if not self.in_step:
@@ -168,13 +177,17 @@ class SeleneChat(AsyncConsumer):
 
                 response_object = self.get_selene_response(selene_node)
                 
+                # the message field should change to a dictionary with the message and the type of message
+                self.save_message(response_object)
                 await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})
                 proper_response = True
 
             else:
-                await self.send({"type":"websocket.send", "text":'Sorry, I do not understand'})   
+                text = 'I am sorry, I do not understand what you mean'
+                self.save_message(text)
+                await self.send({"type":"websocket.send", "text":text})   
         
-
+        self.save_message(MESSAGE, sender=1)
         if proper_response:
             
             ### Do after ###
@@ -225,6 +238,7 @@ class SeleneChat(AsyncConsumer):
    
    
                     response_object = self.get_selene_response(self.current_node)
+                    self.save_message(response_object)
                     await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})
                     
                     
@@ -254,6 +268,7 @@ class SeleneChat(AsyncConsumer):
 
                     #we need to print a message saying that the conversation has ended within the current node
 
+        
     async def websocket_disconnect(self, event):
         # when websocket disconnects
         print("disconnected", event)
@@ -342,7 +357,7 @@ class SeleneChat(AsyncConsumer):
     def model_functions_to_call(self, functions_to_call:list):
         response = list()
         for function in functions_to_call:
-            func = self.SELENE_FUNCTIONS[function['name']]
+            func = self.selene_functions[function['name']]
             if function['name'] == 'print_message':
                 response.append(func(**function['parameters']))
             else:
@@ -408,4 +423,26 @@ class SeleneChat(AsyncConsumer):
                 return response.status_code
             
             raise Exception(f'Error calling webhook: {url}, status_code: {response.status_code}')
+        
+        
+    def save_message(self, message, sender:int=0, understood:bool=True):
+        """
+            This function will save the message into the database
+            more specific int he MessageSent object
+            
+            sender: 0 -> selene
+            sender: 1 -> client
+        """
+        
+        if type(message) is str:
+            message = {"type":"text", "message":message}
+        
+        MessageSent.objects.create(
+            node=self.current_node,
+            interaction=self.interaction,
+            message=message,
+            sender=sender,
+            understood_within_context=understood
+        )
+        
         
