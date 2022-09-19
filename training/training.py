@@ -155,10 +155,11 @@ def train(data_to_train_model:dict, model_name=str):
                 optimizer=tf.keras.optimizers.Adam(learning_rate=0.01), metrics=['accuracy'])
 
     epochs = 100
-    history = model.fit(padded_sequences, np.array(training_labels), epochs=epochs)
+    history = model.fit(padded_sequences, np.array(training_labels), epochs=epochs, verbose=0)
 
     # to save the trained model
-    model_path = f"selene_models_saved/model_{secrets.token_hex()}/{model_name}"
+    model_path = f"selene_models_saved/model_{secrets.token_hex(16)}/{model_name}/"
+    
     model.save(model_path)
 
     model_serializer = SeleneModelSerializer(data={

@@ -19,7 +19,6 @@ import wikipediaapi
 wiki = wikipediaapi.Wikipedia('en')
 
 
-
 def call_wikipedia(query):
     
     page = wiki.page(query)
@@ -36,8 +35,6 @@ class PracticeConsumer(AsyncConsumer):
 
     current_step = None
     
-    
-
 
     async def websocket_connect(self,event):
         # when websocket connects
@@ -50,7 +47,6 @@ class PracticeConsumer(AsyncConsumer):
     async def websocket_receive(self, event):
         # when messages is received from websocket
         # here we need to write the selene response
-        
         
         TEXT = event.get("text")
 
