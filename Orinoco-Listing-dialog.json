@@ -1,0 +1,5497 @@
+{
+  "intents": [
+    {
+      "intent": "AnswerQuestionsNow",
+      "examples": [
+        {
+          "text": "Answer questions now"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "CanIMoveIn",
+      "examples": [
+        {
+          "text": "Can I move in"
+        },
+        {
+          "text": "Can I move-in"
+        },
+        {
+          "text": "Can I move in May 25th"
+        }
+      ],
+      "description": "Can I move in?"
+    },
+    {
+      "intent": "FillOutFormLater",
+      "examples": [
+        {
+          "text": "Fill out form later"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "GenInf_AcceptPeople",
+      "examples": [
+        {
+          "text": "Do you accept people on AISH?"
+        },
+        {
+          "text": "Do you accept unemployed people?"
+        },
+        {
+          "text": "Is it available for people on disability?"
+        }
+      ],
+      "description": "Do you accept unemployed people?"
+    },
+    {
+      "intent": "GenInf_Kids",
+      "examples": [
+        {
+          "text": "Are Kids allowed?"
+        },
+        {
+          "text": "do you accept children?"
+        }
+      ],
+      "description": "Are Kids allowed?"
+    },
+    {
+      "intent": "GenInf_NeighborsLoud",
+      "examples": [
+        {
+          "text": "Are the neighbors loud?"
+        }
+      ],
+      "description": "Are the neighbors loud?"
+    },
+    {
+      "intent": "GenInf_NeighborsNice",
+      "examples": [
+        {
+          "text": "Are the neighbors nice?"
+        }
+      ],
+      "description": "Are the neighbors nice?"
+    },
+    {
+      "intent": "GenInf_OptionUtilities",
+      "examples": [
+        {
+          "text": "Can you include the utilities in the rent?"
+        },
+        {
+          "text": "Could the utilities be included in the rent?"
+        },
+        {
+          "text": "Is there an option for utilities to be included?"
+        }
+      ],
+      "description": "Is there an option for utilities to be included?"
+    },
+    {
+      "intent": "GenInf_PetPolicy",
+      "examples": [
+        {
+          "text": "Do you accept cats?"
+        },
+        {
+          "text": "Do you accept dogs?"
+        },
+        {
+          "text": "Do you accept pets?"
+        },
+        {
+          "text": "How is the pet policy?"
+        },
+        {
+          "text": "Is it pet friendly?"
+        },
+        {
+          "text": "pet friendly"
+        },
+        {
+          "text": "pet policy"
+        },
+        {
+          "text": "What is the pet policy?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "GenInf_RequirementsToMoveIn",
+      "examples": [
+        {
+          "text": "How much do I need to move in?"
+        },
+        {
+          "text": "What do I need to move in?"
+        }
+      ],
+      "description": "How much do I need to move in?"
+    },
+    {
+      "intent": "GenInf_SafeArea",
+      "examples": [
+        {
+          "text": "How is the area?"
+        },
+        {
+          "text": "how is the neighborhood?"
+        },
+        {
+          "text": "How's the area?"
+        },
+        {
+          "text": "How's the neighborhood?"
+        },
+        {
+          "text": "Is it a good neighborhood?"
+        },
+        {
+          "text": "is the neighborhood safe?"
+        },
+        {
+          "text": "Is this a safe area?"
+        }
+      ],
+      "description": "Is this a safe area?"
+    },
+    {
+      "intent": "GenInf_UnitAddress",
+      "examples": [
+        {
+          "text": "can you send me the location?"
+        },
+        {
+          "text": "can you share the location"
+        },
+        {
+          "text": "could you share the address"
+        },
+        {
+          "text": "What is the address?"
+        },
+        {
+          "text": "What is the address of the suite?"
+        },
+        {
+          "text": "what is the location?"
+        },
+        {
+          "text": "What is the location of the place?"
+        },
+        {
+          "text": "Where is it located?"
+        },
+        {
+          "text": "Where is located the unit?"
+        },
+        {
+          "text": "where is the location"
+        }
+      ],
+      "description": "Where is located the unit?"
+    },
+    {
+      "intent": "GenInf_UnitBalcony",
+      "examples": [
+        {
+          "text": "does it have a balcony"
+        },
+        {
+          "text": "Does the suite have a balcony?"
+        },
+        {
+          "text": "Does the unit have a private balcony?"
+        },
+        {
+          "text": "Is there a balcony?"
+        }
+      ],
+      "description": "Is there a balcony?"
+    },
+    {
+      "intent": "GenInf_UnitBasement",
+      "examples": [
+        {
+          "text": "Is this a basement suite"
+        },
+        {
+          "text": "Is this a basement unit?"
+        }
+      ],
+      "description": "Is this a basement unit?"
+    },
+    {
+      "intent": "GenInf_UnitBedrooms",
+      "examples": [
+        {
+          "text": "Bedrooms"
+        },
+        {
+          "text": "Does it have 3 bedrooms?"
+        },
+        {
+          "text": "How many bedrooms"
+        },
+        {
+          "text": "is it 2 bedrooms?"
+        }
+      ],
+      "description": "How many bedrooms?"
+    },
+    {
+      "intent": "GenInf_UnitDeposit",
+      "examples": [
+        {
+          "text": "deposit?"
+        },
+        {
+          "text": "How much is the damage deposit?"
+        },
+        {
+          "text": "What is the deposit?"
+        },
+        {
+          "text": "What is the deposit for this place"
+        }
+      ],
+      "description": "How much is the damage deposit?"
+    },
+    {
+      "intent": "GenInf_UnitDishwasher",
+      "examples": [
+        {
+          "text": "dishwasher?"
+        },
+        {
+          "text": "does it have a dishwasher"
+        },
+        {
+          "text": "Is there a dishwasher?"
+        },
+        {
+          "text": "Is there a dishwasher in the unit?"
+        }
+      ],
+      "description": "is there a dishwasher in the unit?"
+    },
+    {
+      "intent": "GenInf_UnitHasBasement",
+      "examples": [
+        {
+          "text": "Does the unit have a basement?"
+        },
+        {
+          "text": "Hi, this unit have a basement?"
+        }
+      ],
+      "description": "Does the unit has a basement?"
+    },
+    {
+      "intent": "GenInf_UnitLease",
+      "examples": [
+        {
+          "text": "Can I sign a 6 month lease"
+        },
+        {
+          "text": "can I sign a one year lease"
+        }
+      ],
+      "description": "Lease information"
+    },
+    {
+      "intent": "GenInf_UnitOutdoorStorage",
+      "examples": [
+        {
+          "text": "Is there a shed?"
+        },
+        {
+          "text": "Is there outdoor storage?"
+        }
+      ],
+      "description": "Is there outdoor storage?"
+    },
+    {
+      "intent": "GenInf_UnitParking",
+      "examples": [
+        {
+          "text": "Can I have 2 cars?"
+        },
+        {
+          "text": "Can I park 2 cars?"
+        },
+        {
+          "text": "Can I park outside?"
+        },
+        {
+          "text": "How many parking spots are available?"
+        },
+        {
+          "text": "Is there parking?"
+        }
+      ],
+      "description": "Is there parking?"
+    },
+    {
+      "intent": "GenInf_UnitPeopleAbove",
+      "examples": [
+        {
+          "text": "Are there people above?"
+        },
+        {
+          "text": "is there another unit above?"
+        },
+        {
+          "text": "other people live above the unit?"
+        }
+      ],
+      "description": "Are there people above?"
+    },
+    {
+      "intent": "GenInf_UnitRent",
+      "examples": [
+        {
+          "text": "How about the rent"
+        },
+        {
+          "text": "how much is the monthly rent"
+        },
+        {
+          "text": "How much is the rent"
+        },
+        {
+          "text": "rent"
+        }
+      ],
+      "description": "How much is the rent?"
+    },
+    {
+      "intent": "GenInf_UnitShared",
+      "examples": [
+        {
+          "text": "Is there a private entrance?"
+        },
+        {
+          "text": "Is the yard shared?"
+        },
+        {
+          "text": "is this a private suite?"
+        },
+        {
+          "text": "Is this a shared unit?"
+        }
+      ],
+      "description": "Is this a shared unit?"
+    },
+    {
+      "intent": "GenInf_UnitVideoTour",
+      "examples": [
+        {
+          "text": "are video tours available?"
+        },
+        {
+          "text": "can we coordinate a video tour"
+        },
+        {
+          "text": "Can we do a video tour?"
+        },
+        {
+          "text": "can you do a video tour"
+        },
+        {
+          "text": "Is there a way to do a video tour?"
+        },
+        {
+          "text": "I want a video tour"
+        },
+        {
+          "text": "video tour"
+        },
+        {
+          "text": "videotour"
+        }
+      ],
+      "description": "Can you do a video tour?"
+    },
+    {
+      "intent": "GenInf_UnitWasherDryer",
+      "examples": [
+        {
+          "text": "dryer"
+        },
+        {
+          "text": "Is the laundry shared?"
+        },
+        {
+          "text": "Is there a washer and a dryer inside the unit?"
+        },
+        {
+          "text": "Is there in-suite laundry"
+        },
+        {
+          "text": "washer"
+        },
+        {
+          "text": "washer and dryer"
+        },
+        {
+          "text": "washer-dryer"
+        }
+      ],
+      "description": "Is there a washer and a dryer inside the unit?"
+    },
+    {
+      "intent": "GenInf_UnitWhenIsItAvailable",
+      "examples": [
+        {
+          "text": "Availability"
+        },
+        {
+          "text": "Hello, is this still available?"
+        },
+        {
+          "text": "Is the unit available?"
+        },
+        {
+          "text": "is the unit rented?"
+        },
+        {
+          "text": "Is the unit still available"
+        },
+        {
+          "text": "When is it available?"
+        },
+        {
+          "text": "When is the unit available?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "GenInf_UnitYard",
+      "examples": [
+        {
+          "text": "does it have a yard?"
+        },
+        {
+          "text": "does the place have a yard?"
+        },
+        {
+          "text": "Is there a fenced yard?"
+        },
+        {
+          "text": "Is there a yard?"
+        },
+        {
+          "text": "Is the yard private?"
+        }
+      ],
+      "description": "Is there a fenced yard?"
+    },
+    {
+      "intent": "GenInf_UtilitiesCost",
+      "examples": [
+        {
+          "text": "how much are utilities"
+        },
+        {
+          "text": "How much are utilities on average?"
+        },
+        {
+          "text": "How much do utilities cost?"
+        },
+        {
+          "text": "How much do utilities usually cost?"
+        },
+        {
+          "text": "what is the cost of utilities per month"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "GenInf_UtilitiesIncluded",
+      "examples": [
+        {
+          "text": "Is electricity included?",
+          "mentions": [
+            {
+              "entity": "Utilities",
+              "location": [
+                3,
+                14
+              ]
+            }
+          ]
+        },
+        {
+          "text": "Is heat included in the rent?",
+          "mentions": [
+            {
+              "entity": "Utilities",
+              "location": [
+                3,
+                7
+              ]
+            }
+          ]
+        },
+        {
+          "text": "Is natural gas included?",
+          "mentions": [
+            {
+              "entity": "Utilities",
+              "location": [
+                3,
+                14
+              ]
+            }
+          ]
+        },
+        {
+          "text": "Is power included?",
+          "mentions": [
+            {
+              "entity": "Utilities",
+              "location": [
+                3,
+                8
+              ]
+            }
+          ]
+        },
+        {
+          "text": "Is water included in the rent?",
+          "mentions": [
+            {
+              "entity": "Utilities",
+              "location": [
+                3,
+                8
+              ]
+            }
+          ]
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "GenInf_WhatUtilities",
+      "examples": [
+        {
+          "text": "Are the utilities included?"
+        },
+        {
+          "text": "Are utilities included in the rent?"
+        },
+        {
+          "text": "What utilities"
+        },
+        {
+          "text": "What utilities are included?"
+        },
+        {
+          "text": "What utilities are included in the rent?"
+        }
+      ],
+      "description": "What utilities are included in the rent?"
+    },
+    {
+      "intent": "goodbye",
+      "examples": [
+        {
+          "text": "Bye"
+        },
+        {
+          "text": "Goodbye"
+        },
+        {
+          "text": "Thanks"
+        },
+        {
+          "text": "Thanks a lot"
+        },
+        {
+          "text": "Thank you"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Greeting",
+      "examples": [
+        {
+          "text": "Hello"
+        },
+        {
+          "text": "hey"
+        },
+        {
+          "text": "hey there"
+        },
+        {
+          "text": "Hi"
+        },
+        {
+          "text": "hi there"
+        },
+        {
+          "text": "hola"
+        },
+        {
+          "text": "what's up?"
+        }
+      ],
+      "description": "Greetings"
+    },
+    {
+      "intent": "IsThisaRobot",
+      "examples": [
+        {
+          "text": "Is this a robot?"
+        },
+        {
+          "text": "Is this a test?"
+        }
+      ],
+      "description": "Is this a robot?"
+    },
+    {
+      "intent": "Name",
+      "examples": [
+        {
+          "text": "Her name is Maria Perez",
+          "mentions": [
+            {
+              "entity": "Names",
+              "location": [
+                12,
+                23
+              ]
+            }
+          ]
+        },
+        {
+          "text": "I'm James Mcglyn",
+          "mentions": [
+            {
+              "entity": "Names",
+              "location": [
+                4,
+                16
+              ]
+            }
+          ]
+        },
+        {
+          "text": "Marilyn Moreno",
+          "mentions": [
+            {
+              "entity": "Names",
+              "location": [
+                0,
+                14
+              ]
+            }
+          ]
+        },
+        {
+          "text": "My name is Anthony Campos",
+          "mentions": [
+            {
+              "entity": "Names",
+              "location": [
+                11,
+                25
+              ]
+            }
+          ]
+        },
+        {
+          "text": "Sara Lopez",
+          "mentions": [
+            {
+              "entity": "Names",
+              "location": [
+                0,
+                10
+              ]
+            }
+          ]
+        },
+        {
+          "text": "Suzie McDonalds",
+          "mentions": [
+            {
+              "entity": "Names",
+              "location": [
+                0,
+                15
+              ]
+            }
+          ]
+        }
+      ],
+      "description": "Getting name from user"
+    },
+    {
+      "intent": "OkForm",
+      "examples": [
+        {
+          "text": "ok"
+        },
+        {
+          "text": "Perfect"
+        },
+        {
+          "text": "Sounds good"
+        },
+        {
+          "text": "Sounds good, will do"
+        },
+        {
+          "text": "sure"
+        },
+        {
+          "text": "will do"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Questions",
+      "examples": [
+        {
+          "text": "Questions"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "RequestViewing",
+      "examples": [
+        {
+          "text": "Can I request a viewing?"
+        },
+        {
+          "text": "Can I see it?"
+        },
+        {
+          "text": "Can I view the unit tomorrow?"
+        },
+        {
+          "text": "How can I request a viewing?"
+        },
+        {
+          "text": "I'd like to request a viewing"
+        },
+        {
+          "text": "Request a viewing"
+        },
+        {
+          "text": "When can I see it?"
+        },
+        {
+          "text": "When can I view the unit?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "RequestViewingQuestions",
+      "examples": [
+        {
+          "text": "Request a viewing from questions"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Welcome_Intent",
+      "examples": [
+        {
+          "text": "Good afternoon"
+        },
+        {
+          "text": "Good evening"
+        },
+        {
+          "text": "Good morning"
+        },
+        {
+          "text": "Hello"
+        },
+        {
+          "text": "Hello there"
+        },
+        {
+          "text": "Hi"
+        },
+        {
+          "text": "Hi there"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [
+    {
+      "entity": "buildings",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "728 Raynard",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "cities",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Calgary",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Red Deer",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "Email",
+      "values": [
+        {
+          "type": "patterns",
+          "value": "email",
+          "patterns": [
+            "\\b[A-Za-z0-9._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,}\\b"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "GenInf",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Deposit",
+          "synonyms": [
+            "damage deposit"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Discrimination",
+          "synonyms": [
+            "aish",
+            "aish people",
+            "aish person",
+            "ethnicities",
+            "unemployed people",
+            "unemployed person"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "electricity",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Facilities",
+          "synonyms": [
+            "balcony",
+            "garden",
+            "parking",
+            "private garden",
+            "private yard",
+            "shed",
+            "smoking area",
+            "yard"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Pet Policy",
+          "synonyms": [
+            "animal",
+            "animals",
+            "bird",
+            "cat",
+            "dog",
+            "parrot",
+            "pet",
+            "pet fee",
+            "pets"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Rent",
+          "synonyms": [
+            "monthly rent",
+            "payment",
+            "rents"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Utilities",
+          "synonyms": [
+            "electricity",
+            "energy",
+            "gas",
+            "heat",
+            "power",
+            "utility",
+            "water"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "KidsOptions",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "1 kid",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "2 kids",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "3 kids",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "4 or more kids",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "no kids",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "Names",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Anthony Campos",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "James Mcglyn",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Maria Perez",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Marilyn Moreno",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Sara Lopez",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Suzie McDonalds",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "Pets",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "bird",
+          "synonyms": [
+            "bird",
+            "birds",
+            "parrot",
+            "parrots"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "cat",
+          "synonyms": [
+            "cat",
+            "cats",
+            "feline",
+            "kitten",
+            "kitties",
+            "kitty"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "dog",
+          "synonyms": [
+            "can",
+            "cans",
+            "dog",
+            "dogs",
+            "poodle",
+            "puppies",
+            "terrier"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "hamster",
+          "synonyms": [
+            "hamsters"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "lizard",
+          "synonyms": [
+            "lizard",
+            "lizards"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "rabbit",
+          "synonyms": [
+            "rabbit",
+            "rabbits"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "PetsOptions",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "1 cat",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "1 dog",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "2 cats",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "2 dogs",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "no pets",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "other",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "PhoneNumber",
+      "values": [
+        {
+          "type": "patterns",
+          "value": "phone number",
+          "patterns": [
+            "(\\d{3})-(\\d{4})",
+            "(\\d{3})-(\\d{3})-(\\d{4})",
+            "^(\\(?\\+?[0-9]*\\)?)?[0-9_\\- \\(\\)]*$"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-currency",
+      "values": []
+    },
+    {
+      "entity": "sys-date",
+      "values": []
+    },
+    {
+      "entity": "sys-number",
+      "values": []
+    },
+    {
+      "entity": "sys-percentage",
+      "values": []
+    },
+    {
+      "entity": "sys-time",
+      "values": []
+    },
+    {
+      "entity": "Utilities",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "electricity",
+          "synonyms": [
+            "energy",
+            "power"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "garbage",
+          "synonyms": [
+            "waste disposal"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "heat",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "natural gas",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "power",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "water",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "YesOrNo",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "No",
+          "synonyms": [
+            "it doesn't work",
+            "ni",
+            "no",
+            "none",
+            "nop",
+            "noup",
+            "np",
+            "nu"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Yes",
+          "synonyms": [
+            "ok",
+            "sure",
+            "that works",
+            "ye",
+            "yed",
+            "yep",
+            "yes",
+            "yup"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    },
+    "from-sample": true
+  },
+  "webhooks": [
+    {
+      "url": "https://property-administrator.herokuapp.com/watson/property/",
+      "name": "main_webhook",
+      "headers": [
+        {
+          "name": "application",
+          "value": "json"
+        }
+      ]
+    }
+  ],
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Let me check and I'll get back to you. "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_6_1646939243251",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ok, what kind of pets?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_9_1647028875645",
+      "event_name": "focus",
+      "dialog_node": "handler_10_1647028875646",
+      "previous_sibling": "handler_4_1647028875646"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "What kind of pet?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_7_1647460334192",
+      "event_name": "focus",
+      "dialog_node": "handler_10_1647460334193",
+      "previous_sibling": "handler_6_1647460334193"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_10_1655132922960",
+      "event_name": "input",
+      "dialog_node": "handler_11_1655132922960"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "title": "Which option best describes the number and type of pets that will be living in the unit?",
+            "options": [
+              {
+                "label": "No pets",
+                "value": {
+                  "input": {
+                    "text": "no pets"
+                  }
+                }
+              },
+              {
+                "label": "1 Cat",
+                "value": {
+                  "input": {
+                    "text": "1 cat"
+                  }
+                }
+              },
+              {
+                "label": "2 Cats",
+                "value": {
+                  "input": {
+                    "text": "2 cats"
+                  }
+                }
+              },
+              {
+                "label": "1 Dog",
+                "value": {
+                  "input": {
+                    "text": "1 dog"
+                  }
+                }
+              },
+              {
+                "label": "2 Dogs",
+                "value": {
+                  "input": {
+                    "text": "2 dogs"
+                  }
+                }
+              },
+              {
+                "label": "Other",
+                "value": {
+                  "input": {
+                    "text": "other"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "slot_6_1647633551008",
+      "context": {
+        "kind": "<? @Pets.literal ?>"
+      },
+      "event_name": "focus",
+      "dialog_node": "handler_1_1647633551010",
+      "previous_sibling": "handler_8_1647633551010"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Perfect. What’s your phone number?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_8_1648565884279",
+      "event_name": "focus",
+      "dialog_node": "handler_1_1648565884321",
+      "previous_sibling": "handler_4_1648565884321"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Please, send us the name of the other/s adult (if there are more than one, separete them with a comma)"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_7_1648567551134",
+      "event_name": "focus",
+      "dialog_node": "handler_1_1648567551177",
+      "previous_sibling": "handler_6_1648567551177"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_10_1655132922960",
+      "event_name": "focus",
+      "dialog_node": "handler_12_1655132922960",
+      "previous_sibling": "handler_11_1655132922960"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_14_1655133119659",
+      "event_name": "input",
+      "dialog_node": "handler_15_1655133119659"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_14_1655133119659",
+      "event_name": "focus",
+      "dialog_node": "handler_16_1655133119659",
+      "previous_sibling": "handler_15_1655133119659"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": ""
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_2_1648235960671",
+      "event_name": "focus",
+      "dialog_node": "handler_2_1648235960701",
+      "previous_sibling": "handler_5_1648235960701"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thank you. What’s your email address?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_1_1648565283411",
+      "event_name": "focus",
+      "dialog_node": "handler_2_1648565283413",
+      "previous_sibling": "handler_9_1648565283413"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_10_1648573526604",
+      "context": {
+        "Name": "@Names"
+      },
+      "conditions": "@Names",
+      "event_name": "input",
+      "dialog_node": "handler_2_1648573526653"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Sounds good. How many kids will be living in the unit?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_5_1646941027251",
+      "event_name": "focus",
+      "dialog_node": "handler_3_1646941027262",
+      "previous_sibling": "handler_4_1646941027262"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_2_1647026698633",
+      "context": {
+        "pets": "@sys-number"
+      },
+      "conditions": "@sys-number",
+      "event_name": "input",
+      "dialog_node": "handler_3_1647026698633"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_9_1647632164079",
+      "context": {
+        "adults": "@sys-number"
+      },
+      "conditions": "@sys-number",
+      "event_name": "input",
+      "dialog_node": "handler_3_1647632164110"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_2_1647633374047",
+      "context": {
+        "kids": "@KidsOptions"
+      },
+      "conditions": "@KidsOptions",
+      "event_name": "input",
+      "dialog_node": "handler_3_1647633374049"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Please, send us your email so we can send you our form."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_4_1648141588925",
+      "context": {},
+      "event_name": "focus",
+      "dialog_node": "handler_3_1648141588954",
+      "previous_sibling": "handler_9_1648141588954"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_2_1652186122283",
+      "event_name": "input",
+      "dialog_node": "handler_3_1652186122283"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_2_1653311199333",
+      "event_name": "input",
+      "dialog_node": "handler_3_1653311199333"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_2_1655132413914",
+      "context": {
+        "city": "@cities"
+      },
+      "conditions": "@cities",
+      "event_name": "input",
+      "dialog_node": "handler_3_1655132413914"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_31_1647632676828",
+      "context": {
+        "adults": "@sys-number"
+      },
+      "conditions": "@sys-number",
+      "event_name": "input",
+      "dialog_node": "handler_32_1647632676828"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "title": "How many adults will be living in the unit?",
+            "options": [
+              {
+                "label": "1",
+                "value": {
+                  "input": {
+                    "text": "1"
+                  }
+                }
+              },
+              {
+                "label": "2",
+                "value": {
+                  "input": {
+                    "text": "2"
+                  }
+                }
+              },
+              {
+                "label": "3",
+                "value": {
+                  "input": {
+                    "text": "3"
+                  }
+                }
+              },
+              {
+                "label": "4+",
+                "value": {
+                  "input": {
+                    "text": "4"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "slot_31_1647632676828",
+      "event_name": "focus",
+      "dialog_node": "handler_33_1647632676828",
+      "previous_sibling": "handler_32_1647632676828"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_5_1646941027251",
+      "context": {
+        "kids": "@sys-number"
+      },
+      "conditions": "@sys-number",
+      "event_name": "input",
+      "dialog_node": "handler_4_1646941027262"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "What kind of pets and how many?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_2_1647026698633",
+      "event_name": "focus",
+      "dialog_node": "handler_4_1647026698633",
+      "previous_sibling": "handler_3_1647026698633"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_9_1647028875645",
+      "context": {
+        "PetsKind": "@Pets"
+      },
+      "conditions": "@Pets",
+      "event_name": "input",
+      "dialog_node": "handler_4_1647028875646"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_6_1647028976769",
+      "context": {
+        "PetsKind": "@Pets"
+      },
+      "conditions": "@Pets",
+      "event_name": "input",
+      "dialog_node": "handler_4_1647028976770"
+    },
+    {
+      "type": "event_handler",
+      "parent": "slot_3_1647628116213",
+      "event_name": "input",
+      "dialog_node": "handler_4_1647628116257"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_8_1648565884279",
+      "context": {
+        "PhoneNumber": "@PhoneNumber"
+      },
+      "conditions": "@PhoneNumber",
+      "event_name": "input",
+      "dialog_node": "handler_4_1648565884321"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_3_1648571991725",
+      "context": {
+        "Age": "@sys-number"
+      },
+      "conditions": "@sys-number",
+      "event_name": "input",
+      "dialog_node": "handler_4_1648571991727"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_2_1652186122283",
+      "event_name": "focus",
+      "dialog_node": "handler_4_1652186122283",
+      "previous_sibling": "handler_3_1652186122283"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_2_1653311199333",
+      "event_name": "focus",
+      "dialog_node": "handler_4_1653311199333",
+      "previous_sibling": "handler_3_1653311199333"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "title": "Please, select your city of interest:",
+            "options": [
+              {
+                "label": "Calgary",
+                "value": {
+                  "input": {
+                    "text": "Calgary"
+                  }
+                }
+              },
+              {
+                "label": "Red Deer",
+                "value": {
+                  "input": {
+                    "text": "Red Deer"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "slot_2_1655132413914",
+      "event_name": "focus",
+      "dialog_node": "handler_4_1655132413914",
+      "previous_sibling": "handler_3_1655132413914"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "What kind of pets and how many?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_9_1646941969381",
+      "event_name": "focus",
+      "dialog_node": "handler_5_1646941969394",
+      "previous_sibling": "handler_7_1646941969394"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_2_1648235960671",
+      "context": {
+        "Name": "#Name"
+      },
+      "conditions": "#Name",
+      "event_name": "input",
+      "dialog_node": "handler_5_1648235960701"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_8_1647460280705",
+      "context": {
+        "PetsOther": "@sys-number"
+      },
+      "conditions": "@sys-number",
+      "event_name": "input",
+      "dialog_node": "handler_6_1647460280736"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_7_1647460334192",
+      "context": {
+        "PetsKind": "@Pets"
+      },
+      "conditions": "@Pets",
+      "event_name": "input",
+      "dialog_node": "handler_6_1647460334193"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_3_1647628116213",
+      "event_name": "focus",
+      "dialog_node": "handler_6_1647628116257",
+      "previous_sibling": "handler_4_1647628116257"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "title": "Sounds good. How many kids will be living in the unit?",
+            "options": [
+              {
+                "label": "0",
+                "value": {
+                  "input": {
+                    "text": "no kids"
+                  }
+                }
+              },
+              {
+                "label": "1",
+                "value": {
+                  "input": {
+                    "text": "1 kid"
+                  }
+                }
+              },
+              {
+                "label": "2",
+                "value": {
+                  "input": {
+                    "text": "2 kids"
+                  }
+                }
+              },
+              {
+                "label": "3",
+                "value": {
+                  "input": {
+                    "text": "3 kids"
+                  }
+                }
+              },
+              {
+                "label": "4+",
+                "value": {
+                  "input": {
+                    "text": "4 or more kids"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "slot_2_1647633374047",
+      "event_name": "focus",
+      "dialog_node": "handler_6_1647633374049",
+      "previous_sibling": "handler_3_1647633374049"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_7_1648567551134",
+      "context": {
+        "Names": "@Names"
+      },
+      "conditions": "@Names",
+      "event_name": "input",
+      "dialog_node": "handler_6_1648567551177"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_9_1646941969381",
+      "context": {
+        "pets": "@sys-number"
+      },
+      "conditions": "@sys-number",
+      "event_name": "input",
+      "dialog_node": "handler_7_1646941969394"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "How many you have?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_8_1647460280705",
+      "event_name": "focus",
+      "dialog_node": "handler_7_1647460280736",
+      "previous_sibling": "handler_6_1647460280736"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Could you please confirm your full name?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_10_1648573526604",
+      "event_name": "focus",
+      "dialog_node": "handler_7_1648573526653",
+      "previous_sibling": "handler_2_1648573526653"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_6_1655132678889",
+      "context": {
+        "property": "@buildings"
+      },
+      "conditions": "@buildings",
+      "event_name": "input",
+      "dialog_node": "handler_7_1655132678889"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "title": "Perfect! How many adults will be living in the unit?",
+            "options": [
+              {
+                "label": "1",
+                "value": {
+                  "input": {
+                    "text": "1"
+                  }
+                }
+              },
+              {
+                "label": "2",
+                "value": {
+                  "input": {
+                    "text": "2"
+                  }
+                }
+              },
+              {
+                "label": "3",
+                "value": {
+                  "input": {
+                    "text": "3"
+                  }
+                }
+              },
+              {
+                "label": "4+",
+                "value": {
+                  "input": {
+                    "text": "4"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "slot_9_1647632164079",
+      "event_name": "focus",
+      "dialog_node": "handler_8_1647632164110",
+      "previous_sibling": "handler_3_1647632164110"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_6_1647633551008",
+      "context": {
+        "pets": "@PetsOptions"
+      },
+      "conditions": "@PetsOptions",
+      "event_name": "input",
+      "dialog_node": "handler_8_1647633551010"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "What is the age of your kid/s?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_3_1648571991725",
+      "event_name": "focus",
+      "dialog_node": "handler_8_1648571991727",
+      "previous_sibling": "handler_4_1648571991727"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "title": "Please, select your building of interest:",
+            "options": [
+              {
+                "label": "728 Raynard Crescent",
+                "value": {
+                  "input": {
+                    "text": "728 Raynard"
+                  }
+                }
+              },
+              {
+                "label": "736 Raynard Crescent",
+                "value": {
+                  "input": {
+                    "text": "736 Raynard"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "slot_6_1655132678889",
+      "event_name": "focus",
+      "dialog_node": "handler_8_1655132678889",
+      "previous_sibling": "handler_7_1655132678889"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ok, what kind of pets?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_6_1647028976769",
+      "event_name": "focus",
+      "dialog_node": "handler_9_1647028976770",
+      "previous_sibling": "handler_4_1647028976770"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_4_1648141588925",
+      "context": {
+        "email": "@Email"
+      },
+      "conditions": "@Email",
+      "event_name": "input",
+      "dialog_node": "handler_9_1648141588954"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_1_1648565283411",
+      "context": {
+        "Email": "@Email"
+      },
+      "conditions": "@Email",
+      "event_name": "input",
+      "dialog_node": "handler_9_1648565283413"
+    },
+    {
+      "type": "standard",
+      "title": "NoKids",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ok. Do you have any pets?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_3_1646939909272",
+      "conditions": "@YesOrNo:No",
+      "dialog_node": "node_10_1647026646140",
+      "previous_sibling": "node_8_1646941000922"
+    },
+    {
+      "type": "standard",
+      "title": "Is there a yard?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Unfortunately, there isn't a fenced yard. But the unit has a private balcony!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#GenInf_UnitYard",
+      "dialog_node": "node_10_1652188088692",
+      "previous_sibling": "node_9_1652187205785"
+    },
+    {
+      "type": "standard",
+      "title": "Deposit",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The deposit for this unit is CAD$ 1,195."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#GenInf_UnitDeposit",
+      "dialog_node": "node_11_1652188168719",
+      "previous_sibling": "node_6_1646938492562"
+    },
+    {
+      "type": "standard",
+      "title": "How many bedrooms?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "This is a 2 bedrooms unit."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#GenInf_UnitBalcony",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_11_1654879832753",
+      "previous_sibling": "node_8_1652187068344"
+    },
+    {
+      "type": "standard",
+      "title": "Identify Tenant's Preferred Movin-in Date",
+      "parent": "node_6_1646938949680",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "@sys-date",
+      "dialog_node": "node_1_1646751236548"
+    },
+    {
+      "type": "standard",
+      "title": "Goodbye - copy 1",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ok, best of luck in your search! "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1646751236548",
+      "conditions": "@YesOrNo:No",
+      "dialog_node": "node_1_1646939674499"
+    },
+    {
+      "type": "frame",
+      "title": "Pets - copy 1",
+      "output": {
+        "text": {
+          "values": [
+            "Ok, so there will be $adults adults, no kids, and $pets $PetsKind. Is that right?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_10_1647026646140",
+      "metadata": {
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "conditions": "@YesOrNo:Yes",
+      "dialog_node": "node_1_1647026698631"
+    },
+    {
+      "type": "standard",
+      "title": "booking viewing",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Would you like to book a viewing now?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_1_1647459858908",
+      "previous_sibling": "node_4_1647461977316"
+    },
+    {
+      "type": "standard",
+      "title": "Booking. Questions (Availability or Booking)",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "When are you looking to rent? "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_1_1647632676825",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_1_1647459858908"
+    },
+    {
+      "type": "standard",
+      "title": "Utilities Cost",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Utilities are typically $ 200-300 per month, depending on usage and the weather."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": true,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "conditions": "#GenInf_UtilitiesCost",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_1_1647876642452",
+      "previous_sibling": "node_2_1647459962330"
+    },
+    {
+      "type": "frame",
+      "title": "Fill out form later",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Your email is $Email, is that correct?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1647632676828",
+      "context": {
+        "Email": "<? @Email.literal ?>"
+      },
+      "metadata": {
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "conditions": "#FillOutFormLater",
+      "dialog_node": "node_1_1648141502088",
+      "previous_sibling": "node_1_1648494263970"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome - copy 1",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi there! Could you please confirm your full name?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_1_1648227941378",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "frame",
+      "title": "Contact information (Ask Name)",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thank you. What’s your email address?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1647632676828",
+      "context": {
+        "Name": "<? @Names.values ?>"
+      },
+      "conditions": "#AnswerQuestionsNow || @YesOrNo:Yes",
+      "dialog_node": "node_1_1648494263970",
+      "previous_sibling": "node_3_1647632676828"
+    },
+    {
+      "type": "standard",
+      "title": "Request viewing (Form)",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Great, thank you. Please answer the questions at the following link, then we can be in touch about scheduling a viewing. Thanks!\n<a href=\"https://airtable.com/shrCzFcELo4IcJ3jm\">Fill our form from Airtable!</a>"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "conditions": "#RequestViewing",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_1_1650546903772",
+      "previous_sibling": "node_1_1653311199320"
+    },
+    {
+      "type": "standard",
+      "title": "Request viewing 2",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Please fill out the Viewing Request Form (link below) and we'll be in touch to schedule a viewing. Thanks!\n<a href=\"https://airtable.com/shrCzFcELo4IcJ3jm\">Viewing Request Form</a>"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "conditions": "#RequestViewingQuestions",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_1_1650634252146",
+      "previous_sibling": "node_6_1647366570776"
+    },
+    {
+      "type": "standard",
+      "title": "Address",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The address is  728 Raynard Crescent SE, Calgary, AB T2A 1X7"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": true,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "conditions": "#GenInf_UnitAddress",
+      "dialog_node": "node_1_1651860199941",
+      "previous_sibling": "node_5_1653311539611"
+    },
+    {
+      "type": "standard",
+      "title": "What utilities are included?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "No, utilities are not included in rent. The tenant is responsible for water, electricity and natural gas."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": true,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "conditions": "#GenInf_WhatUtilities",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_1_1652121661496",
+      "previous_sibling": "node_1_1647876642452"
+    },
+    {
+      "type": "standard",
+      "title": "Greetings",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hello, I'm Orinoco Ventures virtual assistant!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": true,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#Greeting",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_1_1652186122280",
+      "previous_sibling": "node_5_1647536967297"
+    },
+    {
+      "type": "standard",
+      "title": "Is there a dishwasher?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Unfortunately, there is not a dishwasher in the unit."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#GenInf_UnitDishwasher",
+      "dialog_node": "node_1_1652720279059",
+      "previous_sibling": "node_13_1652188857445"
+    },
+    {
+      "type": "standard",
+      "title": "Video Tours",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Yes, we can arrange a video tour! At the moment we don't have any video from the unit, but in a few days we can record a few and send them to you."
+              },
+              {
+                "text": "You can request a viewing and fill our form so we can have your contact information."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#GenInf_UnitVideoTour",
+      "dialog_node": "node_1_1652979294096",
+      "previous_sibling": "node_1_1653069053001"
+    },
+    {
+      "type": "standard",
+      "title": "Lease Information",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Our preference is for one year leases. If this works for you, feel free to fill our form to request a viewing!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#GenInf_UnitLease",
+      "dialog_node": "node_1_1653069053001",
+      "previous_sibling": "node_12_1652188449949"
+    },
+    {
+      "type": "standard",
+      "title": "Are you a robot?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Yes, I'm Orinoco Ventures virtual assistant!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": true,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#IsThisaRobot",
+      "dialog_node": "node_1_1653311199320",
+      "previous_sibling": "node_1_1652186122280"
+    },
+    {
+      "type": "standard",
+      "title": "Kids",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Absolutely, kids are allowed in the unit."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": true,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "conditions": "#GenInf_Kids",
+      "dialog_node": "node_1_1654611781974",
+      "previous_sibling": "node_20_1652191060071"
+    },
+    {
+      "type": "frame",
+      "title": "City",
+      "output": {
+        "generic": []
+      },
+      "context": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_5_1655132678885"
+      },
+      "conditions": "",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_1_1655132413910",
+      "previous_sibling": "Anything else"
+    },
+    {
+      "type": "standard",
+      "title": "Does the unit has a basement?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "No, the unit does not have a basement."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#GenInf_UnitHasBasement",
+      "dialog_node": "node_1_1658856283028",
+      "previous_sibling": "node_14_1652189793659"
+    },
+    {
+      "type": "standard",
+      "title": "Requirements to Move-In",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Damage deposit CAD$ 1,195 is required to secure the unit, and first month's rent CAD$ 1,195 prior to move-in."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#GenInf_RequirementsToMoveIn",
+      "dialog_node": "node_12_1652188449949",
+      "previous_sibling": "node_11_1652188168719"
+    },
+    {
+      "type": "standard",
+      "title": "Is there a washer and dryer?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "There is a washer and a dryer in the unit."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#GenInf_UnitWasherDryer",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_13_1652188857445",
+      "previous_sibling": "node_19_1652190951466"
+    },
+    {
+      "type": "standard",
+      "title": "Buildings - copy 2",
+      "parent": "node_5_1655132678885",
+      "actions": [
+        {
+          "name": "main_webhook",
+          "type": "webhook",
+          "parameters": {
+            "property_name": "$property"
+          },
+          "result_variable": "answer"
+        }
+      ],
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "@buildings || @buildings:(728 Raynard)",
+      "dialog_node": "node_13_1655133119655"
+    },
+    {
+      "type": "standard",
+      "title": "Is this a basement unit?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "No, the unit is not a basement unit."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#GenInf_UnitBasement",
+      "dialog_node": "node_14_1652189793659",
+      "previous_sibling": "node_1_1652720279059"
+    },
+    {
+      "type": "standard",
+      "title": "Are there people above?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "No, there aren't people above."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#GenInf_UnitPeopleAbove",
+      "dialog_node": "node_15_1652189911760",
+      "previous_sibling": "node_1_1658856283028"
+    },
+    {
+      "type": "standard",
+      "title": "Are the neighbors nice?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Yes, the neighbors are very nice people."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#GenInf_NeighborsNice",
+      "dialog_node": "node_16_1652190155227",
+      "previous_sibling": "node_15_1652189911760"
+    },
+    {
+      "type": "standard",
+      "title": "Are the neighbors loud?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "No, the neighbors are not loud at all. Everyone is very respectful of each other."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#GenInf_NeighborsLoud",
+      "dialog_node": "node_17_1652190380597",
+      "previous_sibling": "node_16_1652190155227"
+    },
+    {
+      "type": "standard",
+      "title": "Is there parking?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Yes, there is parking. The unit has one designated parking spot in the back of the building, and street parking is also available."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#GenInf_UnitParking",
+      "dialog_node": "node_18_1652190664077",
+      "previous_sibling": "node_10_1652188088692"
+    },
+    {
+      "type": "standard",
+      "title": "Is there outdoor storage?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Unfortunately, there isn't outdoor storage."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#GenInf_UnitOutdoorStorage",
+      "dialog_node": "node_19_1652190951466",
+      "previous_sibling": "node_18_1652190664077"
+    },
+    {
+      "type": "standard",
+      "title": "Do you accept unemployed people?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Absolutely! We encourage everyone to go through the application process."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": true,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "conditions": "#GenInf_AcceptPeople",
+      "dialog_node": "node_20_1652191060071",
+      "previous_sibling": "node_6_1652186462904"
+    },
+    {
+      "type": "standard",
+      "title": "Pets",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Yes, some pets are allowed. Our pet policy includes a monthly fee of $ 25 per cat and $ 45 per dog. "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": true,
+            "response_type": "pause"
+          },
+          {
+            "values": [
+              {
+                "text": "What kind of pets do you have and how many?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#GenInf_PetPolicy",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_2_1647459962330",
+      "previous_sibling": "node_1_1654611781974"
+    },
+    {
+      "type": "standard",
+      "title": "Identify Tenant's Preferred Movin-in Date",
+      "output": {},
+      "parent": "node_1_1647632676825",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "@sys-date",
+      "dialog_node": "node_2_1647632676828"
+    },
+    {
+      "type": "frame",
+      "title": "Kids Age ($adults $kids)",
+      "output": {
+        "generic": []
+      },
+      "context": {
+        "Age": "<? @sys-number.values ?>"
+      },
+      "metadata": {
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_9_1648567493269"
+      },
+      "conditions": "",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_2_1648153018303",
+      "previous_sibling": "node_4_1647632676828"
+    },
+    {
+      "type": "standard",
+      "title": "Ok Form 2",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thanks! Let us know if you have any issues filling out the form 🙂 "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1650634252146",
+      "conditions": "#OkForm",
+      "dialog_node": "node_2_1650634791519"
+    },
+    {
+      "type": "frame",
+      "title": "Yes (Questions)",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Perfect, will there be any kids living in the suite?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1646751236548",
+      "context": {},
+      "metadata": {
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "conditions": "@YesOrNo:Yes",
+      "dialog_node": "node_3_1646939909272",
+      "previous_sibling": "node_1_1646939674499"
+    },
+    {
+      "type": "standard",
+      "title": "Household Income",
+      "output": {
+        "generic": [
+          {
+            "title": "Which range best describes your monthly household income?",
+            "options": [
+              {
+                "label": "$ 500 to $ 1500",
+                "value": {
+                  "input": {
+                    "text": "500 to 1500"
+                  }
+                }
+              },
+              {
+                "label": "$ 1500 to $ 2500",
+                "value": {
+                  "input": {
+                    "text": "1500 to 2500"
+                  }
+                }
+              },
+              {
+                "label": "$ 2500 to $ 3500",
+                "value": {
+                  "input": {
+                    "text": "2500 to 3500"
+                  }
+                }
+              },
+              {
+                "label": "$ 3500+",
+                "value": {
+                  "input": {
+                    "text": "3500+"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "node_9_1647028452524",
+      "context": {
+        "Income": "<? input.text ?>"
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "user_input",
+        "dialog_node": "node_3_1647281691876"
+      },
+      "conditions": "$adults >= (1)",
+      "dialog_node": "node_3_1647273692825"
+    },
+    {
+      "type": "standard",
+      "title": "Moving-Out Reasons ($adults >= (1))",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ok thank you. Why are you moving?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "context": {
+        "MOReasons": "<? input.text ?>"
+      },
+      "conditions": "$adults >= (1)",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_3_1647281691876",
+      "previous_sibling": "node_9_1647028452524"
+    },
+    {
+      "type": "standard",
+      "title": "book a viewing",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_1_1647459858908",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_6_1646938949680"
+      },
+      "conditions": "@YesOrNo:Yes",
+      "dialog_node": "node_3_1647459912859"
+    },
+    {
+      "type": "standard",
+      "title": "Goodbye - copy 1",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ok, best of luck in your search! "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1647632676828",
+      "conditions": "@YesOrNo:No",
+      "dialog_node": "node_3_1647632676828"
+    },
+    {
+      "type": "standard",
+      "title": "Form",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Great, thank you. Please answer the questions at the following link, then we can be in touch about scheduling a viewing. Thanks!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "title": "Form",
+            "source": "https://airtable.com/shrW848H4hryodKbK",
+            "response_type": "iframe"
+          }
+        ]
+      },
+      "parent": "node_2_1647632676828",
+      "conditions": "",
+      "dialog_node": "node_3_1648145124161",
+      "previous_sibling": "node_1_1648141502088"
+    },
+    {
+      "type": "standard",
+      "title": "Time Slots",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thank you. Please use the calendar link below to select a few time slots that work for you. I'll check the Property Manager's availability and get back to you with a confirmation. Thanks again and have a great rest of your day. Please don't hesitate to reach out if you have any questions."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "title": "Calendar",
+            "source": "https://calendly.com/utalkto/appointment",
+            "response_type": "iframe"
+          }
+        ]
+      },
+      "parent": "node_7_1647281893478",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "user_input",
+        "dialog_node": "node_6_1646939243251"
+      },
+      "conditions": "$adults >= (1)",
+      "dialog_node": "node_4_1647281934344"
+    },
+    {
+      "type": "standard",
+      "title": "booking viewing - copy 1 - copy 1",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Would you like to book a viewing now?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_4_1647461977316",
+      "previous_sibling": "node_6_1646938949680"
+    },
+    {
+      "type": "frame",
+      "title": "Yes (Questions) ($Email $PhoneNumber)",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "",
+      "digress_in": "not_available",
+      "dialog_node": "node_4_1647632676828",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_1_1647632676825",
+      "digress_out_slots": "allow_returning"
+    },
+    {
+      "type": "standard",
+      "title": "Questions",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Go ahead!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#Questions",
+      "dialog_node": "node_4_1648146993293",
+      "previous_sibling": "node_1_1650546903772"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "your name is $name"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1648227941378",
+      "context": {
+        "Name": "<? @Names.literal ?>"
+      },
+      "conditions": "#Name || @Names",
+      "dialog_node": "node_4_1648235610872"
+    },
+    {
+      "type": "frame",
+      "title": "Get Name, Ask Email",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Perfect. What’s your phone number?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1648494263970",
+      "context": {
+        "Email": "<? @Email.literal ?>"
+      },
+      "conditions": "@Email",
+      "dialog_node": "node_4_1648494336861",
+      "previous_sibling": "slot_10_1648573526604"
+    },
+    {
+      "type": "standard",
+      "title": "NoPets",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ok, so there will be $adults adults, $kids kids, and no pets. Is that right?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_8_1646941000922",
+      "conditions": "@YesOrNo:No",
+      "dialog_node": "node_5_1647026406181",
+      "previous_sibling": "node_9_1646941248233"
+    },
+    {
+      "type": "standard",
+      "title": "not now",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ok.  No worries.  Have a great day!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1647459858908",
+      "conditions": "#no",
+      "dialog_node": "node_5_1647460019092",
+      "previous_sibling": "node_3_1647459912859"
+    },
+    {
+      "type": "standard",
+      "title": "book a viewing - copy 1",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_4_1647461977316",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_6_1646938949680"
+      },
+      "conditions": "#yes || @YesOrNo:Yes",
+      "dialog_node": "node_5_1647461977317"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi there, I'm Orinoco Ventures virtual assistant!\n\nLet me show you the unit: \nIt's available for August 1st, a BI-LEVEL corner fourplex suite.\nIt has 2 bedrooms, 1 bathroom, a balcony, private laundry and parking available!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "title": "728 Raynard Crescent",
+            "source": "https://www.utalkto.com/website/wp-content/uploads/2022/07/foto-raynard-728.jpg",
+            "alt_text": "",
+            "description": "",
+            "response_type": "image"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "welcome",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_5_1647536967297"
+    },
+    {
+      "type": "standard",
+      "title": "Email Received",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Perfect, we'll send you our form!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1648141502088",
+      "conditions": "@YesOrNo:Yes",
+      "dialog_node": "node_5_1648218612837"
+    },
+    {
+      "type": "standard",
+      "title": "Ok Form",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thanks! Let us know if you have any issues filling out the form 🙂 "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1650546903772",
+      "conditions": "#OkForm",
+      "dialog_node": "node_5_1650634328908"
+    },
+    {
+      "type": "standard",
+      "title": "Could the utilities be included?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "No, unfortunately we're not able to include that as an option. Sorry about that!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": true,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "conditions": "#GenInf_OptionUtilities",
+      "dialog_node": "node_5_1652186365716",
+      "previous_sibling": "node_1_1652121661496"
+    },
+    {
+      "type": "standard",
+      "title": "Identify Tenant's Preferred Movin-in Date",
+      "output": {},
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "@sys-date && #CanIMoveIn",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_5_1653311539611",
+      "previous_sibling": "node_8_1648146502197"
+    },
+    {
+      "type": "frame",
+      "title": "Buildings",
+      "output": {
+        "generic": []
+      },
+      "parent": "node_1_1655132413910",
+      "context": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_13_1655133119655"
+      },
+      "conditions": "@cities:Calgary",
+      "dialog_node": "node_5_1655132678885"
+    },
+    {
+      "type": "standard",
+      "title": "Rent",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The monthly rent for this unit is CAD$ 1,195."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#GenInf_UnitRent",
+      "dialog_node": "node_6_1646938492562",
+      "previous_sibling": "node_1_1651860199941"
+    },
+    {
+      "type": "standard",
+      "title": "Availability",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The unit is still available!  When are you looking to rent? "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_6_1646938949680",
+      "previous_sibling": "node_1_1648227941378"
+    },
+    {
+      "type": "standard",
+      "title": "Goodbye",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thank you, all set. Have a great day!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#goodbye",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_6_1646939243251",
+      "previous_sibling": "node_1_1650634252146"
+    },
+    {
+      "type": "standard",
+      "title": "Utilities",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "@GenInf:Utilities || @Utilities || #GenInf_UtilitiesIncluded",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_6_1647366570776",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_5_1652186365716"
+    },
+    {
+      "type": "standard",
+      "title": "not now - copy 1",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ok.  No worries.  Have a great day!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1647461977316",
+      "conditions": "#no",
+      "dialog_node": "node_6_1647461977317",
+      "previous_sibling": "node_5_1647461977317"
+    },
+    {
+      "type": "standard",
+      "parent": "node_1_1648227941378",
+      "dialog_node": "node_6_1648235926917",
+      "previous_sibling": "node_4_1648235610872"
+    },
+    {
+      "type": "standard",
+      "title": "Is this a safe area?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The area is safe. We've had buildings here for several years and have never had an issue."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": true,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "conditions": "#GenInf_SafeArea",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_6_1652186462904",
+      "previous_sibling": "node_17_1652190380597"
+    },
+    {
+      "type": "standard",
+      "title": "NoPets - copy 1",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ok, so there will be $adults adults, no kids, and no pets. Is that right?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1647026646140",
+      "conditions": "@YesOrNo:No",
+      "dialog_node": "node_7_1647026709697",
+      "previous_sibling": "node_1_1647026698631"
+    },
+    {
+      "type": "standard",
+      "title": "Relevant Information",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thanks. Is there any other relevant information you would like to share with us?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1647362830773",
+      "context": {
+        "RelevantInformation": "<? input.text ?>"
+      },
+      "conditions": "$adults >= (1)",
+      "dialog_node": "node_7_1647281893478"
+    },
+    {
+      "type": "standard",
+      "title": "Time in previous address",
+      "output": {
+        "generic": [
+          {
+            "title": "How long have you been at your current address?",
+            "options": [
+              {
+                "label": "Less than 1 year",
+                "value": {
+                  "input": {
+                    "text": "Less than 1 year"
+                  }
+                }
+              },
+              {
+                "label": "1 to 3 years",
+                "value": {
+                  "input": {
+                    "text": "1 to 3 years"
+                  }
+                }
+              },
+              {
+                "label": "3 to 5 years",
+                "value": {
+                  "input": {
+                    "text": "3 to 5 years"
+                  }
+                }
+              },
+              {
+                "label": "More than 5 years",
+                "value": {
+                  "input": {
+                    "text": "More than 5 years"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "node_3_1647281691876",
+      "context": {
+        "Time": "<? input.text ?>"
+      },
+      "conditions": "$adults >= (1)",
+      "dialog_node": "node_7_1647362830773"
+    },
+    {
+      "type": "frame",
+      "title": "Get Email, Ask Phone Number",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Your email is: $Email \nand your phone number is: $PhoneNumber. \nIf they're wrong, please refresh the page and book a viewing again."
+              },
+              {
+                "text": "We'll move-on to the next questions, do you want to continue?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "parent": "node_4_1648494336861",
+      "context": {
+        "PhoneNumber": "<? @PhoneNumber.literal ?>"
+      },
+      "conditions": "@PhoneNumber",
+      "dialog_node": "node_7_1648565749296"
+    },
+    {
+      "type": "frame",
+      "title": "Kids",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ok. Do you have any pets?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_3_1646939909272",
+      "context": {},
+      "metadata": {
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "conditions": "@YesOrNo:Yes",
+      "dialog_node": "node_8_1646941000922",
+      "previous_sibling": "slot_9_1647632164079"
+    },
+    {
+      "type": "frame",
+      "title": "Number of pets and kind",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thanks! I believe the pets you mentioned are acceptable, but I will double check."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "node_2_1647459962330",
+      "conditions": "@Pets",
+      "dialog_node": "node_8_1647460256148"
+    },
+    {
+      "type": "standard",
+      "title": "Pets Other Test",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ok, so there will be $adults adults, $kids, and $PetsOther $PetsKind. Is that right?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1647632676828",
+      "context": {
+        "PetsKind": "<? @Pets.literal ?>",
+        "PetsOther": "<? @sys-number.literal ?>"
+      },
+      "conditions": "@Pets",
+      "dialog_node": "node_8_1647880991907",
+      "previous_sibling": "slot_6_1647633551008"
+    },
+    {
+      "type": "standard",
+      "title": "When is it available?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The unit is available on August 1st."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": true,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "conditions": "#GenInf_UnitWhenIsItAvailable",
+      "dialog_node": "node_8_1648146502197",
+      "previous_sibling": "node_4_1648146993293"
+    },
+    {
+      "type": "standard",
+      "title": "Is this a private unit?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The unit is completely private, with a private entrance and a private balcony."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#GenInf_UnitShared",
+      "dialog_node": "node_8_1652187068344",
+      "previous_sibling": "node_1_1652979294096"
+    },
+    {
+      "type": "frame",
+      "title": "Pets",
+      "output": {
+        "text": {
+          "values": [
+            "Ok, so there will be $adults adults, $kids kids, and $pets $PetsKind. Is that right?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_8_1646941000922",
+      "metadata": {
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "conditions": "@YesOrNo:Yes",
+      "dialog_node": "node_9_1646941248233"
+    },
+    {
+      "type": "standard",
+      "title": "Employment Questions ($adults >= (1))",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_9_1647028452524",
+      "previous_sibling": "node_9_1648567493269"
+    },
+    {
+      "type": "frame",
+      "title": "($adults >= (2))",
+      "output": {
+        "generic": []
+      },
+      "context": {
+        "Names": "<? @Names.values ?>"
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_9_1647028452524"
+      },
+      "conditions": "",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_9_1648567493269",
+      "previous_sibling": "node_2_1648153018303"
+    },
+    {
+      "type": "standard",
+      "title": "Is there a balcony?",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Yes, there is a private balcony."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": false,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "context": {},
+      "conditions": "#GenInf_UnitBalcony",
+      "dialog_node": "node_9_1652187205785",
+      "previous_sibling": "node_11_1654879832753"
+    },
+    {
+      "type": "standard",
+      "title": "Property - copy 1",
+      "output": {
+        "generic": [
+          {
+            "title": "Please, select your city of interest:",
+            "options": [
+              {
+                "label": "Calgary",
+                "value": {
+                  "input": {
+                    "text": "Calgary"
+                  }
+                }
+              },
+              {
+                "label": "Red Deer",
+                "value": {
+                  "input": {
+                    "text": "Red Deer"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "node_1_1655132413910",
+      "context": {
+        "property": "<? input.text ?>"
+      },
+      "conditions": "@cities:(Red Deer)",
+      "dialog_node": "node_9_1655132922955",
+      "previous_sibling": "node_5_1655132678885"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Perfect! Where do you (and the other adult) currently work and for how long have you been at that job?  (If not currently employed please explain)."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_9_1647028452524",
+      "context": {
+        "Job": "<? input.text ?>"
+      },
+      "conditions": "$adults:(2)",
+      "dialog_node": "response_10_1647272864536",
+      "previous_sibling": "response_1_1647272723014"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "$answer"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_13_1655133119655",
+      "context": {
+        "property": "<? @properties.literal ?>"
+      },
+      "conditions": "$answer",
+      "dialog_node": "response_10_1655133294626"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Perfect! Where do you currently work and for how long have you been at that job?  (If not currently employed please explain)."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_9_1647028452524",
+      "context": {
+        "Job": "<? input.text ?>"
+      },
+      "conditions": "$adults:(1)",
+      "dialog_node": "response_1_1647272723014",
+      "previous_sibling": "node_3_1647273692825"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "<? @GenInf.literal ?> is not included in the rent."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 3000,
+            "typing": true,
+            "response_type": "pause"
+          },
+          {
+            "title": "What would you like to do next?",
+            "options": [
+              {
+                "label": "Ask a question about the unit",
+                "value": {
+                  "input": {
+                    "text": "Questions"
+                  }
+                }
+              },
+              {
+                "label": "Request a viewing",
+                "value": {
+                  "input": {
+                    "text": "Request a viewing from questions"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "node_6_1647366570776",
+      "conditions": "@Utilities:(natural gas) || @Utilities:water || @Utilities:power || @Utilities:electricity || @Utilities:garbage",
+      "dialog_node": "response_1_1647373147547"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Thanks. Do you have any pets?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_9_1646941248233",
+      "disabled": true,
+      "conditions": "@sys-number",
+      "dialog_node": "response_3_1646941265057",
+      "previous_sibling": "slot_9_1647028875645"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Perfect! Where do you (and the other adults) currently work and for how long have you been at that job?  (If not currently employed please explain)."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_9_1647028452524",
+      "context": {
+        "Job": "<? input.text ?>"
+      },
+      "conditions": "$adults >= (3)",
+      "dialog_node": "response_3_1647272920043",
+      "previous_sibling": "response_10_1647272864536"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Please list all your pets!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1647632676828",
+      "context": {},
+      "conditions": "$pets = \"other\"",
+      "dialog_node": "response_3_1647882154560",
+      "previous_sibling": "response_4_1647878183503"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Unfortunately, we are looking to rent the unit for August 1st, as the unit won’t be available until then.  Best of luck in your search!\nIf you would be able to accommodate an August 1st Move-in, please request a viewing so I can send you the Viewing Request Form."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_5_1653311539611",
+      "conditions": "@sys-date > ('2022-07-07')",
+      "dialog_node": "response_3_1653311738599",
+      "previous_sibling": "response_39_1653311539619"
+    },
+    {
+      "type": "response_condition",
+      "parent": "node_13_1655133119655",
+      "conditions": "anything_else",
+      "dialog_node": "response_3_1655133223514",
+      "previous_sibling": "response_10_1655133294626"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Great, you'd like to move-in by $date. The unit will be available by April 1st. "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "time": 2000,
+            "typing": true,
+            "response_type": "pause"
+          },
+          {
+            "title": "Prior to booking a viewing, I'll ask a few questions to ensure this property is a good match for you. Please let us know which of the 2 options works best for you.",
+            "options": [
+              {
+                "label": "Answer questions now",
+                "value": {
+                  "input": {
+                    "text": "Answer questions now"
+                  }
+                }
+              },
+              {
+                "label": "Fill out form later",
+                "value": {
+                  "input": {
+                    "text": "Fill out form later"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "node_2_1647632676828",
+      "context": {
+        "date": "<? @sys-date.literal ?>"
+      },
+      "conditions": "@sys-date >= ('2022-04-01')",
+      "dialog_node": "response_35_1647632676828",
+      "previous_sibling": "node_3_1648145124161"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thanks! Unfortunately, the unit won't be available until April 1st. Are you still interested?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1647632676828",
+      "conditions": "@sys-date < ('2022-03-31')",
+      "dialog_node": "response_36_1647632676828",
+      "previous_sibling": "response_35_1647632676828"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Great, you'd like to move-in by $date. The unit will be available by August 1st. We invite you to request a viewing!"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_5_1653311539611",
+      "context": {
+        "date": "<? @sys-date.literal ?>"
+      },
+      "conditions": "@sys-date >= ('2022-07-01')",
+      "dialog_node": "response_38_1653311539619",
+      "previous_sibling": "response_3_1653311738599"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Unfortunately, we are looking to rent the unit for August 1st, as the unit won’t be available until then.  Best of luck in your search!\nIf you would be able to accommodate an August 1st Move-in, please request a viewing so I can send you the Viewing Request Form."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_5_1653311539611",
+      "conditions": "@sys-date < ('2022-07-01')",
+      "dialog_node": "response_39_1653311539619"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ok, so there will be $adults adults, $kids, and $pets. Is that right?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1647632676828",
+      "conditions": "$pets != \"other\"",
+      "dialog_node": "response_4_1647878183503",
+      "previous_sibling": "node_8_1647880991907"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hello, I am Orinoco Venture Virtual Assistant and I am here to help you.  Please, select the city and the building you live in."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "Welcome",
+      "disabled": true,
+      "conditions": "#City_Building",
+      "dialog_node": "response_5_1645549450321"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thanks! Unfortunately, the unit won't be available until April 1st. Are you still interested?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1646751236548",
+      "conditions": "@sys-date >= ('2022-05-01')",
+      "dialog_node": "response_5_1646751386474",
+      "previous_sibling": "response_7_1646751279159"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Thanks. Do you have any pets?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_1_1647026698631",
+      "disabled": true,
+      "conditions": "@sys-number",
+      "dialog_node": "response_5_1647026698633",
+      "previous_sibling": "slot_6_1647028976769"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            ""
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_8_1646941000922",
+      "context": {
+        "kids": "<? @sys-number ?>"
+      },
+      "disabled": true,
+      "conditions": "@YesOrNo:Yes",
+      "dialog_node": "response_6_1646941016446",
+      "previous_sibling": "slot_5_1646941027251"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ok, so there will be $adults adults, $kids kids, and $pets pets. Is that right?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_9_1646941248233",
+      "disabled": true,
+      "conditions": "@YesOrNo:No",
+      "dialog_node": "response_6_1646941917988",
+      "previous_sibling": "response_3_1646941265057"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ok, so there will be $adults adults, $kids kids, and $pets pets. Is that right?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1647026698631",
+      "disabled": true,
+      "conditions": "@YesOrNo:No",
+      "dialog_node": "response_6_1647026698633",
+      "previous_sibling": "response_5_1647026698633"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "How old is your kid?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1648153018303",
+      "context": {
+        "KidsAge": "@sys-number"
+      },
+      "disabled": true,
+      "conditions": "$kids = \"1 kid\"",
+      "dialog_node": "response_6_1648153058654",
+      "previous_sibling": "slot_3_1648571991725"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Great, you'd like to move-in by $date. The unit will be available by April 1st. Prior to booking a viewing, I'll ask a few questions to ensure this property is a good match for you. Please let me know if you have any additional questions about the unit and I'll be more than happy to answer them. Is that ok with you?",
+            ""
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_1_1646751236548",
+      "context": {
+        "date": "<? @sys-date.literal ?>"
+      },
+      "conditions": "@sys-date < ('2022-05-01')",
+      "dialog_node": "response_7_1646751279159",
+      "previous_sibling": "node_3_1646939909272"
+    },
+    {
+      "type": "response_condition",
+      "output": {},
+      "parent": "node_3_1646939909272",
+      "disabled": true,
+      "dialog_node": "response_8_1646940038542",
+      "previous_sibling": "node_10_1647026646140"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Please, send us your email so we can send you our form."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1648141502088",
+      "context": {
+        "email": "<? @EmailEntity.literal ?>"
+      },
+      "disabled": true,
+      "conditions": "#FillOutFormLater",
+      "dialog_node": "response_9_1648143035345",
+      "previous_sibling": "node_5_1648218612837"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "How old are your kids?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1648153018303",
+      "context": {
+        "KidsAge": "<? @sys-number.values ?>"
+      },
+      "disabled": true,
+      "conditions": "$kids != \"1 kid\" ||  $kids != \"no kids\"",
+      "dialog_node": "response_9_1648568432726",
+      "previous_sibling": "response_6_1648153058654"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_1_1648494263970",
+      "variable": "$Name",
+      "dialog_node": "slot_10_1648573526604"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_9_1655132922955",
+      "dialog_node": "slot_10_1655132922960"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_4_1648494336861",
+      "variable": "$Email",
+      "dialog_node": "slot_1_1648565283411",
+      "previous_sibling": "node_7_1648565749296"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_13_1655133119655",
+      "dialog_node": "slot_14_1655133119659",
+      "previous_sibling": "response_3_1655133223514"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_1_1647026698631",
+      "variable": "$pets",
+      "dialog_node": "slot_2_1647026698633"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_4_1647632676828",
+      "variable": "$kids",
+      "dialog_node": "slot_2_1647633374047",
+      "previous_sibling": "slot_31_1647632676828"
+    },
+    {
+      "type": "slot",
+      "parent": "node_4_1648235610872",
+      "variable": "$Name",
+      "dialog_node": "slot_2_1648235960671"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_1_1652186122280",
+      "dialog_node": "slot_2_1652186122283"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_1_1653311199320",
+      "dialog_node": "slot_2_1653311199333"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_1_1655132413910",
+      "variable": "$city",
+      "dialog_node": "slot_2_1655132413914",
+      "previous_sibling": "node_9_1655132922955"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_4_1647632676828",
+      "variable": "$adults",
+      "dialog_node": "slot_31_1647632676828"
+    },
+    {
+      "type": "slot",
+      "parent": "node_5_1647536967297",
+      "dialog_node": "slot_3_1647628116213"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_2_1648153018303",
+      "variable": "$Age",
+      "dialog_node": "slot_3_1648571991725"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_1_1648141502088",
+      "variable": "$email",
+      "dialog_node": "slot_4_1648141588925",
+      "previous_sibling": "response_9_1648143035345"
+    },
+    {
+      "type": "slot",
+      "parent": "node_8_1646941000922",
+      "variable": "$kids",
+      "dialog_node": "slot_5_1646941027251",
+      "previous_sibling": "node_5_1647026406181"
+    },
+    {
+      "type": "slot",
+      "parent": "node_1_1647026698631",
+      "variable": "$PetsKind",
+      "dialog_node": "slot_6_1647028976769",
+      "previous_sibling": "slot_2_1647026698633"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_4_1647632676828",
+      "variable": "$pets",
+      "dialog_node": "slot_6_1647633551008",
+      "previous_sibling": "slot_2_1647633374047"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_5_1655132678885",
+      "variable": "$property",
+      "dialog_node": "slot_6_1655132678889",
+      "previous_sibling": "node_13_1655133119655"
+    },
+    {
+      "type": "slot",
+      "parent": "node_8_1647460256148",
+      "variable": "$PetsKind",
+      "dialog_node": "slot_7_1647460334192",
+      "previous_sibling": "slot_8_1647460280705"
+    },
+    {
+      "type": "slot",
+      "parent": "node_9_1648567493269",
+      "variable": "$Names",
+      "dialog_node": "slot_7_1648567551134"
+    },
+    {
+      "type": "slot",
+      "parent": "node_8_1647460256148",
+      "variable": "$PetsOther",
+      "dialog_node": "slot_8_1647460280705"
+    },
+    {
+      "type": "slot",
+      "parent": "node_7_1648565749296",
+      "variable": "$PhoneNumber",
+      "dialog_node": "slot_8_1648565884279"
+    },
+    {
+      "type": "slot",
+      "parent": "node_9_1646941248233",
+      "variable": "$pets",
+      "dialog_node": "slot_9_1646941969381"
+    },
+    {
+      "type": "slot",
+      "parent": "node_9_1646941248233",
+      "variable": "$PetsKind",
+      "dialog_node": "slot_9_1647028875645",
+      "previous_sibling": "slot_9_1646941969381"
+    },
+    {
+      "type": "slot",
+      "output": {},
+      "parent": "node_3_1646939909272",
+      "variable": "$adults",
+      "dialog_node": "slot_9_1647632164079"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi there, what information do you need about the unit?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "context": {},
+      "metadata": {
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "conditions": "",
+      "digress_in": "does_not_return",
+      "dialog_node": "Welcome",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_1_1655132413910"
+    }
+  ],
+  "counterexamples": [
+    {
+      "text": "acampos@utalkto.com"
+    },
+    {
+      "text": "Questions"
+    }
+  ],
+  "system_settings": {
+    "disambiguation": {
+      "prompt": "Ok, I can help you.",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "None of the above"
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    },
+    "intent_classification": {
+      "training_backend_version": "v2"
+    },
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "name": "Orinoco Listing",
+  "language": "en",
+  "description": "Orinoco Listing"
+}

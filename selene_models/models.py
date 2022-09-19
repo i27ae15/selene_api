@@ -6,6 +6,7 @@ import datetime
 from django.db import models
 from django.utils import timezone
 
+
 class SeleneModel(models.Model):
 
     created_at:datetime.datetime = models.DateTimeField(null=True, default=None)
@@ -85,6 +86,21 @@ class SeleneNode(models.Model):
     
     do_after:dict = models.JSONField(null=True, default=dict)
     do_before:dict = models.JSONField(null=True, default=dict)
+    
+    """
+        do_afterlist[dict]; do_beforelist[dict];
+        
+        dict = "functions_to_call": [{
+                    "name": "send_email",
+                    "parameters": {
+                        "send_to": "andresruse18@gmail.com",
+                        "subject": "New conversation initiated",
+                        "html": "<h1>f'A new conversation has initated with Selene'<h1>",
+                    }
+                    }]
+
+    
+    """
     
     end_steps:bool = models.BooleanField(default=False)
 

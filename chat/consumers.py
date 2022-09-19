@@ -2,6 +2,7 @@
 import time
 import json
 import re
+import requests
 
 import asyncio
 from channels.consumer import AsyncConsumer
@@ -28,7 +29,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rest.settings')
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 django.setup()
 
-CURRENT_MODEL = 14
+CURRENT_MODEL = 16
 
 
 def check_variable(variable, variable_type) -> bool:
@@ -59,24 +60,6 @@ def check_variable(variable, variable_type) -> bool:
 
 class SeleneChat(AsyncConsumer):
 
-    in_step = False
-    parent_node:SeleneNode = None
-    current_node:SeleneNode = None
-    selene_model_object:SeleneModel = None
-    tf_model:keras.models.Model = None
-
-    variables = dict()
-    is_input = False
-    input_object = dict()
-    options = False
-
-    name_to_save_variable:str = None
-    variable_type_to_wait:str = None
-    response_on_failure:str = None
-    
-    response_validators = dict()
-
-
     def __init__(self) -> None:
         
         self.SELENE_FUNCTIONS = {
@@ -84,6 +67,25 @@ class SeleneChat(AsyncConsumer):
             'to_wait': self.to_wait,
             'send_email': SendEmail,
         }
+        
+        self.in_step:bool = False
+        self.parent_node:SeleneNode = None
+        self.current_node:SeleneNode = None
+        self.selene_model_object:SeleneModel = None
+        self.tf_model:keras.models.Model = None
+
+        self.variables:dict = dict()
+        self.input_object:dict = dict()
+
+        self.is_input:bool = False
+        self.options:bool = False
+
+        self.name_to_save_variable:str = None
+        self.variable_type_to_wait:str = None
+        self.response_on_failure:str = None
+        
+        self.response_validators:dict = dict()
+    
         super().__init__()
 
 
@@ -120,24 +122,22 @@ class SeleneChat(AsyncConsumer):
             print('-'*50)
             print('parent node: ', self.parent_node.name)
             print('-'*50)
-
-
-            func = [{"name": "send_email","parameters": {
-                "send_to": "andresruse18@gmail.com",
-                "subject": "New conversation initiated",
-                "html": "<h1>f'A new conversation has initated with Selene'<h1>",
-                }}]
-
-            function_res = self.model_action(func)     
-
-            if function_res:
-                for res in function_res:
-
-                    res_object = {'responses': [{'message': res, 'type': 'text'}]}
-                    
-                    await self.send(json.dumps(res_object))        
-   
-
+            
+            ### Do before ###
+            # -------------------------------------------------------------------------  
+            functions_to_call = self.current_node.do_before.get('functions_to_call')
+            if functions_to_call:
+                function_res = self.model_functions_to_call(functions_to_call)
+                if function_res:
+                    for res in function_res:
+                        res_object = {'responses': [{'message': res, 'type': 'text'}]}
+                        await self.send(json.dumps(res_object))
+                        
+                        
+            self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
+        
+            # -------------------------------------------------------------------------  
+           
         # this is the text that selene has to process to be able to send back to the client
         if self.is_input:
 
@@ -176,18 +176,23 @@ class SeleneChat(AsyncConsumer):
         
 
         if proper_response:
+            
+            ### Do after ###
+            # -------------------------------------------------------------------------  
             functions_to_call = self.current_node.do_after.get('functions_to_call')
-
             if functions_to_call:
-
-                function_res = self.model_action(functions_to_call)
+                function_res = self.model_functions_to_call(functions_to_call)
                 if function_res:
                     for res in function_res:
-                        await self.send(res)
+                        res_object = {'responses': [{'message': res, 'type': 'text'}]}
+                        await self.send(json.dumps(res_object))
+                        
+            self.call_webhook(webhook_object=self.current_node.do_after.get('web_hooks_to_call'))
+            
+            # -------------------------------------------------------------------------  
 
                 
             # check if the current node has a next node, or a following step
-
             option_to_look_up = 'next_node'
 
             if self.options:
@@ -204,13 +209,39 @@ class SeleneChat(AsyncConsumer):
                 if not self.is_input:
                     self.current_node = self.current_node.next(option_to_look_up)
                     
-                    # do before
-
+                    ### Do before ###
+                    # -------------------------------------------------------------------------  
+                    functions_to_call = self.current_node.do_before.get('functions_to_call')
+                    if functions_to_call:
+                        function_res = self.model_functions_to_call(functions_to_call)
+                        if function_res:
+                            for res in function_res:
+                                res_object = {'responses': [{'message': res, 'type': 'text'}]}
+                                await self.send(json.dumps(res_object))
+                    
+                    self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
+                    
+                    # -------------------------------------------------------------------------       
+   
+   
                     response_object = self.get_selene_response(self.current_node)
-
                     await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})
                     
-                    # do after
+                    
+                    ### Do after ###
+                    # -------------------------------------------------------------------------  
+                    functions_to_call = self.current_node.do_after.get('functions_to_call')
+                    if functions_to_call:
+                        function_res = self.model_functions_to_call(functions_to_call)
+                        if function_res:
+                            for res in function_res:
+                                res_object = {'responses': [{'message': res, 'type': 'text'}]}
+                                await self.send(json.dumps(res_object))
+                    
+                    self.call_webhook(webhook_object=self.current_node.do_after.get('web_hooks_to_call'))
+                    
+                    # -------------------------------------------------------------------------         
+   
             
             else:
                 if self.in_step:
@@ -222,7 +253,6 @@ class SeleneChat(AsyncConsumer):
                     await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})
 
                     #we need to print a message saying that the conversation has ended within the current node
-        
 
     async def websocket_disconnect(self, event):
         # when websocket disconnects
@@ -309,7 +339,7 @@ class SeleneChat(AsyncConsumer):
         return False
     
 
-    def model_action(self, functions_to_call:dict):
+    def model_functions_to_call(self, functions_to_call:list):
         response = list()
         for function in functions_to_call:
             func = self.SELENE_FUNCTIONS[function['name']]
@@ -336,3 +366,46 @@ class SeleneChat(AsyncConsumer):
 
     def to_wait(self, time_to_wait:int):
         time.sleep(time_to_wait)
+        
+    
+    def call_webhook(self, webhook_object:list[dict]):
+        """
+            This function will call a webhook and will save the response of the webhook into the state variables
+            
+            the webhook_object follows the following structure:
+            
+            webhook_object = [
+                {
+                    "url": "https://www.youtube.com/results?search_query=never+gonna+give+you+up",
+                    "parameters": [
+                        {
+                            "name": "Aquiles, el de los pies ligeros",
+                            "age": "3200",
+                                            "like_apples": "@Vaquiles_like_apples"
+                        }
+                    ]
+                }
+            ]
+        """
+        
+        for webhook in webhook_object:
+            url = webhook['url']
+            parameters = webhook['parameters']
+            
+            print('-'*50)
+            print('call to wbhook: ', url)
+            print('response: ', response)
+            
+            response = requests.post(url, params=parameters)
+            
+            print('status_code: ', response.status_code)
+            print('-'*50)
+            
+            if response.status_code >= 200 and response.status_code < 400:
+                for key in response:
+                    self.variables[f'@V{key}'] = response[key]
+                
+                return response.status_code
+            
+            raise Exception(f'Error calling webhook: {url}, status_code: {response.status_code}')
+        
