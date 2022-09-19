@@ -18,4 +18,4 @@ class TrainingAPI(APIView):
         train(data_to_create_model, model_name)
 
 
-        return Response({"message": "Model train successfully!"})
+        return Response({"message": "Model trained successfully!"})
