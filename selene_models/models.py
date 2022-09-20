@@ -77,7 +77,7 @@ class SeleneNode(models.Model):
     # object and then, the model is created, at that point the model field got associeted with the model object
     model:SeleneModel = models.ForeignKey(SeleneModel, null=True, default=None, on_delete=models.CASCADE)
     
-    head_id = models.IntegerField(null=True, default=None)
+    head_id:int = models.IntegerField(null=True, default=None)
     # ------------------------------------------------------
         
     block_step:bool = models.BooleanField(default=True)

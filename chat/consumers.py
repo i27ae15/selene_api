@@ -19,6 +19,8 @@ import django
 # django-channels
 from channels.consumer import AsyncConsumer
 
+from selene_models.models import SeleneBot
+
 # models
 from .models import SeleneModel, SeleneNode, Interaction, MessageSent
 
@@ -33,7 +35,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rest.settings')
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 django.setup()
 
-CURRENT_MODEL = 16
+CURRENT_MODEL = 19
+CURRENT_INTERACTION = 4
 
 
 def check_variable(variable, variable_type) -> bool:
@@ -65,11 +68,20 @@ class SeleneChat(AsyncConsumer):
 
     def __init__(self) -> None:
         
+        print('-'*50)
+        print('initializing selene chat')
+        print('-'*50)
+        
         self.selene_functions = {
             'print_message': self.print_message,
             'to_wait': self.to_wait,
             'send_email': SendEmail,
         }
+           
+        super().__init__()
+
+
+    async def websocket_connect(self, event):
         
         self.in_step:bool = False
         self.parent_node:SeleneNode = None
@@ -91,12 +103,8 @@ class SeleneChat(AsyncConsumer):
         
         # intilize the current selene-bot interaction
         
-        self.interaction:Interaction = Interaction.objects.create()
-           
-        super().__init__()
-
-
-    async def websocket_connect(self, event):
+        self.selene_bot = SeleneBot.objects.get(id=CURRENT_INTERACTION)
+        self.interaction:Interaction = Interaction.objects.create(selene_bot=self.selene_bot)
 
         # when connections occurs, the model is loaded
         self.selene_model_object:SeleneModel = SeleneModel.objects.get(id=CURRENT_MODEL)
@@ -168,10 +176,10 @@ class SeleneChat(AsyncConsumer):
                 print('-'*50)
 
         else:
-
             if selene_node.name != 'not_found':
 
                 waiting_time = selene_node.response_time_wait
+                # for front
                 time.sleep(waiting_time)
 
 
@@ -213,7 +221,7 @@ class SeleneChat(AsyncConsumer):
                 self.options = False
 
             print('-'*50)
-            print('next node:', self.current_node.next(option_to_look_up))
+            print('before next node')
             print('-'*50)
 
             if self.current_node.next(option_to_look_up):
@@ -255,11 +263,32 @@ class SeleneChat(AsyncConsumer):
                     self.call_webhook(webhook_object=self.current_node.do_after.get('web_hooks_to_call'))
                     
                     # -------------------------------------------------------------------------         
-   
-            
+                    
+                    print('-'*50)
+                    print('next to current node:', self.current_node.next())
+                    print('-'*50)
+                    
+                    if not self.current_node.next():
+                        if self.in_step and not self.is_input:
+                            self.in_step = False
+                            self.parent_node = None
+                            
+                            response_object =[{'message': 'Thank you for your time, I hope I have been able to help you', 'type': 'text'}, 
+                                        {'message': 'If you have any other questions, please do not hesitate to tell me about it', 'type': 'text'}]
+
+                            await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})
+
+            # this won't be necessary anymore
             else:
+                print('-'*50)
+                print('no next node')
+                print('-'*50)
                 if self.in_step:
                     self.in_step = False
+                    
+                    print('-'*50)
+                    print('not steps')
+                    print('-'*50)
 
                     response_object =[{'message': 'Thank you for your time, I hope I have been able to help you', 'type': 'text'}, 
                                       {'message': 'If you have any other questions, please do not hesitate to tell me about it', 'type': 'text'}]
@@ -284,6 +313,10 @@ class SeleneChat(AsyncConsumer):
                 "message": response['text'],
                 "type": response['type'],
             }
+            
+            # print('-'*50)
+            # print('current response:', response)
+            # print('-'*50)
 
             # if the response type is an image then we need to add the url, title and description field from the properties object
             if response['type'] == 'media':
@@ -296,6 +329,8 @@ class SeleneChat(AsyncConsumer):
                 self.is_input = True
                 self.name_to_save_variable = response['properties']['input_name']
                 current_response['input_type'] = response['properties']['input_type']
+                
+                
 
                 if current_response['input_type'] == 'options':
                     # when a option is active, a special function will manage the value that comes from the client
@@ -322,9 +357,9 @@ class SeleneChat(AsyncConsumer):
 
             response_object.append(current_response)
 
-        print('-'*50)
-        print('response_object: ', response_object)
-        print('-'*50)
+        # print('-'*50)
+        # print('response_object: ', response_object)
+        # print('-'*50)
 
         return response_object
 
@@ -403,6 +438,9 @@ class SeleneChat(AsyncConsumer):
             ]
         """
         
+        if not webhook_object:
+            return
+        
         for webhook in webhook_object:
             url = webhook['url']
             parameters = webhook['parameters']
@@ -425,7 +463,7 @@ class SeleneChat(AsyncConsumer):
             raise Exception(f'Error calling webhook: {url}, status_code: {response.status_code}')
         
         
-    def save_message(self, message, sender:int=0, understood:bool=True):
+    def save_message(self, message:dict, sender:int=0, understood:bool=True):
         """
             This function will save the message into the database
             more specific int he MessageSent object
@@ -440,7 +478,7 @@ class SeleneChat(AsyncConsumer):
         MessageSent.objects.create(
             node=self.current_node,
             interaction=self.interaction,
-            message=message,
+            message_object=message,
             sender=sender,
             understood_within_context=understood
         )
