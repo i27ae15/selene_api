@@ -1,7 +1,10 @@
 {"intents": [
     {
     "node": "Make appointment",
-    "patterns": ["I want to make an appointment", "I want to schedule an appointment", "I want to book an appointment", "Appointment", "Book an appointment", "Schedule an appointment", "Make an appointment", "I want to make an appointment with a doctor", "I want to schedule an appointment with a doctor", "I want to book an appointment with a doctor", "Appointment with a doctor", "Book an appointment with a doctor", "Schedule an appointment with a doctor", "Make an appointment with a doctor"],
+    "patterns": ["I want to make an appointment", "I want to schedule an appointment", "I want to book an appointment", 
+    "Appointment", "Book an appointment", "Schedule an appointment", "Make an appointment", "I want to make an appointment with a doctor", 
+    "I want to schedule an appointment with a doctor", "I want to book an appointment with a doctor", "Appointment with a doctor", 
+    "Book an appointment with a doctor", "Schedule an appointment with a doctor", "Make an appointment with a doctor"],
     "responses": [
     {
         "type": "text",
