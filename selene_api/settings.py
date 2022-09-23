@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'training',
     'register',
     'selene_models',
+    'webhook_testing',
 
     # 3rd party apps
 

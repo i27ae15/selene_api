@@ -27,9 +27,9 @@ urlpatterns = [
 
    path('chat/', include('chat.urls')),
    path('training/api/v1/', include('training.urls')),
+   path('webhook-testing/', include('webhook_testing.urls')),
    
    re_path(r'^authenticate/', CustomObtainAuthToken.as_view()),
-
 
    # drf urls
    

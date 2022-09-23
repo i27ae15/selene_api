@@ -54,6 +54,11 @@ class SeleneBot(models.Model):
 
     created_at:datetime.datetime = models.DateTimeField()
 
+    cover_image = models.ImageField(upload_to='static/selene_chat_bots/', null=True, default=None)
+    
+    cover_title:str = models.CharField(max_length=30, default='')
+    cover_description:str = models.CharField(max_length=256, default='')
+
     token:str = models.CharField(max_length=255) # token is used to authenticate the bot with the server
     updated_at:datetime.datetime = models.DateTimeField()
 
@@ -101,7 +106,7 @@ class SeleneNode(models.Model):
 
     
     """
-    
+
     end_steps:bool = models.BooleanField(default=False)
 
     name:str = models.CharField(max_length=255)
@@ -123,7 +128,6 @@ class SeleneNode(models.Model):
     response_time_wait:int = models.IntegerField(default=0)
     
     updated_at:datetime.datetime = models.DateTimeField(null=True, default=None)
-
 
 
     @property

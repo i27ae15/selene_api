@@ -34,6 +34,7 @@ def train(data_to_train_model:dict, model_name=str):
     local_training_sentences:list[str] = []
 
     for node in data_to_train_model['intents']:
+        node:dict
         for pattern in node['patterns']:
             training_sentences.append(pattern)
             local_training_sentences.append(pattern)
@@ -50,6 +51,8 @@ def train(data_to_train_model:dict, model_name=str):
             'patterns': local_training_sentences,
             'responses': node['responses'],
             'random_response': data_to_train_model['random_response'] if 'random_response' in data_to_train_model else True,
+            'do_before': node.get('do_before', {}),
+            'do_after': node.get('do_after', {})
         }
 
 

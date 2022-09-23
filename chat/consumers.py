@@ -28,15 +28,18 @@ from .models import SeleneModel, SeleneNode, Interaction, MessageSent
 from .serializers import InteractionSerializer, MessageSentSerializer
 
 # utils
-
 from utils.send_email import SendEmail
+from utils.logging import Print
+
+# webhook testing
+from webhook_testing.end_point_simulation import get_properties_test
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rest.settings')
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 django.setup()
 
-CURRENT_MODEL = 19
-CURRENT_INTERACTION = 4
+CURRENT_MODEL = 24
+CURRENT_BOT = 8
 
 
 def check_variable(variable, variable_type) -> bool:
@@ -64,13 +67,15 @@ def check_variable(variable, variable_type) -> bool:
     return True
 
 
+def is_status_code_valid(status_code) -> bool:
+    if status_code >= 100 and status_code < 400:
+        return True
+
 class SeleneChat(AsyncConsumer):
 
     def __init__(self) -> None:
-        
-        print('-'*50)
-        print('initializing selene chat')
-        print('-'*50)
+
+        Print('initializing selene chat')
         
         self.selene_functions = {
             'print_message': self.print_message,
@@ -103,7 +108,7 @@ class SeleneChat(AsyncConsumer):
         
         # intilize the current selene-bot interaction
         
-        self.selene_bot = SeleneBot.objects.get(id=CURRENT_INTERACTION)
+        self.selene_bot = SeleneBot.objects.get(id=CURRENT_BOT)
         self.interaction:Interaction = Interaction.objects.create(selene_bot=self.selene_bot)
 
         # when connections occurs, the model is loaded
@@ -136,9 +141,7 @@ class SeleneChat(AsyncConsumer):
             
             self.current_node = selene_node
 
-            print('-'*50)
-            print('parent node: ', self.parent_node.name)
-            print('-'*50)
+            Print('parent_node', self.parent_node.name)
             
             ### Do before ###
             # -------------------------------------------------------------------------  
@@ -151,7 +154,7 @@ class SeleneChat(AsyncConsumer):
                         await self.send(json.dumps(res_object))
                         
                         
-            self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
+            status_code = self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
         
             # -------------------------------------------------------------------------  
            
@@ -171,9 +174,7 @@ class SeleneChat(AsyncConsumer):
 
                 proper_response = True
 
-                print('-'*50)
-                print(self.variables)
-                print('-'*50)
+                Print('variables', self.variables)
 
         else:
             if selene_node.name != 'not_found':
@@ -181,7 +182,6 @@ class SeleneChat(AsyncConsumer):
                 waiting_time = selene_node.response_time_wait
                 # for front
                 time.sleep(waiting_time)
-
 
                 response_object = self.get_selene_response(selene_node)
                 
@@ -220,9 +220,7 @@ class SeleneChat(AsyncConsumer):
                 option_to_look_up = MESSAGE
                 self.options = False
 
-            print('-'*50)
-            print('before next node')
-            print('-'*50)
+            Print('before next node')
 
             if self.current_node.next(option_to_look_up):
                 self.in_step = True
@@ -263,10 +261,8 @@ class SeleneChat(AsyncConsumer):
                     self.call_webhook(webhook_object=self.current_node.do_after.get('web_hooks_to_call'))
                     
                     # -------------------------------------------------------------------------         
-                    
-                    print('-'*50)
-                    print('next to current node:', self.current_node.next())
-                    print('-'*50)
+
+                    Print('next to current node', self.current_node.next())
                     
                     if not self.current_node.next():
                         if self.in_step and not self.is_input:
@@ -280,15 +276,12 @@ class SeleneChat(AsyncConsumer):
 
             # this won't be necessary anymore
             else:
-                print('-'*50)
-                print('no next node')
-                print('-'*50)
+                Print('no next node')
                 if self.in_step:
                     self.in_step = False
                     
-                    print('-'*50)
-                    print('not steps')
-                    print('-'*50)
+                    Print('no next step')
+
 
                     response_object =[{'message': 'Thank you for your time, I hope I have been able to help you', 'type': 'text'}, 
                                       {'message': 'If you have any other questions, please do not hesitate to tell me about it', 'type': 'text'}]
@@ -314,10 +307,6 @@ class SeleneChat(AsyncConsumer):
                 "type": response['type'],
             }
             
-            # print('-'*50)
-            # print('current response:', response)
-            # print('-'*50)
-
             # if the response type is an image then we need to add the url, title and description field from the properties object
             if response['type'] == 'media':
                 current_response['url'] = response['properties']['url']
@@ -331,7 +320,6 @@ class SeleneChat(AsyncConsumer):
                 current_response['input_type'] = response['properties']['input_type']
                 
                 
-
                 if current_response['input_type'] == 'options':
                     # when a option is active, a special function will manage the value that comes from the client
                     current_response['options'] = response['properties']['options']                    
@@ -357,9 +345,11 @@ class SeleneChat(AsyncConsumer):
 
             response_object.append(current_response)
 
-        # print('-'*50)
-        # print('response_object: ', response_object)
-        # print('-'*50)
+        # converting the message object message to use the selene current state
+
+        for response in response_object:
+            message = response['message']
+            response['message'] = self.convert_message_with_selene_state(message)
 
         return response_object
 
@@ -403,14 +393,7 @@ class SeleneChat(AsyncConsumer):
 
     def print_message(self, message:str) -> dict:
         
-        while message.find('@V') != -1:
-            var_name = message[message.find('@V')+2:message.find(' ', message.find('@V'))]
-
-            if var_name not in self.variables.keys():
-                message = message.replace(f'@V{var_name}', f'@E:notFound-{var_name}')
-            else:
-                message = message.replace(f'@V{var_name}', self.variables[f'@V{var_name}'])
-    
+        message = self.convert_message_with_selene_state(message)
         return {"type":"websocket.send", "text":message}
 
 
@@ -418,7 +401,7 @@ class SeleneChat(AsyncConsumer):
         time.sleep(time_to_wait)
         
     
-    def call_webhook(self, webhook_object:list[dict]):
+    def call_webhook(self, webhook_object:'list[dict]'):
         """
             This function will call a webhook and will save the response of the webhook into the state variables
             
@@ -431,27 +414,48 @@ class SeleneChat(AsyncConsumer):
                         {
                             "name": "Aquiles, el de los pies ligeros",
                             "age": "3200",
-                                            "like_apples": "@Vaquiles_like_apples"
+                            "like_apples": "@Vaquiles_like_apples"
                         }
                     ]
                 }
             ]
         """
-        
+
+        ### TODO: ###
+
+        # when calling a webhook, check if it was called early so that we 
+        # don't call it again and just go to the variables in current session
+        # to look for the needed information
+
+        # Note that this only can be done with informative webhooks, not with
+        # webhooks that change something in their origin
+
         if not webhook_object:
             return
         
         for webhook in webhook_object:
             url = webhook['url']
-            parameters = webhook['parameters']
+            parameters = webhook.get('parameters', {})
             
-            print('-'*50)
-            print('call to wbhook: ', url)
-            print('response: ', response)
-            
-            response = requests.post(url, params=parameters)
+            Print(['call to webhook', 'parameters'], [url, parameters])
+
+            # Testing -----------------------------------
+
+            testing_response, status_code = get_properties_test(parameters)
+
+            if is_status_code_valid(status_code):
+                for key in testing_response:
+                    self.variables[f'@V{key}'] = testing_response[key]
+
+                Print(['testing_response', 'self.variables'], [testing_response, self.variables])
+                
+            return status_code
+
+                    # -------------------------------------------
+            response = requests.post('https://calendar-dev-api.herokuapp.com', params=parameters)
             
             print('status_code: ', response.status_code)
+            print('response: ', response)
             print('-'*50)
             
             if response.status_code >= 200 and response.status_code < 400:
@@ -482,5 +486,40 @@ class SeleneChat(AsyncConsumer):
             sender=sender,
             understood_within_context=understood
         )
+    
+
+    def convert_message_with_selene_state(self, message:str):
         
+        while message.find('@V') != -1:
+
+            start_index = message.find('@V')
+            end_index = message.find(' ', start_index)
+
+            if end_index == -1:
+                end_index = len(message)
+
+            var_name = message[start_index : end_index]
+
+            if var_name not in self.variables.keys():
+                message = message.replace(var_name, f'@E:notFound-{var_name[2:]}')
+            else:
+                message = message.replace(var_name, self.variables[var_name])
+    
+        return message
+
+
+    def print_current_session_state(self):
+        print('-'*50)
+        print('--currrent session state--')
+        print('session.variables: ', self.variables)
+        print('session.current_node: ', self.current_node.name)
+        if self.current_node:
+            print('session.next_node: ', self.current_node.next().name)
+        else:
+            print('session.next_node: ', None)
         
+        if self.parent_node:
+            print('session.parent_node: ', self.parent_node.name)
+        else:
+            print('session.parent_node: ', None)
+        print('-'*50)
