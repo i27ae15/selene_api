@@ -6,6 +6,8 @@ import datetime
 from django.db import models
 from django.utils import timezone
 
+from django.db.models import FileField
+
 
 class SeleneModel(models.Model):
 
@@ -53,14 +55,13 @@ class SeleneBot(models.Model):
     active:bool = models.BooleanField(default=True)
 
     created_at:datetime.datetime = models.DateTimeField()
-
-    cover_image = models.ImageField(upload_to='static/selene_chat_bots/', null=True, default=None)
-    
+    cover_image:FileField = models.ImageField(upload_to='static/selene_chat_bots/', null=True, default=None)    
     cover_title:str = models.CharField(max_length=30, default='')
     cover_description:str = models.CharField(max_length=256, default='')
 
     token:str = models.CharField(max_length=255) # token is used to authenticate the bot with the server
     updated_at:datetime.datetime = models.DateTimeField()
+    
 
     @property
     def number_of_interactions(self) -> int:

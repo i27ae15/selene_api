@@ -1,6 +1,5 @@
 # python
 import time
-import json
 import re
 import requests
 import json 
@@ -18,6 +17,7 @@ import django
 
 # django-channels
 from channels.consumer import AsyncConsumer
+from channels.exceptions import StopConsumer
 
 from selene_models.models import SeleneBot
 
@@ -33,6 +33,8 @@ from utils.logging import Print
 
 # webhook testing
 from webhook_testing.end_point_simulation import get_properties_test
+
+from .responses import SeleneResponse, SeleneResponseType
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rest.settings')
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
@@ -107,10 +109,8 @@ class SeleneChat(AsyncConsumer):
         self.selene_bot:SeleneBot = None
         self.interaction:Interaction = None
         
-        # intilize the current selene-bot interaction
 
         await self.send({"type": "websocket.accept"})
-        # await self.send({"type":"websocket.send", "text":'there'})
  
 
     async def websocket_receive(self, event):
@@ -120,14 +120,18 @@ class SeleneChat(AsyncConsumer):
 
         MESSAGE = object_dict.get("message")        
         
+        # intilize the current selene-bot interaction
         if not self.selene_bot and object_dict.get('token'):
-            self.selene_bot:SeleneBot = SeleneBot.objects.get(token=object_dict['token'])
-            self.interaction:Interaction = Interaction.objects.create(selene_bot=self.selene_bot)
-
-            # when connections occurs, the model is loaded
-            self.selene_model_object:SeleneModel = self.selene_bot.model
-            self.tf_model = keras.models.load_model(self.selene_model_object.model_path + 'model')
-            
+            try:
+                self.initialize_selene_bot(object_dict.get('token'))
+            except SeleneBot.DoesNotExist:
+                
+                await self.send(SeleneResponse('token is not valid, closing connection').response)
+                
+                Print('token is not valid, closing connection')
+                
+                raise StopConsumer
+                    
         # save current message
 
         selene_node:SeleneNode = None
@@ -151,8 +155,7 @@ class SeleneChat(AsyncConsumer):
                 function_res = self.model_functions_to_call(functions_to_call)
                 if function_res:
                     for res in function_res:
-                        res_object = {'responses': [{'message': res, 'type': 'text'}]}
-                        await self.send(json.dumps(res_object))
+                        await self.send(SeleneResponse(res).response)
                         
             # TODO: check if the satus code is valid
             status_code = self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
@@ -164,8 +167,7 @@ class SeleneChat(AsyncConsumer):
 
             # we need to check the variable introduced
             if not check_variable(MESSAGE, self.variable_type_to_wait):
-                res_object = {'responses': [{'message': self.response_on_failure, 'type': 'text'}]}
-                await self.send({"type":"websocket.send", "text":json.dumps(res_object)})
+                await self.send(SeleneResponse(self.response_on_failure).response)
             else:
 
                 self.variables[f"@V{self.name_to_save_variable}"] = MESSAGE
@@ -206,8 +208,8 @@ class SeleneChat(AsyncConsumer):
                 function_res = self.model_functions_to_call(functions_to_call)
                 if function_res:
                     for res in function_res:
-                        res_object = {'responses': [{'message': res, 'type': 'text'}]}
-                        await self.send(json.dumps(res_object))
+                        await self.send(SeleneResponse(res).response)
+                        
                         
             self.call_webhook(webhook_object=self.current_node.do_after.get('web_hooks_to_call'))
             
@@ -236,8 +238,8 @@ class SeleneChat(AsyncConsumer):
                         function_res = self.model_functions_to_call(functions_to_call)
                         if function_res:
                             for res in function_res:
-                                res_object = {'responses': [{'message': res, 'type': 'text'}]}
-                                await self.send(json.dumps(res_object))
+                                await self.send(SeleneResponse(res).response)
+                                
                     
                     self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
                     
@@ -254,8 +256,8 @@ class SeleneChat(AsyncConsumer):
                         function_res = self.model_functions_to_call(functions_to_call)
                         if function_res:
                             for res in function_res:
-                                res_object = {'responses': [{'message': res, 'type': 'text'}]}
-                                await self.send(json.dumps(res_object))
+                                await self.send(SeleneResponse(res).response)
+                                
                     
                     self.call_webhook(webhook_object=self.current_node.do_after.get('web_hooks_to_call'))
                     
@@ -287,12 +289,22 @@ class SeleneChat(AsyncConsumer):
 
                     # await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})
 
-                    #we need to print a message saying that the conversation has ended within the current node
-
+                    #we need to print a message saying that the conversation has ended within the current node    
+    
         
     async def websocket_disconnect(self, event):
         # when websocket disconnects
-        print("disconnected", event)
+        Print("disconnected", event)
+        
+        
+    def initialize_selene_bot(self, token:str):
+        self.selene_bot:SeleneBot = SeleneBot.objects.get(token=token)
+            
+        self.interaction:Interaction = Interaction.objects.create(selene_bot=self.selene_bot)
+
+        # when connections occurs, the model is loaded
+        self.selene_model_object:SeleneModel = self.selene_bot.model
+        self.tf_model = keras.models.load_model(self.selene_model_object.model_path + 'model')    
 
     
     def get_selene_response(self, selene_node:SeleneNode) -> dict:

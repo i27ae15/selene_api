@@ -7,8 +7,9 @@ from rest_framework import permissions
 
 from register.views import CustomObtainAuthToken
 
-def trigger_error(request):
-    division_by_zero = 1 / 0
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 
 schema_view = get_schema_view(
@@ -31,7 +32,6 @@ urlpatterns = [
    path('chat/', include('chat.urls')),
    path('training/api/v1/', include('training.urls')),
    path('webhook-testing/', include('webhook_testing.urls')),
-   path('sentry-debug/', trigger_error),
    
    re_path(r'^authenticate/', CustomObtainAuthToken.as_view()),
 
@@ -40,4 +40,5 @@ urlpatterns = [
    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
    re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
    re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-]
+
+] +  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
