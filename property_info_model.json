@@ -2,31 +2,193 @@
     "data_to_create_model": {
         "intents": [
     {
-        "node": "Ask about a property",
-        "patterns": ["I wanto to get information about the property", "I want to know about the property", "Can I ask for information about the property", "Show me information about the property", "Information about the property"],
-        "do_before": [
-            {
-                "web_hooks_to_call":[
-                    {
-                        "url": "http://localhost:8000/webhook-testing/property-test?simple_example",
-                        "parameters": [
-                            {
-                                "simple_example": true
-                            }
-                        ]
-                    }
-                ]
-            }
-        ],
-        
+        "node": "Greeting",
+        "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day", "Whats up", "Hey", "Good morning", 
+        "Good evening", "Good afternoon", "Hello", "Hi there", "Whats up", "Hey there", "Hi there", "Hello there"],       
         "responses": [
             {
                 "type": "text",
                 "properties": {},
-                "text": "Hello, this is the property name @Vproperty_name"
+                "text": "Hello, I am Selene, I here to answer your questions about the unit. How can I help you?"
+            }
+        ]
+    },
+    {
+        "node": "GenInf_Kids",
+        "patterns": ["are kids allowed?", "do you accept children?", "do you accept kids?", "are children allowed?", "are kids allowed?", 
+        "do you accept children?", "do you accept kids?", "are children allowed?"],  
+        "do_before": {
+            "web_hooks_to_call":[
+                {
+                    "url": "http://localhost:8000/webhook-testing/property-test/",
+                    "parameters": {
+                        "simple_example": true
+                    }
+                }
+            ]
+        },  
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "@Vkids_response"
+            }
+        ]
+    },
+    {
+        "node": "GenInf_PetPolicy",
+        "patterns": ["Do you accept cats?", "Do you accept dogs?", "Do you accept pets?", "Do you accept animals?", "are pets allowed?", 
+        "are animals allowed?"],
+        "do_before": {
+            "web_hooks_to_call":[
+                {
+                    "url": "http://localhost:8000/webhook-testing/property-test/",
+                    "parameters": {
+                        "simple_example": true
+                    }
+                }
+            ]
+        },
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "@Vpets_policy"
+            }
+        ]
+    },
+    {
+        "node": "GenInf_RequirementsToMoveIn",
+        "patterns": ["How much do i need to move in?", "What are the requirements to move in?", "What do I need to move in?", 
+        "requirements to move in", "I want to know the requirements to move in", "I want to get the requirements to move in"],
+        "do_before": {
+            "web_hooks_to_call":[
+                {
+                    "url": "http://localhost:8000/webhook-testing/property-test/",
+                    "parameters": {
+                        "simple_example": true
+                    }
+                }
+            ]
+        },
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "@Vunit_requirements"
+            }
+        ]
+    },
+    {
+        "node": "GenInf_SafeArea",
+        "patterns": ["how is the area", "how is the neighborhooo", "is this a good area?", "is this a safe area?", "is this a good neighborhood?",
+        "is the neighborhood safe?", "is the area safe?", "is the area good?", "is the neighborhood good?"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "Yes the area is one of the best in the city, it is very safe and quiet."
+            }
+        ]
+    },
+    {
+        "node": "GenInf_UnitAddress",
+        "patterns": ["what is the address?", "what is the address of the unit?", "what is the address of the property?", 
+        "what is the address of the building?","what is the address of the apartment?", "what is the address of the house?", 
+        "can you send me the address?", "show me where is the unit located?", "show me where is the property located?",
+        "show me where is the building located", "I want to get the address of the unit", "I want to get the address of the property"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "Here is the link with the location in Google Maps."
+            },
+            {
+                "type": "link",
+                "properties": {},
+                "text": "https://www.wikiwand.com/en/Empire_State_Building"
+            }
+        ]
+    },
+    {
+        "node": "rent",
+        "patterns": ["How much is the rent?", "How much is the rent per month?", "Can you tell me the rent?", "What is the rent?", 
+        "let me know the rent", "I want to know the rent", "I want to get the rent", "I want to know the rent per month"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "@Vunit_requirements"
+            }
+        ],
+        "steps": [
+            {
+                "node": "select amount of time to rent",
+                "patterns": [],
+                "responses": [
+                {
+                    "type": "input",
+                    "properties": {
+                        "input_type": "options",
+                        "input_name": "doctor",
+                        "options": ["less thaan 6 months", "more than 6 months"]
+                    },
+                    "text": "Select you desire amount of time to rent"
+                }
+                ],
+                "next_node_on_option": {
+                    "less thaan 6 months": "node_less_than_6_months",
+                    "more than 6 months": "node_more_than_6_months"
+                }           
+                
+            },
+            {
+                "node": "node_less_than_6_months",
+                "patterns": [],
+                "do_before": {
+                    "web_hooks_to_call":[
+                        {
+                            "url": "http://localhost:8000/webhook-testing/property-test/",
+                            "parameters": {
+                                "simple_example": true
+                            }
+                        }
+                    ]
+                },
+                "responses": [
+                {
+                    "type": "text",
+                    "properties": {},
+                    "text": "@Vless_than_6_months"
+                }
+                ],
+                "end_steps": true
+            },
+            {
+                "node": "node_more_than_6_months",
+                "patterns": [],
+                "do_before": {
+                    "web_hooks_to_call":[
+                        {
+                            "url": "http://localhost:8000/webhook-testing/property-test/",
+                            "parameters": {
+                                "simple_example": true
+                            }
+                        }
+                    ]
+                },
+                "responses": [
+                {
+                    "type": "text",
+                    "properties": {},
+                    "text": "@Vmore_than_6_months"
+                }
+                ],
+                "end_steps": true
             }
         ]
     }
+
     ]
     },
     "model_name": "Information about a property"

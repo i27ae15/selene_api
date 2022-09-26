@@ -38,8 +38,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rest.settings')
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 django.setup()
 
-CURRENT_MODEL = 28
-CURRENT_BOT = 11
+CURRENT_MODEL = 64
+CURRENT_BOT = 47
 
 
 def check_variable(variable, variable_type) -> bool:
@@ -70,6 +70,7 @@ def check_variable(variable, variable_type) -> bool:
 def is_status_code_valid(status_code) -> bool:
     if status_code >= 100 and status_code < 400:
         return True
+
 
 class SeleneChat(AsyncConsumer):
 
@@ -153,7 +154,7 @@ class SeleneChat(AsyncConsumer):
                         res_object = {'responses': [{'message': res, 'type': 'text'}]}
                         await self.send(json.dumps(res_object))
                         
-                        
+            # TODO: check if the satus code is valid
             status_code = self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
         
             # -------------------------------------------------------------------------  
@@ -267,10 +268,10 @@ class SeleneChat(AsyncConsumer):
                             self.in_step = False
                             self.parent_node = None
                             
-                            response_object =[{'message': 'Thank you for your time, I hope I have been able to help you', 'type': 'text'}, 
-                                        {'message': 'If you have any other questions, please do not hesitate to tell me about it', 'type': 'text'}]
+                            # response_object =[{'message': 'Thank you for your time, I hope I have been able to help you', 'type': 'text'}, 
+                            #             {'message': 'If you have any other questions, please do not hesitate to tell me about it', 'type': 'text'}]
 
-                            await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})
+                            # await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})
 
             # this won't be necessary anymore
             else:
@@ -281,10 +282,10 @@ class SeleneChat(AsyncConsumer):
                     Print('no next step')
 
 
-                    response_object =[{'message': 'Thank you for your time, I hope I have been able to help you', 'type': 'text'}, 
-                                      {'message': 'If you have any other questions, please do not hesitate to tell me about it', 'type': 'text'}]
+                    # response_object =[{'message': 'Thank you for your time, I hope I have been able to help you', 'type': 'text'}, 
+                    #                   {'message': 'If you have any other questions, please do not hesitate to tell me about it', 'type': 'text'}]
 
-                    await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})
+                    # await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})
 
                     #we need to print a message saying that the conversation has ended within the current node
 
