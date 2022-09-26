@@ -1,111 +1,91 @@
-{"intents": [
+{
+    "data_to_create_model": {
+        "intents": [
     {
     "node": "Make appointment",
-    "patterns": ["I want to make an appointment", "I want to schedule an appointment", "I want to book an appointment", 
-    "Appointment", "Book an appointment", "Schedule an appointment", "Make an appointment", "I want to make an appointment with a doctor", 
-    "I want to schedule an appointment with a doctor", "I want to book an appointment with a doctor", "Appointment with a doctor", 
-    "Book an appointment with a doctor", "Schedule an appointment with a doctor", "Make an appointment with a doctor"],
+    "patterns": ["I want to make an appointment", "I want to schedule an appointment", "I want to book an appointment", "Appointment", "Book an appointment", "Schedule an appointment", "Make an appointment", "I want to make an appointment with a doctor", "I want to schedule an appointment with a doctor", "I want to book an appointment with a doctor", "Appointment with a doctor", "Book an appointment with a doctor", "Schedule an appointment with a doctor", "Make an appointment with a doctor"],
     "responses": [
     {
-        "type": "text",
-        "settings": {},
-        "text": "Of course, what day and time would you like to schedule your appointment?"
+        "type": "input",
+        "properties": {
+            "input_type": "selene_input",
+            "input_name": "person_name"
+        },
+        "text": "Of course, please introduce your name so we can continue"
     }
     ],
-     "steps": [
+    
+    "steps": [
         {
-            "node": "step_1 - select day and time",
+            "node": "step_1 - Introduce the mail",
             "patterns": [],
-            "responses": [
-                {
-                    "type": "input-field",
-                    "settings": {
-                        "type": "date",
-                        "label": "Select a date",
-                        "name": "date"
-                    },
-                    "text": null
-                }
-            ]
-        },
-        {
-            "node": "step_2 - select doctor",
-            "patterns": [],
-            "responses": [
-                {
-                    "type": "button",
-                    "settings": {
-                        "type": "select",
-                        "label": "Select a doctor",
-                        "name": "doctor",
-                        "options": [
-                            {
-                                "label": "Dr. John Doe",
-                                "value": "Dr. John Doe"
-                            },
-                            {
-                                "label": "Dr. Jane Salazar",
-                                "value": "Dr. Jane Salazar"
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        {
-            "node": "step_3 - confirm email",
-            "patterns": [],
-            "responses": [
-                {
-                    "type": "selene-input",
-                    "settings": {
-                        "input_type": "email",
-                        "name": "email"
-                    },
-                    "text": "Please enter your email address so we can send you a confirmation."
-                }
-            ],
-            "to_do_after":{
-            "functions_to_call":[
-                {
-                    "name": "generate_code_and_send_email",
-                    "parameters": [
-                        {
-                            "name": "email",
-                            "value": "email",
-                            "email": "@input"
-                        }
-                    ]
-                }
-            ]
-            }
-        },
-        {
-            "to_do_before": {
-                "type": "send_message",
-                "message": "We have sent you an email with a code, please enter it below to confirm it is you!",
-                "to_wait": "1000"
-            },
-            "tag": "step_4 - confirm appointment",
-            "patterns": [],
-            "random_response": false,
             "responses": [
                 {
                     "type": "input",
-                    "settings": {
-                        "input_type": "text",
-                        "name": "code"
-                    }
+                    "properties": {
+                        "input_type": "selene_input",
+                        "input_name": "person_email"
+                    },
+                    "text": "Please, introduce your email"
                 }
-            ],
-            "to_do_after": {
-                "type": "send_message",
-                "message": "Thank you for confirming your appointment!",
-                "to_wait": "1000",
-                "end_conversation": true
+            ]
+        },
+        {
+            "node": "select a doctor",
+            "patterns": [],
+            "responses": [
+            {
+                "type": "media",
+                "properties": {
+                    "url": "https://cdn.pixabay.com/photo/2016/11/25/23/15/moon-1859616__480.jpg",
+                    "title": "This is the moon",
+                    "description": "The moon is our satellite"
+
+                },
+                "text": "Please, introduce anything to continue"
+            },
+            {
+                "type": "input",
+                "properties": {
+                    "input_type": "options",
+                    "input_name": "doctor",
+                    "options": ["Dr. John Doe", "Dr. Jane Salazar"]
+                },
+                "text": "please select the doctor"
             }
+            ],
+            "next_node_on_option": {
+                "Dr. John Doe": "doctor_number_one",
+                "Dr. Jane Salazar": "doctor_number_two"
+            }           
+            
+        },
+        {
+            "node": "doctor_number_one",
+            "patterns": [],
+            "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "This is the first node, with doctor John Doe"
+            }
+            ],
+            "end_steps": true
+        },
+        {
+            "node": "doctor_number_two",
+            "patterns": [],
+            "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "This is the second node with doctor Jane Salazar"
+            }
+            ],
+            "end_steps": true
         }
-     ]
+    ]
+    
     },
     {
         "node": "Greeting",
@@ -113,7 +93,18 @@
         "responses": [
             {
                 "type": "text",
-                "settings": {},
+                "properties": {},
+                "text": "Hello, thanks for visiting us"
+            }
+        ]
+    },
+    {
+        "node": "Ask for property",
+        "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day", "Whats up", "Hey", "Hi there", "Hello there", "Good to see you"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
                 "text": "Hello, thanks for visiting us"
             }
         ]
@@ -124,18 +115,18 @@
         "responses": [
             {
                 "type": "text",
-                "settings": {},
+                "properties": {},
                 "text": "See you later, thanks for visiting us"
             }
         ]
     },
     {
         "node": "black hole",
-        "patterns": ["What is a black hole", "I want to know what a black hole is", "can you tell me what a is a black hole?", "Black hole", "tell me what is a black hole", "I wanna know what is a black hole", "Black hole information"],
+        "patterns": ["What is a black hole?", "I want to know what a black hole is", "can you tell me what is a black hole?", "Black hole", "tell me what is a black hole", "I wanna know what is a black hole", "Black hole information"],
         "responses": [
             {
                 "type": "text",
-                "settings": {},
+                "properties": {},
                 "text": "A black hole is a region of spacetime exhibiting such strong gravitational effects that nothing—not even particles and electromagnetic radiation such as light—can escape from inside it. The theory of general relativity predicts that a sufficiently compact mass can deform spacetime to form a black hole."
             }
         ]
@@ -146,10 +137,14 @@
         "responses": [
             {
                 "type": "text",
-                "settings": {},
+                "properties": {},
                 "text": "Of course, what is your email address?"
             }
         ]
     }
-]
+    ]
+    },
+    "model_name": "Appointment creation model with media"
+    
+    
 }

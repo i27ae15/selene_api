@@ -7,6 +7,9 @@ from rest_framework import permissions
 
 from register.views import CustomObtainAuthToken
 
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -28,6 +31,7 @@ urlpatterns = [
    path('chat/', include('chat.urls')),
    path('training/api/v1/', include('training.urls')),
    path('webhook-testing/', include('webhook_testing.urls')),
+   path('sentry-debug/', trigger_error),
    
    re_path(r'^authenticate/', CustomObtainAuthToken.as_view()),
 

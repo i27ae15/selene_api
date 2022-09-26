@@ -1,0 +1,7 @@
+La primera opcion a realizar será la de quien eres tú, para que la gente sepa mas de selene, y luego, al finalizar ese node, debemos ir segundo contacto, donde saldran las mismas opciones pero sin el saludo inicial
+
+el botón magico hará que el usuario sea rickyroleado
+
+When selecting the option, guiame tu, tenemos que crear unos pasos donde se guie detalladamente como se crea un agujero negro
+
+We need to create a property that says go_to, this will the node go to a concreate other node when finishing it execution

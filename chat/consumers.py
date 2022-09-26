@@ -38,8 +38,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rest.settings')
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 django.setup()
 
-CURRENT_MODEL = 24
-CURRENT_BOT = 8
+CURRENT_MODEL = 28
+CURRENT_BOT = 11
 
 
 def check_variable(variable, variable_type) -> bool:
@@ -241,8 +241,6 @@ class SeleneChat(AsyncConsumer):
                     self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
                     
                     # -------------------------------------------------------------------------       
-   
-   
                     response_object = self.get_selene_response(self.current_node)
                     self.save_message(response_object)
                     await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})

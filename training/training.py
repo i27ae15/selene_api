@@ -52,7 +52,8 @@ def train(data_to_train_model:dict, model_name=str):
             'responses': node['responses'],
             'random_response': data_to_train_model['random_response'] if 'random_response' in data_to_train_model else True,
             'do_before': node.get('do_before', {}),
-            'do_after': node.get('do_after', {})
+            'do_after': node.get('do_after', {}),
+            'next_node_on_option': node.get('next_node_on_option', {}),
         }
 
 
