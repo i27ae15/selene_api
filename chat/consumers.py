@@ -38,9 +38,6 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rest.settings')
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 django.setup()
 
-CURRENT_MODEL = 64
-CURRENT_BOT = 47
-
 
 def check_variable(variable, variable_type) -> bool:
     if variable_type == 'int':
@@ -106,28 +103,31 @@ class SeleneChat(AsyncConsumer):
         self.response_on_failure:str = None
         
         self.response_validators:dict = dict()
+
+        self.selene_bot:SeleneBot = None
+        self.interaction:Interaction = None
         
         # intilize the current selene-bot interaction
-        
-        self.selene_bot = SeleneBot.objects.get(id=CURRENT_BOT)
-        self.interaction:Interaction = Interaction.objects.create(selene_bot=self.selene_bot)
-
-        # when connections occurs, the model is loaded
-        self.selene_model_object:SeleneModel = SeleneModel.objects.get(id=CURRENT_MODEL)
-        self.tf_model = keras.models.load_model(self.selene_model_object.model_path + 'model')
-
 
         await self.send({"type": "websocket.accept"})
         # await self.send({"type":"websocket.send", "text":'there'})
  
 
     async def websocket_receive(self, event):
-
+        
         proper_response = False
         object_dict:dict = json.loads(event['text'])
 
-        MESSAGE = object_dict.get("message")
+        MESSAGE = object_dict.get("message")        
         
+        if not self.selene_bot and object_dict.get('token'):
+            self.selene_bot:SeleneBot = SeleneBot.objects.get(token=object_dict['token'])
+            self.interaction:Interaction = Interaction.objects.create(selene_bot=self.selene_bot)
+
+            # when connections occurs, the model is loaded
+            self.selene_model_object:SeleneModel = self.selene_bot.model
+            self.tf_model = keras.models.load_model(self.selene_model_object.model_path + 'model')
+            
         # save current message
 
         selene_node:SeleneNode = None
@@ -294,7 +294,7 @@ class SeleneChat(AsyncConsumer):
         # when websocket disconnects
         print("disconnected", event)
 
-
+    
     def get_selene_response(self, selene_node:SeleneNode) -> dict:
         response_object = list()
 
