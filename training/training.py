@@ -20,6 +20,7 @@ import pickle
 from selene_models.models import SeleneModel, SeleneNode
 from selene_models.serializers import SeleneModelSerializer, SeleneNodeSerializer
 
+
 def train(data_to_train_model:dict, model_name=str):
 
     training_sentences:list[str] = []
@@ -32,6 +33,8 @@ def train(data_to_train_model:dict, model_name=str):
     head_node:SeleneNode = None
 
     local_training_sentences:list[str] = []
+    
+    TOKEN = secrets.token_urlsafe(16)
 
     for node in data_to_train_model['intents']:
         node:dict
@@ -47,14 +50,18 @@ def train(data_to_train_model:dict, model_name=str):
 
             
         data_to_serialize = {
-            'name': node['node'],
+            'name': f'{TOKEN}-{node["node"]}',
             'patterns': local_training_sentences,
             'responses': node['responses'],
             'random_response': data_to_train_model['random_response'] if 'random_response' in data_to_train_model else True,
             'do_before': node.get('do_before', {}),
             'do_after': node.get('do_after', {}),
-            'next_node_on_option': node.get('next_node_on_option', {}),
         }
+        
+        if nodes:= node.get('next_node_on_option'):
+            data_to_serialize['next_node_on_option'] = [f'{TOKEN}-{nodes[opt]}' for opt in nodes]
+        else:
+            data_to_serialize['next_node_on_option'] = dict()
 
 
         main_node_serializer = SeleneNodeSerializer(data=data_to_serialize)
@@ -75,7 +82,7 @@ def train(data_to_train_model:dict, model_name=str):
             for step in node['steps']:
                 step:dict
                 data_to_serialize = {
-                    'name': step['node'],
+                    'name': f'{TOKEN}-{step["node"]}',
                     'patterns': step['patterns'],
                     'responses': step['responses'],
                     'head_id': head_node.id,
@@ -83,9 +90,13 @@ def train(data_to_train_model:dict, model_name=str):
                     'do_before': step.get('do_before', {}),
                     'block_step': step.get('block_step', True),
                     'random_response': step.get('random_response', False),
-                    'next_node_on_option': step.get('next_node_on_option', {}),
                     'end_steps': step.get('end_steps', False),
                 }
+                
+                if nodes:= node.get('next_node_on_option'):
+                    data_to_serialize['next_node_on_option'] = [f'{TOKEN}-{nodes[opt]}' for opt in nodes]
+                else:
+                    data_to_serialize['next_node_on_option'] = dict()
 
 
                 for pattern in step['patterns']:

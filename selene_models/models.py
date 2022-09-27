@@ -22,6 +22,9 @@ class SeleneModel(models.Model):
     main_tags:dict = models.JSONField(default=list)
     
     token=models.CharField(max_length=255, default=secrets.token_urlsafe(16))
+    
+    # the only models that can go in a website are the ones that have is_main_model=True
+    is_main_model:bool = models.BooleanField(default=True)
 
 
     @property
@@ -115,7 +118,7 @@ class SeleneNode(models.Model):
 
     end_steps:bool = models.BooleanField(default=False)
 
-    name:str = models.CharField(max_length=255)
+    tokenized_name:str = models.CharField(max_length=255)
     next_node_on_option :dict = models.JSONField(default=dict)
     """
         this will be a dictionary with the following structure:
@@ -135,7 +138,12 @@ class SeleneNode(models.Model):
     
     updated_at:datetime.datetime = models.DateTimeField(null=True, default=None)
 
-
+    
+    @property
+    def name(self) -> str:
+        return self.tokenized_name.split('_')[1].title()
+    
+    
     @property
     def childs(self) -> list:
         return self.selenechildnode.all()
@@ -153,7 +161,7 @@ class SeleneNode(models.Model):
         node_name:str = self.next_node_on_option.get(option)
 
         if node_name:
-            return SeleneNode.objects.get(name=node_name)
+            return SeleneNode.objects.get(tokenized_name=node_name)
         else:
             return None
     
