@@ -6,7 +6,8 @@ class Print():
 
     __check_variables = True
 
-    def __init__(self, text:str, var=None, num_lines=50, al=True, num_al=1, bl=True, num_bl=1, include_time=True) -> None:
+    def __init__(self, text:str, var=None, num_lines=50, al=True, num_al=1, bl=True, num_bl=1, include_time=False, 
+                 include_caller_file=False, include_caller_line=True) -> None:
 
         if num_al < 1:
             num_al = 1
@@ -62,9 +63,16 @@ class Print():
 
 
         if include_time:
-            print('-'*num_lines)
             print(f'runtime: {datetime.datetime.now().time()}')
-
+            
+        caller = inspect.getframeinfo(inspect.stack()[1][0])
+        
+        if include_caller_file and include_caller_line:
+            print(f'caller: {caller.filename} line: {caller.lineno}')
+        
+        elif not include_caller_file and include_caller_line:
+            print(f'line: {caller.lineno}')
+            
         if bl:
             for _ in range(0, num_bl):
                 print('-'*num_lines)
@@ -74,6 +82,8 @@ class Print():
         callers_local_vars = inspect.currentframe().f_back.f_back.f_locals.items()
         var_name = [var_name for var_name, var_val in callers_local_vars if var_val is var]
         return var_name[0] if var_name else None
+
+ 
 
 
 class MeassureTime():

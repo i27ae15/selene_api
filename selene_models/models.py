@@ -20,6 +20,8 @@ class SeleneModel(models.Model):
     updated_at:datetime.datetime = models.DateTimeField(null=True, default=None)
 
     main_tags:dict = models.JSONField(default=list)
+    
+    token=models.CharField(max_length=255, default=secrets.token_urlsafe(16))
 
 
     @property
@@ -58,8 +60,11 @@ class SeleneBot(models.Model):
     cover_image:FileField = models.ImageField(upload_to='static/selene_chat_bots/', null=True, default=None)    
     cover_title:str = models.CharField(max_length=30, default='')
     cover_description:str = models.CharField(max_length=256, default='')
+    
+    default_response_on_webhook_failure:str = models.CharField(max_length=256, default='There was a problem with the request. Please try again later.')
 
     token:str = models.CharField(max_length=255) # token is used to authenticate the bot with the server
+    
     updated_at:datetime.datetime = models.DateTimeField()
     
 

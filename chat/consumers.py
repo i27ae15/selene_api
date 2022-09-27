@@ -72,14 +72,13 @@ def is_status_code_valid(status_code) -> bool:
 
 
 class SeleneChat(AsyncConsumer):
+    
+    __webhooks_called = dict()
 
     def __init__(self) -> None:
 
-        Print('initializing selene chat')
-        
         self.selene_functions = {
             'print_message': self.print_message,
-            'to_wait': self.to_wait,
             'send_email': SendEmail,
         }
            
@@ -124,12 +123,24 @@ class SeleneChat(AsyncConsumer):
         if not self.selene_bot and object_dict.get('token'):
             try:
                 self.initialize_selene_bot(object_dict.get('token'))
+                # in our first response we must return the cover image, if it exists
+                data_to_send = dict(
+                    responses=[dict(
+                        url=self.selene_bot.cover_image.url,
+                        title=self.selene_bot.cover_title,
+                        description=self.selene_bot.cover_description,
+                        type='media'
+                    )]
+                )
+                
+                Print('initializing selene bot')
+                await self.send(SeleneResponse(data_to_send).response)
+                
             except SeleneBot.DoesNotExist:
                 
                 await self.send(SeleneResponse('token is not valid, closing connection').response)
                 
                 Print('token is not valid, closing connection')
-                
                 raise StopConsumer
                     
         # save current message
@@ -145,8 +156,6 @@ class SeleneChat(AsyncConsumer):
                 self.parent_node = selene_node
             
             self.current_node = selene_node
-
-            Print('parent_node', self.parent_node.name)
             
             ### Do before ###
             # -------------------------------------------------------------------------  
@@ -157,8 +166,12 @@ class SeleneChat(AsyncConsumer):
                     for res in function_res:
                         await self.send(SeleneResponse(res).response)
                         
-            # TODO: check if the satus code is valid
-            status_code = self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
+            status_code, in_failure = self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
+            if not is_status_code_valid(status_code):
+                if in_failure:
+                    await self.send(SeleneResponse(in_failure).response)
+                else:
+                    await self.send(SeleneResponse(self.selene_bot.default_response_on_webhook_failure).response)
         
             # -------------------------------------------------------------------------  
            
@@ -182,21 +195,21 @@ class SeleneChat(AsyncConsumer):
         else:
             if selene_node.name != 'not_found':
 
+                # this should go in the front
                 waiting_time = selene_node.response_time_wait
-                # for front
-                time.sleep(waiting_time)
 
                 response_object = self.get_selene_response(selene_node)
                 
                 # the message field should change to a dictionary with the message and the type of message
                 self.save_message(response_object)
-                await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})
+                await self.send(SeleneResponse(response_object).response)
                 proper_response = True
 
             else:
                 text = 'I am sorry, I do not understand what you mean'
                 self.save_message(text)
-                await self.send({"type":"websocket.send", "text":text})   
+                await self.send(SeleneResponse(text).response)
+                   
         
         self.save_message(MESSAGE, sender=1)
         if proper_response:
@@ -210,9 +223,13 @@ class SeleneChat(AsyncConsumer):
                     for res in function_res:
                         await self.send(SeleneResponse(res).response)
                         
-                        
-            self.call_webhook(webhook_object=self.current_node.do_after.get('web_hooks_to_call'))
             
+            status_code, in_failure = self.call_webhook(webhook_object=self.current_node.do_after.get('web_hooks_to_call'))
+            if not is_status_code_valid(status_code):
+                if in_failure:
+                    await self.send(SeleneResponse(in_failure).response)
+                else:
+                    await self.send(SeleneResponse(self.selene_bot.default_response_on_webhook_failure).response)
             # -------------------------------------------------------------------------  
 
                 
@@ -222,8 +239,6 @@ class SeleneChat(AsyncConsumer):
             if self.options:
                 option_to_look_up = MESSAGE
                 self.options = False
-
-            Print('before next node')
 
             if self.current_node.next(option_to_look_up):
                 self.in_step = True
@@ -241,12 +256,17 @@ class SeleneChat(AsyncConsumer):
                                 await self.send(SeleneResponse(res).response)
                                 
                     
-                    self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
+                    status_code, in_failure = self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
+                    if not is_status_code_valid(status_code):
+                        if in_failure:
+                            await self.send(SeleneResponse(in_failure).response)
+                        else:
+                            await self.send(SeleneResponse(self.selene_bot.default_response_on_webhook_failure).response)
                     
                     # -------------------------------------------------------------------------       
                     response_object = self.get_selene_response(self.current_node)
                     self.save_message(response_object)
-                    await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})
+                    await self.send(SeleneResponse(response_object).response)
                     
                     
                     ### Do after ###
@@ -259,12 +279,15 @@ class SeleneChat(AsyncConsumer):
                                 await self.send(SeleneResponse(res).response)
                                 
                     
-                    self.call_webhook(webhook_object=self.current_node.do_after.get('web_hooks_to_call'))
-                    
+                    status_code, in_failure = self.call_webhook(webhook_object=self.current_node.do_after.get('web_hooks_to_call'))
+                    if not is_status_code_valid(status_code):
+                        if in_failure:
+                            await self.send(SeleneResponse(in_failure).response)
+                        else:
+                            await self.send(SeleneResponse(self.selene_bot.default_response_on_webhook_failure).response)
+                        
                     # -------------------------------------------------------------------------         
 
-                    Print('next to current node', self.current_node.next())
-                    
                     if not self.current_node.next():
                         if self.in_step and not self.is_input:
                             self.in_step = False
@@ -298,6 +321,15 @@ class SeleneChat(AsyncConsumer):
         
         
     def initialize_selene_bot(self, token:str):
+        
+        """
+            This only must be called at the beggining of teh conversation
+        
+            Get the selene bot for this conversation
+            setting it into self.selene_bot and creaters the current interaction, 
+            setting it into interaction
+        """
+        
         self.selene_bot:SeleneBot = SeleneBot.objects.get(token=token)
             
         self.interaction:Interaction = Interaction.objects.create(selene_bot=self.selene_bot)
@@ -406,16 +438,12 @@ class SeleneChat(AsyncConsumer):
         
         message = self.convert_message_with_selene_state(message)
         return {"type":"websocket.send", "text":message}
-
-
-    def to_wait(self, time_to_wait:int):
-        time.sleep(time_to_wait)
         
     
-    def call_webhook(self, webhook_object:'list[dict]'):
+    def call_webhook(self, webhook_object:'list[dict]') -> 'tuple[str]':
         """
             This function will call a webhook and will save the response of the webhook into the state variables
-            
+        
             the webhook_object follows the following structure:
             
             webhook_object = [
@@ -427,6 +455,8 @@ class SeleneChat(AsyncConsumer):
                             "age": "3200",
                             "like_apples": "@Vaquiles_like_apples"
                         }
+                    "in_failure": "please enter a valid value",
+                    "method": "GET",
                     ]
                 }
             ]
@@ -438,29 +468,54 @@ class SeleneChat(AsyncConsumer):
         # don't call it again and just go to the variables in current session
         # to look for the needed information
 
-        # Note that this only can be done with informative webhooks, not with
-        # webhooks that change something in their origin
+        # Note that this only can be done with get requets, since these are meant to not update 
+        # anything in the database, if, something needs to be updated, then call POST, in the webhooks 
+        # request, so that the webhook is called again
+        
+        in_failure:str = None
 
         if not webhook_object:
             return
         
         for webhook in webhook_object:
+            
+            method:str = webhook['method']
             url = webhook['url']
+            
+            if method == 'GET':
+                # check if the webhook was called before
+                if url in self.__webhooks_called:
+                    # if it was called before, then get the response from the state
+                    response = self.__webhooks_called[url]
+                    # set the variables in the state
+                    for key in response:
+                        self.variables[f'@V{key}'] = response[key]
+                    break
+                
             parameters = webhook.get('parameters', {})
             
             Print(['call to webhook', 'parameters'], [url, parameters])
 
             # Testing -----------------------------------
-
+            # calling the webhook
             testing_response, status_code = get_properties_test(parameters)
+            
+            if method == 'GET':
+                # requests.get(url, params=parameters)
+                self.__webhooks_called[url] = testing_response
+                
 
             if is_status_code_valid(status_code):
                 for key in testing_response:
                     self.variables[f'@V{key}'] = testing_response[key]
 
-                Print(['testing_response', 'self.variables'], [testing_response, self.variables])
+                Print(['testing_response', 'variables'], [testing_response, self.variables])
+            
+            else:
+                Print(['webhook failure', status_code])
+                in_failure = webhook.get('in_failure')
                 
-            return status_code
+            return status_code, in_failure
 
                     # -------------------------------------------
             response = requests.post('https://calendar-dev-api.herokuapp.com', params=parameters)

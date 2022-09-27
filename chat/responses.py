@@ -27,20 +27,29 @@ class SeleneResponse:
         self.message_type = message_type
         
         if convert_all_messages:
-            self.__convert_message()
+            self.__convert_message(type(messages) == dict)
     
     
-    def __convert_message(self):
+    def __convert_message(self, is_dict:bool=False):
         
         res_object = {
             'type': 'websocket.send',
             'text': {'responses': list()},
         }
         
-        for message in self.message:
-            res:list[dict] = res_object['text']['responses']
-            res.append({'type': self.message_type.name.lower(), 'message': message})
-            res_object['text']['responses'] = res
+        if is_dict:
+            self.message:dict
+            if self.message.get('responses'):
+                res_object['text'] = self.message
+            else:
+                res_object['text']['responses'] = [self.message]
+        
+        else:
+            for message in self.message:
+                res:list[dict] = res_object['text']['responses']
+                res.append({'type': self.message_type.name.lower(), 'message': message})
+                res_object['text']['responses'] = res
+
 
         res_object['text'] = json.dumps(res_object['text'])
         self.__response_text = res_object
