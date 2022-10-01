@@ -24,6 +24,11 @@
                     "parameters": {
                         "simple_example": true
                     }
+                },
+                {
+                    "type": "text",
+                    "properties": {},
+                    "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
                 }
             ]
         },  
@@ -46,6 +51,11 @@
                     "parameters": {
                         "simple_example": true
                     }
+                },
+                {
+                    "type": "text",
+                    "properties": {},
+                    "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
                 }
             ]
         },
@@ -54,6 +64,11 @@
                 "type": "text",
                 "properties": {},
                 "text": "@Vpets_policy"
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
             }
         ]
     },
@@ -68,6 +83,11 @@
                     "parameters": {
                         "simple_example": true
                     }
+                },
+                {
+                    "type": "text",
+                    "properties": {},
+                    "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
                 }
             ]
         },
@@ -76,6 +96,11 @@
                 "type": "text",
                 "properties": {},
                 "text": "@Vunit_requirements"
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
             }
         ]
     },
@@ -88,6 +113,11 @@
                 "type": "text",
                 "properties": {},
                 "text": "Yes the area is one of the best in the city, it is very safe and quiet."
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
             }
         ]
     },
@@ -107,84 +137,11 @@
                 "type": "link",
                 "properties": {},
                 "text": "https://www.wikiwand.com/en/Empire_State_Building"
-            }
-        ]
-    },
-    {
-        "node": "rent",
-        "patterns": ["How much is the rent?", "How much is the rent per month?", "Can you tell me the rent?", "What is the rent?", 
-        "let me know the rent", "I want to know the rent", "I want to get the rent", "I want to know the rent per month"],
-        "responses": [
+            },
             {
                 "type": "text",
                 "properties": {},
-                "text": "@Vunit_requirements"
-            }
-        ],
-        "steps": [
-            {
-                "node": "select amount of time to rent",
-                "patterns": [],
-                "responses": [
-                {
-                    "type": "input",
-                    "properties": {
-                        "input_type": "options",
-                        "input_name": "doctor",
-                        "options": ["less thaan 6 months", "more than 6 months"]
-                    },
-                    "text": "Select you desire amount of time to rent"
-                }
-                ],
-                "next_node_on_option": {
-                    "less thaan 6 months": "node_less_than_6_months",
-                    "more than 6 months": "node_more_than_6_months"
-                }           
-                
-            },
-            {
-                "node": "node_less_than_6_months",
-                "patterns": [],
-                "do_before": {
-                    "web_hooks_to_call":[
-                        {
-                            "url": "http://localhost:8000/webhook-testing/property-test/",
-                            "parameters": {
-                                "simple_example": true
-                            }
-                        }
-                    ]
-                },
-                "responses": [
-                {
-                    "type": "text",
-                    "properties": {},
-                    "text": "@Vless_than_6_months"
-                }
-                ],
-                "end_steps": true
-            },
-            {
-                "node": "node_more_than_6_months",
-                "patterns": [],
-                "do_before": {
-                    "web_hooks_to_call":[
-                        {
-                            "url": "http://localhost:8000/webhook-testing/property-test/",
-                            "parameters": {
-                                "simple_example": true
-                            }
-                        }
-                    ]
-                },
-                "responses": [
-                {
-                    "type": "text",
-                    "properties": {},
-                    "text": "@Vmore_than_6_months"
-                }
-                ],
-                "end_steps": true
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
             }
         ]
     },
@@ -207,6 +164,305 @@
                 "type": "text",
                 "properties": {},
                 "text": "The unit has @Vnumber_of_rooms rooms."
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
+            }
+        ]
+    },
+    {
+        "node": "GenInf_AcceptPeople",
+        "patterns": ["Do you accept people with disabilities?", "Do you accept people with special needs?", "Do you accept people with special needs?","Do you accept people unemployed"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "Yes, we accept all kind of people."
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
+            }
+        ]
+    },
+    {
+        "node": "GenInf_NeighborsNice",
+        "patterns": ["are the neighbors nice?", "hwo are the neighbors?", "are the neighbors good?", "are the neighbors friendly?", "tell me about the neighbors"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "Yes, the neighbors are pretty nice."
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
+            }
+        ]
+    },
+    {
+        "node": "GenInf_OptionUtilities",
+        "patterns": ["Can you include the utilities in the rent", "could the utilitie be included in the rent?", "is there an option for the utilities to be included?", "can the utilities be included in the rent?"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "No, there is no option for this."
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
+            }
+        ]
+    },
+    {
+        "node": "GenInf_UnitBalcony",
+        "patterns": ["does it have a balcony?", "does the suite have a balcony?", "does the unit have a balcony?", "does the apartment have a balcony?", "does the house have a balcony?"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "Yes, the unit has a balcony."
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
+            }
+        ]
+    },
+    {
+        "node": "GenInf_UnitDeposit",
+        "patterns": ["deposit?", "how much is the damage deposit?", "how much is the damage deposit", "how much is the damage deposit?", "how much is the damage deposit?","how much is the damage deposit?"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "The deposit is 2000$."
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
+            }
+        ]
+    },
+    {
+        "node": "GenInf_UnitBasement",
+        "patterns": ["Is this a basement suite?", "Is this a basement unit?", "Is this a basement apartment?", "Is this a basement house?", "Is this a basement?"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "No, the unit does not have a basement."
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
+            }
+        ]
+    },
+    {
+        "node": "GenInf_UnitDishwasher",
+        "patterns": ["dishwasher?", "does it have a dishwasher?", "does the suite have a dishwasher?", "does the unit have a dishwasher?", "does the apartment have a dishwasher?", "does the house have a dishwasher?", "is there a dishwasher in the unit?", "is there a dishwasher in the suite?", "is there a dishwasher in the apartment?", "is there a dishwasher in the house?"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "Yes, the unit has a dishwasher."
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
+            }
+        ]
+    },
+    {
+        "node": "GenInf_WhatUtilities",
+        "patterns": ["Are utilities included?", "are utilities included in the rent?", "what utilities?", "what utilities are included?", "what utilities are included in the rent?", "what utilities are included in the rent?", "what utilities are included in the rent?"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "There are no utilities included."
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
+            }
+        ]
+    },
+    {
+        "node": "GenInf_UnitWhenIsItAvailable",
+        "patterns": ["When is the unit available?", "When is the suite available?", "When is the apartment available?", "When is the house available?", "When is it available?", "When is it available?", "When is it available?"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "On december first."
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
+            }
+        ]
+    },
+    {
+        "node": "GenInf_UnitWasherDryer",
+        "patterns": ["dryer", "does the unit have a dryer?", "does the suite have a dryer?", "does the apartment have a dryer?", "does the house have a dryer?", "is there a dryer in the unit?", "is there a dryer in the suite?", "is there a dryer in the apartment?", "is there a dryer in the house?", "washer", "does the unit have a washer?", "does the suite have a washer?", "does the apartment have a washer?", "does the house have a washer?", "is there a washer in the unit?", "is there a washer in the suite?", "is there a washer in the apartment?", "is there a washer in the house?"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "yes, the unit has a dryer."
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
+            }
+        ]
+    },
+    {
+        "node": "GenInf_UnitYard",
+        "patterns": ["Does the unit has a yard?", "Does the suite has a yard?", "Does the apartment has a yard?", "Does the house has a yard?", "Does it has a yard?", "Does it has a yard?", "Does it has a yard?"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "Yes, the unit has a private yard."
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
+            }
+        ]
+    },
+    {
+        "node": "GenInf_UnitVideoTour",
+        "patterns": ["are video tours available?", "can we have a video tour?", "can you show us a video tour?", "can we do a video tour?"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "Unfortunately, we do not have a video tour for the moment."
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
+            }
+        ]
+    },
+    {
+        "node": "GenInf_UnitRent",
+        "patterns": ["How much is the rent?", "how much it the monthly rent?", "rent", "how about the rent?", "what is the rent?", "what is the monthly rent?", "what is the monthly rent?", "what is the monthly rent?"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "2500$ monthly."
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
+            }
+        ]
+
+    },
+    {
+        "node": "GenInf_UnitPeopleAbove",
+        "patterns": ["Are there people above?", "is there another unti above?", "other people live above the unit?", "other people live above the suite?", "other people live above the apartment?", "other people live above the house?"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "No, there is no people above the unit."
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
+            }
+        ]
+
+    },
+    {
+        "node": "GenInf_UnitParking",
+        "patterns": ["Does the unit has a parking lot?", "Does the suite has a parking lot?", "Does the apartment has a parking lot?", "Does the house has a parking lot?", "Does it has a parking lot?", "Does it has a parking lot?", "Does it has a parking lot?", "can I park N cars?"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "The parking lot the unit has is for 2 cars."
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
+            }
+        ]
+
+    },
+    {
+        "node": "GenInf_UnitOutdoorStorage",
+        "patterns": ["Is there a sheed?", "is there outdoor storage?"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "No, there is not."
+            },
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
+            }
+        ]
+
+    },
+    {
+        "node": "What_to_do_next_node",
+        "patterns": ["What can I do next?", "what could I do next?", "what can I do next?", "what can I do next?", "what can I do next?"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "You can ask anything you like about the unit. or if you are ready, you can book a visit."
+            }
+        ]
+
+    },
+    {
+        "node": "ask_about_a_unit",
+        "patterns": ["I wanto to make a question", "make a question", "question", "i want to ask about the unit"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "Go ahead, ask me anything you like about the unit."
+            }
+        ]
+    },
+    {
+        "node": "request_a_viewing",
+        "patterns": ["I want to to request a viewing", "request a viewing", "I want to view the unit", "I want to view the appartment", "I wanto to book a viewing", "show me a the unit", "request a viewing"],
+        "responses": [
+            {
+                "type": "link",
+                "properties": {},
+                "text": "https://airtable.com/shrCzFcELo4IcJ3jm"
             }
         ]
     }

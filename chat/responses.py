@@ -23,7 +23,7 @@ class SeleneResponse:
     __response_link:dict = None
     
     def __init__(self, messages:'list[str]', message_type:SeleneResponseType=SeleneResponseType.TEXT, convert_all_messages:bool=True):
-        self.message = messages if type(messages) == list else [messages]
+        self.message = messages if type(messages) == list or type(messages) == dict else [messages]
         self.message_type = message_type
         
         if convert_all_messages:
@@ -46,13 +46,16 @@ class SeleneResponse:
         
         else:
             for message in self.message:
+                Print('message', self.message)
+
                 res:list[dict] = res_object['text']['responses']
-                res.append({'type': self.message_type.name.lower(), 'message': message})
+                res.append({'type': message['type'], 'message': message['message']})
                 res_object['text']['responses'] = res
 
 
         res_object['text'] = json.dumps(res_object['text'])
         self.__response_text = res_object
+        Print('res_object', res_object)
     
     
     @property

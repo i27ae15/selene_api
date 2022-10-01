@@ -50,7 +50,7 @@ def train(data_to_train_model:dict, model_name=str):
 
             
         data_to_serialize = {
-            'name': f'{TOKEN}-{node["node"]}',
+            'tokenized_name': f'{TOKEN}s--s{node["node"]}',
             'patterns': local_training_sentences,
             'responses': node['responses'],
             'random_response': data_to_train_model['random_response'] if 'random_response' in data_to_train_model else True,
@@ -58,8 +58,8 @@ def train(data_to_train_model:dict, model_name=str):
             'do_after': node.get('do_after', {}),
         }
         
-        if nodes:= node.get('next_node_on_option'):
-            data_to_serialize['next_node_on_option'] = [f'{TOKEN}-{nodes[opt]}' for opt in nodes]
+        if nodes_opt:= node.get('next_node_on_option'):
+            data_to_serialize['next_node_on_option'] = [f'{TOKEN}s--s{nodes_opt[opt]}' for opt in nodes_opt]
         else:
             data_to_serialize['next_node_on_option'] = dict()
 
@@ -82,7 +82,7 @@ def train(data_to_train_model:dict, model_name=str):
             for step in node['steps']:
                 step:dict
                 data_to_serialize = {
-                    'name': f'{TOKEN}-{step["node"]}',
+                    'tokenized_name': f'{TOKEN}s--s{step["node"]}',
                     'patterns': step['patterns'],
                     'responses': step['responses'],
                     'head_id': head_node.id,
@@ -93,8 +93,8 @@ def train(data_to_train_model:dict, model_name=str):
                     'end_steps': step.get('end_steps', False),
                 }
                 
-                if nodes:= node.get('next_node_on_option'):
-                    data_to_serialize['next_node_on_option'] = [f'{TOKEN}-{nodes[opt]}' for opt in nodes]
+                if nodes_opt:= node.get('next_node_on_option'):
+                    data_to_serialize['next_node_on_option'] = [f'{TOKEN}s--s{nodes_opt[opt]}' for opt in nodes_opt]
                 else:
                     data_to_serialize['next_node_on_option'] = dict()
 
@@ -139,19 +139,6 @@ def train(data_to_train_model:dict, model_name=str):
             print('-----------------')
             return 'error'
                 
-    line = str()
-    for node in nodes:
-        line += f'{node.id} <- '
-
-    line += 'None'
-
-    reversed_nodes = nodes[::-1]
-
-    reversed_line = str()
-    for node in reversed_nodes:
-        reversed_line += f'{node.id} <- '
-    
-    reversed_line += 'None'
             
     num_classes = len(labels)
 

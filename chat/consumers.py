@@ -165,14 +165,17 @@ class SeleneChat(AsyncConsumer):
                 if function_res:
                     for res in function_res:
                         await self.send(SeleneResponse(res).response)
-                        
-            status_code, in_failure = self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
-            if not is_status_code_valid(status_code):
-                if in_failure:
-                    await self.send(SeleneResponse(in_failure).response)
-                else:
-                    await self.send(SeleneResponse(self.selene_bot.default_response_on_webhook_failure).response)
-        
+            
+            Print(self.current_node.do_before.get('web_hooks_to_call'))
+            try:
+                status_code, in_failure = self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
+                if not is_status_code_valid(status_code):
+                    if in_failure:
+                        await self.send(SeleneResponse(in_failure).response)
+                    else:
+                        await self.send(SeleneResponse(self.selene_bot.default_response_on_webhook_failure).response)
+            except: pass
+            
             # -------------------------------------------------------------------------  
            
         # this is the text that selene has to process to be able to send back to the client
@@ -223,13 +226,14 @@ class SeleneChat(AsyncConsumer):
                     for res in function_res:
                         await self.send(SeleneResponse(res).response)
                         
-            
-            status_code, in_failure = self.call_webhook(webhook_object=self.current_node.do_after.get('web_hooks_to_call'))
-            if not is_status_code_valid(status_code):
-                if in_failure:
-                    await self.send(SeleneResponse(in_failure).response)
-                else:
-                    await self.send(SeleneResponse(self.selene_bot.default_response_on_webhook_failure).response)
+            try:
+                status_code, in_failure = self.call_webhook(webhook_object=self.current_node.do_after.get('web_hooks_to_call'))
+                if not is_status_code_valid(status_code):
+                    if in_failure:
+                        await self.send(SeleneResponse(in_failure).response)
+                    else:
+                        await self.send(SeleneResponse(self.selene_bot.default_response_on_webhook_failure).response)
+            except: pass
             # -------------------------------------------------------------------------  
 
                 
@@ -255,14 +259,14 @@ class SeleneChat(AsyncConsumer):
                             for res in function_res:
                                 await self.send(SeleneResponse(res).response)
                                 
-                    
-                    status_code, in_failure = self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
-                    if not is_status_code_valid(status_code):
-                        if in_failure:
-                            await self.send(SeleneResponse(in_failure).response)
-                        else:
-                            await self.send(SeleneResponse(self.selene_bot.default_response_on_webhook_failure).response)
-                    
+                    try:
+                        status_code, in_failure = self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
+                        if not is_status_code_valid(status_code):
+                            if in_failure:
+                                await self.send(SeleneResponse(in_failure).response)
+                            else:
+                                await self.send(SeleneResponse(self.selene_bot.default_response_on_webhook_failure).response)
+                    except: pass
                     # -------------------------------------------------------------------------       
                     response_object = self.get_selene_response(self.current_node)
                     self.save_message(response_object)
@@ -278,14 +282,14 @@ class SeleneChat(AsyncConsumer):
                             for res in function_res:
                                 await self.send(SeleneResponse(res).response)
                                 
-                    
-                    status_code, in_failure = self.call_webhook(webhook_object=self.current_node.do_after.get('web_hooks_to_call'))
-                    if not is_status_code_valid(status_code):
-                        if in_failure:
-                            await self.send(SeleneResponse(in_failure).response)
-                        else:
-                            await self.send(SeleneResponse(self.selene_bot.default_response_on_webhook_failure).response)
-                        
+                    try:
+                        status_code, in_failure = self.call_webhook(webhook_object=self.current_node.do_after.get('web_hooks_to_call'))
+                        if not is_status_code_valid(status_code):
+                            if in_failure:
+                                await self.send(SeleneResponse(in_failure).response)
+                            else:
+                                await self.send(SeleneResponse(self.selene_bot.default_response_on_webhook_failure).response)
+                    except: pass
                     # -------------------------------------------------------------------------         
 
                     if not self.current_node.next():
@@ -416,6 +420,7 @@ class SeleneChat(AsyncConsumer):
         tag = lbl_encoder.inverse_transform([np.argmax(result)])
 
         for node in self.selene_model_object.nodes:
+            Print(('node.name', 'tag'), (node.name, tag))
             if node.name == tag:
                 return node
 
@@ -474,12 +479,14 @@ class SeleneChat(AsyncConsumer):
         
         in_failure:str = None
 
+        Print(webhook_object)
+
         if not webhook_object:
             return
         
         for webhook in webhook_object:
             
-            method:str = webhook['method']
+            method:str = 'GET' # webhook['method']
             url = webhook['url']
             
             if method == 'GET':
@@ -499,6 +506,9 @@ class SeleneChat(AsyncConsumer):
             # Testing -----------------------------------
             # calling the webhook
             testing_response, status_code = get_properties_test(parameters)
+
+            Print(testing_response)
+            Print(status_code)
             
             if method == 'GET':
                 # requests.get(url, params=parameters)

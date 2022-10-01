@@ -141,7 +141,7 @@ class SeleneNode(models.Model):
     
     @property
     def name(self) -> str:
-        return self.tokenized_name.split('_')[1].title()
+        return self.tokenized_name.split('s--s')[1]
     
     
     @property
@@ -181,5 +181,5 @@ class SeleneNode(models.Model):
 
 
     def __str__(self) -> str:
-        return f'{self.id} - {self.name}'
+        return f'{self.id} - {self.tokenized_name}'
 
