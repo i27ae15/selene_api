@@ -8,9 +8,9 @@ def get_properties_test(parameters:dict) -> 'tuple(dict, int)':
     if 'simple_example' in parameters:
 
         property_information = {
-            'kids_response': 'Kids are welcomed here',
-            'pets_policy': 'Cats and dogs are allowed',
-            'unit_requirements': 'You have to be 21 years old and have a job to be able to live here',
+            'kids_response': 'Absolutely, kids are allowed in the unit.',
+            'pets_policy': 'Yes, some pets are allowed. Our pet policy includes a monthly fee of $ 25 per cat and $ 45 per dog. ',
+            'unit_requirements': "Damage deposit CAD$ 1,125 is required to secure the unit, and first month's rent CAD$ 1,125 prior to move-in.",
             'less_than_6_months': 'in this case the rent will be 1500',
             'more_than_6_months': 'in this case the rent will be 1250',
             'number_of_rooms': '2',

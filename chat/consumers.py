@@ -205,6 +205,8 @@ class SeleneChat(AsyncConsumer):
                 
                 # the message field should change to a dictionary with the message and the type of message
                 self.save_message(response_object)
+                Print(response_object)
+                
                 await self.send(SeleneResponse(response_object).response)
                 proper_response = True
 
@@ -362,7 +364,8 @@ class SeleneChat(AsyncConsumer):
 
             elif response['type'] == 'input':
                 # field and actions for the general response of type input
-                self.is_input = True
+                # TODO: set is input to True when changing other things
+                # self.is_input = True
                 self.name_to_save_variable = response['properties']['input_name']
                 current_response['input_type'] = response['properties']['input_type']
                 
@@ -371,7 +374,8 @@ class SeleneChat(AsyncConsumer):
                     # when a option is active, a special function will manage the value that comes from the client
                     current_response['options'] = response['properties']['options']                    
                     self.variable_type_to_wait = 'str'
-                    self.options = True
+                    # TODO: set self.options to True when changing other things
+                    # self.options = True
                 
                 elif current_response['input_type'] == 'selene_input':
                     # fields and actions for the response of type selene_input
