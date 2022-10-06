@@ -222,7 +222,7 @@
             {
                 "type": "text",
                 "properties": {},
-                "text": "This is a 1 bathroom unit."
+                "text": "This is a @Vnumber_of_bathrooms bathroom unit."
             },
             {
                 "type": "input",
@@ -322,7 +322,7 @@
             {
                 "type": "text",
                 "properties": {},
-                "text": "Yes, the unit has a balcony."
+                "text": "@Vbalcony"
             },
             {
                 "type": "input",
@@ -342,7 +342,7 @@
             {
                 "type": "text",
                 "properties": {},
-                "text": "The deposit for this unit is CAD$ 1,125."
+                "text": "The deposit for this unit is @Vdeposit"
             },
             {
                 "type": "input",
@@ -397,12 +397,12 @@
     },
     {
         "node": "GenInf_WhatUtilitiesIncluded",
-        "patterns": ["Are utilities included?", "are utilities included in the rent?", "what utilities?", "what utilities are included?", "what utilities are included in the rent?", "what utilities are included in the rent?", "what utilities are included in the rent?"],
+        "patterns": ["Are utilities included?", "are utilities included in the rent?", "what utilities?", "what utilities are included?", "what utilities are included in the rent?", "what utilities are included in the rent?", "what utilities are included in the rent?", "what utilities are included", "utilities", "utilities include"],
         "responses": [
             {
                 "type": "text",
                 "properties": {},
-                "text": "Water is included in the rent. The tenant is responsible for electricity and natural gas."
+                "text": "@Vutilities"
             },
             {
                 "type": "input",
@@ -507,7 +507,7 @@
             {
                 "type": "text",
                 "properties": {},
-                "text": "The monthly rent for this unit is CAD$ 1,125."
+                "text": "The monthly rent for this unit is @Vrent"
             },
             {
                 "type": "input",
@@ -633,9 +633,14 @@
         "patterns": ["I want to to request a viewing", "request a viewing", "I want to view the unit", "I want to view the appartment", "I wanto to book a viewing", "show me a the unit", "request a viewing", "Can I see the unit?", "Can I request I viewing?"],
         "responses": [
             {
+                "type": "text",
+                "properties": {},
+                "text": "You can request a viewing in the following link."
+            },
+            {
                 "type": "link",
                 "properties": {},
-                "text": "https://airtable.com/shrCzFcELo4IcJ3jm"
+                "text": "https://calendar-utalkto.netlify.app/MmOCFIIOqz3-lZJZ5t67KqM4To2F"
             }
         ]
     },
@@ -664,7 +669,7 @@
                 "properties": {
                     "input_type": "options",
                     "input_name": "unit_red_deer",
-                    "options": ["unit 1"]
+                    "options": ["11 Nyber"]
                     },
                 "text": "Please Select a unit"
             }
@@ -680,7 +685,7 @@
                 "properties": {
                     "input_type": "options",
                     "input_name": "unit_calgary",
-                    "options": ["unit 2", "unit 3"]
+                    "options": ["728 Raynard", "736 Raynard"]
                     },
                 "text": "Please Select a city"
             }

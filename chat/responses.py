@@ -46,16 +46,20 @@ class SeleneResponse:
         
         else:
             for message in self.message:
-                Print('message', self.message)
+                Print('message', message)
 
                 res:list[dict] = res_object['text']['responses']
-                res.append({'type': message['type'], 'message': message['message']})
+                if message['type'] == 'input':
+                    res.append({'type': message['type'], 'input_type':'options', 'options':message['options'], 'message': message['message']})
+                else:
+                    res.append({'type': message['type'], 'message': message['message']})
+                    
+                
                 res_object['text']['responses'] = res
-
+                
 
         res_object['text'] = json.dumps(res_object['text'])
         self.__response_text = res_object
-        Print('res_object', res_object)
     
     
     @property
