@@ -166,7 +166,6 @@ class SeleneChat(AsyncConsumer):
                     for res in function_res:
                         await self.send(SeleneResponse(res).response)
             
-            Print(self.current_node.do_before.get('web_hooks_to_call'))
             try:
                 status_code, in_failure = self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
                 if not is_status_code_valid(status_code):
@@ -179,6 +178,8 @@ class SeleneChat(AsyncConsumer):
             # -------------------------------------------------------------------------  
            
         # this is the text that selene has to process to be able to send back to the client
+
+        self.print_current_session_state()
         if self.is_input:
 
             # we need to check the variable introduced
@@ -193,8 +194,6 @@ class SeleneChat(AsyncConsumer):
 
                 proper_response = True
 
-                Print('variables', self.variables)
-
         else:
             if selene_node.name != 'not_found':
 
@@ -205,7 +204,6 @@ class SeleneChat(AsyncConsumer):
                 
                 # the message field should change to a dictionary with the message and the type of message
                 self.save_message(response_object)
-                Print(response_object)
                 
                 await self.send(SeleneResponse(response_object).response)
                 proper_response = True
@@ -483,8 +481,6 @@ class SeleneChat(AsyncConsumer):
         
         in_failure:str = None
 
-        Print(webhook_object)
-
         if not webhook_object:
             return
         
@@ -504,15 +500,10 @@ class SeleneChat(AsyncConsumer):
                     break
                 
             parameters = webhook.get('parameters', {})
-            
-            Print(['call to webhook', 'parameters'], [url, parameters])
 
             # Testing -----------------------------------
             # calling the webhook
             testing_response, status_code = get_properties_test(parameters)
-
-            Print(testing_response)
-            Print(status_code)
             
             if method == 'GET':
                 # requests.get(url, params=parameters)
@@ -574,11 +565,15 @@ class SeleneChat(AsyncConsumer):
 
             start_index = message.find('@V')
             end_index = message.find(' ', start_index)
+            
+            Print(['start_index', 'end_index'], [start_index, end_index])
 
             if end_index == -1:
                 end_index = len(message)
 
             var_name = message[start_index : end_index]
+
+            Print(['var_name'], [var_name])
 
             if var_name not in self.variables.keys():
                 message = message.replace(var_name, f'@E:notFound-{var_name[2:]}')
@@ -593,7 +588,7 @@ class SeleneChat(AsyncConsumer):
         print('--currrent session state--')
         print('session.variables: ', self.variables)
         print('session.current_node: ', self.current_node.name)
-        if self.current_node:
+        if self.current_node.next():
             print('session.next_node: ', self.current_node.next().name)
         else:
             print('session.next_node: ', None)

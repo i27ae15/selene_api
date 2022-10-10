@@ -57,12 +57,9 @@ class SeleneResponse:
                 
                 res_object['text']['responses'] = res
                 
-                
-
 
         res_object['text'] = json.dumps(res_object['text'])
         self.__response_text = res_object
-        Print('res_object', res_object)
     
     
     @property
