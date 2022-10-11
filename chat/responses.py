@@ -46,8 +46,6 @@ class SeleneResponse:
         
         else:
             for message in self.message:
-                Print('message', message)
-
                 res:list[dict] = res_object['text']['responses']
                 if message['type'] == 'input':
                     res.append({'type': message['type'], 'input_type':'options', 'options':message['options'], 'message': message['message']})
