@@ -148,7 +148,13 @@ class SeleneChat(AsyncConsumer):
         if not self.in_step:
             selene_node = self.get_selene_node(MESSAGE)
         
-
+        if not selene_node:
+            text = {'message': 'I am sorry, I do not understand what you mean', 'type': 'text'}
+            self.save_message(text)
+            await self.send(SeleneResponse(text).response)
+            return
+            
+            
         if not self.parent_node or self.current_node and self.current_node != selene_node and selene_node is not None:
 
             if self.parent_node is None:
@@ -175,8 +181,8 @@ class SeleneChat(AsyncConsumer):
             except: pass
             
             # -------------------------------------------------------------------------  
-           
-        # this is the text that selene has to process to be able to send back to the client
+        
+    # this is the text that selene has to process to be able to send back to the client
 
         # self.print_current_session_state()
         if self.is_input:
@@ -193,24 +199,18 @@ class SeleneChat(AsyncConsumer):
 
                 proper_response = True
 
-        else:
-            if selene_node.name != 'not_found':
+        if selene_node.name != 'not_found':
 
-                # this should go in the front
-                waiting_time = selene_node.response_time_wait
+            # this should go in the front
+            waiting_time = selene_node.response_time_wait
 
-                response_object = self.get_selene_response(selene_node)
-                
-                # the message field should change to a dictionary with the message and the type of message
-                self.save_message(response_object)
-                
-                await self.send(SeleneResponse(response_object).response)
-                proper_response = True
-
-            else:
-                text = 'I am sorry, I do not understand what you mean'
-                self.save_message(text)
-                await self.send(SeleneResponse(text).response)
+            response_object = self.get_selene_response(selene_node)
+            
+            # the message field should change to a dictionary with the message and the type of message
+            self.save_message(response_object)
+            
+            await self.send(SeleneResponse(response_object).response)
+            proper_response = True
                    
         
         self.save_message(MESSAGE, sender=1)
@@ -303,13 +303,9 @@ class SeleneChat(AsyncConsumer):
 
             # this won't be necessary anymore
             else:
-                Print('no next node')
                 if self.in_step:
                     self.in_step = False
                     
-                    Print('no next step')
-
-
                     # response_object =[{'message': 'Thank you for your time, I hope I have been able to help you', 'type': 'text'}, 
                     #                   {'message': 'If you have any other questions, please do not hesitate to tell me about it', 'type': 'text'}]
 
@@ -417,15 +413,29 @@ class SeleneChat(AsyncConsumer):
 
         result = self.tf_model.predict(keras.preprocessing.sequence.pad_sequences(tokenizer.texts_to_sequences([text]),
         truncating='post', maxlen=max_len))
+        
+        Print(result)
+        posible_node = False
+        
+        re = result[0]
+        for r in re:
+            # convert scientific notation to float
+            str_num = '{:f}'.format(r * 100)
+            Print('Percentage', str_num, bl=False, al=False, include_caller_line=False) 
+            
+            if int(str_num.split(".")[0]) >= 95:
+                posible_node = True
+                break
+            
+        max_result = np.argmax(result)
+        Print(lbl_encoder.inverse_transform([max_result]))
+        
+        if not posible_node: return False
 
-        tag = lbl_encoder.inverse_transform([np.argmax(result)])
-
+        tag = lbl_encoder.inverse_transform([max_result])
         for node in self.selene_model_object.nodes:
-            Print(('node.name', 'tag'), (node.name, tag))
             if node.name == tag:
                 return node
-
-        return False
     
 
     def model_functions_to_call(self, functions_to_call:list):
@@ -513,10 +523,7 @@ class SeleneChat(AsyncConsumer):
                 for key in testing_response:
                     self.variables[f'@V{key}'] = testing_response[key]
 
-                Print(['testing_response', 'variables'], [testing_response, self.variables])
-            
             else:
-                Print(['webhook failure', status_code])
                 in_failure = webhook.get('in_failure')
                 
             return status_code, in_failure
