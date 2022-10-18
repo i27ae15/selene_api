@@ -1,5 +1,4 @@
 # python
-import time
 import re
 import requests
 import json 
@@ -29,7 +28,7 @@ from .serializers import InteractionSerializer, MessageSentSerializer
 
 # utils
 from utils.send_email import SendEmail
-from utils.logging import Print
+from print_pp.logging import Print
 
 # webhook testing
 from webhook_testing.end_point_simulation import get_properties_test
@@ -179,7 +178,7 @@ class SeleneChat(AsyncConsumer):
            
         # this is the text that selene has to process to be able to send back to the client
 
-        self.print_current_session_state()
+        # self.print_current_session_state()
         if self.is_input:
 
             # we need to check the variable introduced
@@ -566,19 +565,18 @@ class SeleneChat(AsyncConsumer):
             start_index = message.find('@V')
             end_index = message.find(' ', start_index)
             
-            Print(['start_index', 'end_index'], [start_index, end_index])
-
             if end_index == -1:
                 end_index = len(message)
 
             var_name = message[start_index : end_index]
 
-            Print(['var_name'], [var_name])
+            # need to delete all special characters a variable name can have
+            var_name = var_name.replace('.', '').replace(',', '').replace('?', '').replace('!', '').replace(';', '').replace(':', '').replace('¿', '')
 
             if var_name not in self.variables.keys():
                 message = message.replace(var_name, f'@E:notFound-{var_name[2:]}')
             else:
-                message = message.replace(var_name, self.variables[var_name])
+                message = message.replace(var_name, str(self.variables[var_name]))
     
         return message
 

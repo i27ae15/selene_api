@@ -1,4 +1,4 @@
-from utils.logging import Print
+from print_pp.logging import Print
 
 def get_properties_test(parameters:dict) -> 'tuple(dict, int)':
     """

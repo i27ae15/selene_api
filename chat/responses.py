@@ -1,4 +1,4 @@
-from utils.logging import Print
+from print_pp.logging import Print
 
 from enum import Enum
 import json
@@ -18,19 +18,15 @@ class SeleneResponse:
         
     """
     
-    __response_text:dict = None
-    __response_media:dict = None
-    __response_link:dict = None
+    __response:dict = None
     
-    def __init__(self, messages:'list[str]', message_type:SeleneResponseType=SeleneResponseType.TEXT, convert_all_messages:bool=True):
+    def __init__(self, messages:'str | list[str] | dict[str, str]'):
+
         self.message = messages if type(messages) == list or type(messages) == dict else [messages]
-        self.message_type = message_type
-        
-        if convert_all_messages:
-            self.__convert_message(type(messages) == dict)
+        self.__convert_response(type(messages) == dict)
     
     
-    def __convert_message(self, is_dict:bool=False):
+    def __convert_response(self, is_dict:bool=False):
         
         res_object = {
             'type': 'websocket.send',
@@ -59,20 +55,14 @@ class SeleneResponse:
                 
 
         res_object['text'] = json.dumps(res_object['text'])
-        self.__response_text = res_object
+
+        self.__response = res_object
     
     
     @property
     def response(self) -> dict:
+        return self.__response
         
-        if self.message_type == SeleneResponseType.TEXT:
-            return self.__response_text
-        
-        elif self.message_type == SeleneResponseType.MEDIA:
-            return self.__response_media
-            
-        elif self.message_type == SeleneResponseType.LINK:
-            return self.__response_link
         
         
         

@@ -9,7 +9,7 @@
             {
                 "type": "text",
                 "properties": {},
-                "text": "Hello, I am Selene, I here to answer your questions about the unit. How can I help you?"
+                "text": "Hello, I am Selene, I am here to answer your questions about the unit. How can I help you?"
             }
         ]
     },
@@ -376,6 +376,26 @@
         ]
     },
     {
+        "node": "schools_nearby",
+        "patterns": ["Are there schools near?", "schools?", "schools near", "schools near to property", "schools in the area?", "is there any school in the area?", "area some schools?", "can you tell me if there is any school near?", "school near here?", "school near the unit?"],
+        "responses": [
+            {
+                "type": "text",
+                "properties": {},
+                "text": "No, the unit does not have a basement."
+            },
+            {
+                "type": "input",
+                "properties": {
+                    "input_type": "options",
+                    "input_name": "options",
+                    "options": ["Book a viewing", "ask a question"]
+                    },
+                "text": "What do you want to do next?"
+            }
+        ]
+    },
+    {
         "node": "GenInf_UnitDishwasher",
         "patterns": ["dishwasher?", "does it have a dishwasher?", "does the suite have a dishwasher?", "does the unit have a dishwasher?", "does the apartment have a dishwasher?", "does the house have a dishwasher?", "is there a dishwasher in the unit?", "is there a dishwasher in the suite?", "is there a dishwasher in the apartment?", "is there a dishwasher in the house?"],
         "responses": [
@@ -619,7 +639,7 @@
     },
     {
         "node": "ask_about_a_unit",
-        "patterns": ["I want to make a question", "make a question", "question", "i want to ask about the unit"],
+        "patterns": ["I want to make a question", "make a question", "make a question", "question", "i want to ask about the unit"],
         "responses": [
             {
                 "type": "text",
@@ -687,7 +707,7 @@
                     "input_name": "unit_calgary",
                     "options": ["728 Raynard", "736 Raynard"]
                     },
-                "text": "Please Select a city"
+                "text": "Please Select a building"
             }
         ]
 
@@ -708,13 +728,18 @@
         },  
         "responses": [
             {
+                "type": "text",
+                "properties": {},
+                "text": "In 11 Nyber there is a beautiful unit for the rent, with @Vnumber_of_rooms rooms and @Vnumber_of_bathrooms bathrooms, with a monthly rent of @Vrent"
+            },
+            {
                 "type": "input",
                 "properties": {
                     "input_type": "options",
                     "input_name": "options",
                     "options": ["Book a viewing", "ask a question"]
                     },
-                "text": "What do you want to do next?"
+                "text": "Feel free to ask questions or request a viewing"
             }
         ]
 
@@ -735,13 +760,18 @@
         },  
         "responses": [
             {
+                "type": "text",
+                "properties": {},
+                "text": "In 728 Raynard there is a beautiful unit for the rent, with @Vnumber_of_rooms rooms and @Vnumber_of_bathrooms bathrooms, with a monthly rent of @Vrent"
+            },
+            {
                 "type": "input",
                 "properties": {
                     "input_type": "options",
                     "input_name": "options",
                     "options": ["Book a viewing", "ask a question"]
                     },
-                "text": "What do you want to do next?"
+                "text": "Feel free to ask questions or request a viewing"
             }
         ]
 
@@ -762,13 +792,18 @@
         },  
         "responses": [
             {
+                "type": "text",
+                "properties": {},
+                "text": "In 736 Raynard there is a beautiful unit for the rent, with @Vnumber_of_rooms rooms and @Vnumber_of_bathrooms bathrooms, with a monthly rent of @Vrent"
+            },
+            {
                 "type": "input",
                 "properties": {
                     "input_type": "options",
                     "input_name": "options",
                     "options": ["Book a viewing", "ask a question"]
                     },
-                "text": "What do you want to do next?"
+                "text": "Feel free to ask questions or request a viewing"
             }
         ]
 
