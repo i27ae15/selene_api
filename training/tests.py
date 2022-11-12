@@ -1,6 +1,7 @@
 from django.test import TestCase
-from .training import train
+from .training import train, SeleneNode, SeleneModelVersion
 
+from print_pp.logging import Print
 
 def test_column(total):
     column = str()
@@ -23,49 +24,98 @@ def test_reversed_column(total):
 
     return column
 
+
 class TrainingTestCase(TestCase):
     
     def test_training(self):
         
-        data_to_train_model = {
-            "intents": [
-            {
-            "node": "Make appointment",
-            "patterns": ["I want to make an appointment", "I want to schedule an appointment", "I want to book an appointment", "Appointment", "Book an appointment", "Schedule an appointment", "Make an appointment", "I want to make an appointment with a doctor", "I want to schedule an appointment with a doctor", "I want to book an appointment with a doctor", "Appointment with a doctor", "Book an appointment with a doctor", "Schedule an appointment with a doctor", "Make an appointment with a doctor"],
-            "responses": [
-            {
-                "type": "text",
-                "settings": {},
-                "text": "Of course, what day and time would you like to schedule your appointment?"
-            }
-            ],
-            'steps': []
-            }]
-        }
+        data_to_train_model = dict(intents = list(), version = '1.0.0')
 
-        end = 3
-        for step in range(0, end):
-            data_to_train_model['intents'][0]['steps'].append({
-                "name": "step_{}".format(step),
-                "patterns": ["step_{}".format(step)],
-                "responses": ["step_{}".format(step)],
-                "do_after": "step_{}".format(step),
-                "do_before": "step_{}".format(step),
-                "block_step": False,
-                "random_response": True,
+        for i in range(0, 10):
+            data_to_train_model['intents'].append({
+                "node": f"node {i}",
+                "patterns": [f"pattern {i}"],
+                "responses": [
+                {
+                    "type": "text",
+                    "settings": {},
+                    "text": "Of course, what day and time would you like to schedule your appointment?"
+                }
+                ],
+                'steps': []
             })
+
+            if i == 3:
+                data_to_train_model['intents'][i]['next_node'] = 'node 4'
+
+            if i == 4:
+                data_to_train_model['intents'][i]['next_node'] = 'node 5'
+            
+            if i == 5:
+                data_to_train_model['intents'][i]['next_node'] = 'node 6'
+
+
+        nodes_created = train(data_to_train_model, 'model_number_one')
+
+        # Creating nodes with the new model system
+
+        model_version = None
+        try:
+            model_version = SeleneModelVersion.objects.get(id=1)
+        except SeleneModelVersion.DoesNotExist:
+            Print('No model version found')
+            pass
+
+        data_to_train_model = dict(intents = list(), version = '2.0.0')
+
+        for i in range(0, 10):
+            data_to_train_model['intents'].append({
+                "node": f"node {i}",
+                "patterns": [f"pattern {i}"],
+                "responses": [
+                {
+                    "type": "text",
+                    "settings": {},
+                    "text": "Of course, what day and time would you like to schedule your appointment?"
+                }
+                ],
+                'steps': []
+            })
+
+            if i == 3:
+                data_to_train_model['intents'][i]['next_node'] = 'node 4'
+
+            if i == 4:
+                data_to_train_model['intents'][i]['next_node'] = 'node 5'
+            
+            if i == 5:
+                data_to_train_model['intents'][i]['next_node'] = 'node 6'
+
+
+        if model_version:
+            for index, node in enumerate(model_version.nodes()):
+                data_to_train_model['intents'][index]['token'] = node.token
+
+
+        Print('creating nodes with the new model system')
+
+        nodes_created = train(data_to_train_model, 'model_number_one', model_version)
+
+
+        for node in nodes_created:
+            Print(
+                ('node_name', 'model_version', 'next_node', 'previous_node', 'token'), 
+                (node.name, node.model_version.version, node.next_node, node.previous_node, node.token), 
+                include_caller_line=False)
         
 
-        column, reversed_line = train(data_to_train_model)
+        current_node:SeleneNode = next(filter(lambda node: node.name == 'node 3', nodes_created))
 
-        print('-' * 50)
-        print(reversed_line)
-        print('-' * 50)
 
-        print('-' * 50)
-        print(column)
-        print('-' * 50)
+        while current_node:
+            Print('current_node', current_node.name, al=False, bl=False, include_caller_line=False)
+            current_node = current_node.next_node
 
-        self.assertEquals(column, test_column(end))
-        self.assertEquals(reversed_line, test_reversed_column(end))
+
+        print(SeleneModelVersion.objects.all())
         

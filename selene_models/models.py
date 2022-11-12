@@ -5,36 +5,49 @@ import datetime
 # django
 from django.db import models
 from django.utils import timezone
+from django.db.models import QuerySet
 
 from django.db.models import FileField
 
 
 class SeleneModel(models.Model):
 
-    created_at:datetime.datetime = models.DateTimeField(null=True, default=None)
 
     model_path = models.CharField(default='', max_length=256)
 
     name:str = models.CharField(max_length=255)
 
-    updated_at:datetime.datetime = models.DateTimeField(null=True, default=None)
-
     main_tags:dict = models.JSONField(default=list)
     
-    token=models.CharField(max_length=255, default=secrets.token_urlsafe(16))
+    token=models.CharField(max_length=255)
     
-    # the only models that can go in a website are the ones that have is_main_model=True
-    is_main_model:bool = models.BooleanField(default=True)
+    # logs fields
+
+    created_at:datetime.datetime = models.DateTimeField()
+    updated_at:datetime.datetime = models.DateTimeField(null=True, blank=True, default=None)
 
 
     @property
     def active_bots(self):
         return self.selenebot_set.filter(is_active=True)
 
+
+    @property
+    def current_version(self) -> 'SeleneModelVersion':
+        return self.selenemodelversion_set.get(is_current_version=True)
+
+
+    @property
+    def last_version(self) -> 'SeleneModelVersion':
+        return self.selenemodelversion_set.order_by('-id').first()
+
     
     @property
-    def nodes(self) -> 'list[SeleneNode]':
-        return self.selenenode_set.all()
+    def nodes(self) -> 'QuerySet[SeleneNode]':
+        """
+            Returning the nodes that are attached to the main version of the model
+        """
+        return self.current_version.nodes()
 
 
     def __str__(self):
@@ -51,6 +64,42 @@ class SeleneModel(models.Model):
         return super().save(*args, **kwargs)
 
 
+class SeleneModelVersion(models.Model):
+    version = models.CharField(max_length=255, default='1.0.0')
+    model = models.ForeignKey(SeleneModel, on_delete=models.CASCADE)
+
+    # the only models that can go in a website are the ones that have is_current_version=True
+    is_current_version:bool = models.BooleanField(default=True)
+
+    created_at:datetime.datetime = models.DateTimeField()
+    updated_at:datetime.datetime = models.DateTimeField(null=True, blank=True, default=None)
+    
+
+    def nodes(self) -> QuerySet['SeleneNode']:
+        return self.selenenode_set.all()
+
+
+    def difference_of_nodes(self, other_version: 'SeleneModelVersion') -> 'QuerySet[SeleneModelVersion]':
+        """
+            Returns the difference of nodes between this version and the other one.
+        """
+        return list(self.nodes().difference(other_version.nodes()))
+
+    
+    def save(self, *args, **kwargs):
+        
+        if not self.pk:
+            self.created_at = timezone.now()
+        else:
+            self.updated_at = timezone.now()
+
+        return super().save(*args, **kwargs)
+
+
+    def __str__(self):
+        return f'{self.id} - {self.version}'
+
+
 class SeleneBot(models.Model):
 
     # Foreign keys -----------------------------------------
@@ -59,7 +108,6 @@ class SeleneBot(models.Model):
 
     active:bool = models.BooleanField(default=True)
 
-    created_at:datetime.datetime = models.DateTimeField()
     cover_image:FileField = models.ImageField(upload_to='static/selene_chat_bots/', null=True, default=None)    
     cover_title:str = models.CharField(max_length=30, default='')
     cover_description:str = models.CharField(max_length=256, default='')
@@ -68,7 +116,9 @@ class SeleneBot(models.Model):
 
     token:str = models.CharField(max_length=255) # token is used to authenticate the bot with the server
     
-    updated_at:datetime.datetime = models.DateTimeField()
+
+    created_at:datetime.datetime = models.DateTimeField()
+    updated_at:datetime.datetime = models.DateTimeField(null=True, blank=True, default=None)
     
 
     @property
@@ -89,14 +139,27 @@ class SeleneNode(models.Model):
     # Foreign keys -----------------------------------------
     # even though this model field should not be null, the null=True, is needed since, we need first to create the SeleneNode
     # object and then, the model is created, at that point the model field got associeted with the model object
-    model:SeleneModel = models.ForeignKey(SeleneModel, null=True, default=None, on_delete=models.CASCADE)
+
+    """
+        The new structure for Selene Node is as follows:
+
+            It will behave as a linked list, where each node will perform an inheritance from the last node, this way, the nodes
+            can ne update without creatint problems with the nodes that are on the produciton environment.
+
+            These nodes are going to be attached to a version of a model, so that, there can be multiple models attached to the same 
+    """
     
-    head_id:int = models.IntegerField(null=True, default=None)
+    model_version = models.ForeignKey(SeleneModelVersion, on_delete=models.CASCADE)
+
+    next_node_version:'SeleneNode' = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, default=None, related_name='next_selene_node_version')
+    previous_node_version:'SeleneNode' = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, default=None, related_name='previous_selene_node_version')
+    
+    next_node:'SeleneNode' = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, default=None, related_name='next_nodes')
+    previous_node:'SeleneNode' = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, default=None, related_name='previous_nodes')
+
     # ------------------------------------------------------
         
     block_step:bool = models.BooleanField(default=True)
-    
-    created_at:datetime.datetime = models.DateTimeField(null=True, default=None)
     
     do_after:dict = models.JSONField(null=True, default=dict)
     do_before:dict = models.JSONField(null=True, default=dict)
@@ -120,6 +183,7 @@ class SeleneNode(models.Model):
 
     tokenized_name:str = models.CharField(max_length=255)
     next_node_on_option :dict = models.JSONField(default=dict)
+
     """
         this will be a dictionary with the following structure:
 
@@ -135,17 +199,20 @@ class SeleneNode(models.Model):
     random_response:bool = models.BooleanField(default=True)
     responses:list = models.JSONField(default=list)
     response_time_wait:int = models.IntegerField(default=0)
-    
-    updated_at:datetime.datetime = models.DateTimeField(null=True, default=None)
 
-    
+    # the token is going to be used to differentiate the nodes, so that, we have the possibility to update everything
+    # on the node and knowing it was from a node before
+    token = models.CharField(max_length=255)
+
+    created_at:datetime.datetime = models.DateTimeField()
+
     @property
     def name(self) -> str:
         return self.tokenized_name.split('s--s')[1]
     
     
     @property
-    def childs(self) -> list:
+    def children(self) -> list:
         return self.selenechildnode.all()
 
     
@@ -156,6 +223,11 @@ class SeleneNode(models.Model):
         except: pass
         return node
     
+    
+    def set_previous_node(self, node:'SeleneNode'):
+        self.previous_node = node
+        self.save()
+        
 
     def next(self, option:str='next_node') -> 'SeleneNode':
         node_name:str = self.next_node_on_option.get(option)
@@ -173,13 +245,13 @@ class SeleneNode(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
+            if self.token == 'initial_token':
+                self.token = secrets.token_hex(16)
             self.created_at = timezone.now()
-        else:
-            self.updated_at = timezone.now()
 
         super().save(*args, **kwargs)
 
 
     def __str__(self) -> str:
-        return f'{self.id} - {self.tokenized_name}'
+        return f'{self.id} - {self.name}'
 
