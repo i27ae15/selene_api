@@ -12,9 +12,6 @@ from django.db.models import FileField
 
 class SeleneModel(models.Model):
 
-
-    model_path = models.CharField(default='', max_length=256)
-
     name:str = models.CharField(max_length=255)
 
     main_tags:dict = models.JSONField(default=list)
@@ -73,6 +70,8 @@ class SeleneModelVersion(models.Model):
 
     created_at:datetime.datetime = models.DateTimeField()
     updated_at:datetime.datetime = models.DateTimeField(null=True, blank=True, default=None)
+
+    version_model_path = models.CharField(default='', max_length=256)
     
 
     def nodes(self) -> QuerySet['SeleneNode']:
@@ -115,7 +114,6 @@ class SeleneBot(models.Model):
     default_response_on_webhook_failure:str = models.CharField(max_length=256, default='There was a problem with the request. Please try again later.')
 
     token:str = models.CharField(max_length=255) # token is used to authenticate the bot with the server
-    
 
     created_at:datetime.datetime = models.DateTimeField()
     updated_at:datetime.datetime = models.DateTimeField(null=True, blank=True, default=None)
@@ -137,8 +135,6 @@ class SeleneBot(models.Model):
 
 class SeleneNode(models.Model):
     # Foreign keys -----------------------------------------
-    # even though this model field should not be null, the null=True, is needed since, we need first to create the SeleneNode
-    # object and then, the model is created, at that point the model field got associeted with the model object
 
     """
         The new structure for Selene Node is as follows:
@@ -156,6 +152,17 @@ class SeleneNode(models.Model):
     
     next_node:'SeleneNode' = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, default=None, related_name='next_nodes')
     previous_node:'SeleneNode' = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, default=None, related_name='previous_nodes')
+    next_node_on_option :dict = models.JSONField(default=dict)
+
+    """
+        this will be a dictionary with the following structure:
+
+        {
+            'option[str]': node_name[str]  
+        }
+
+        So, this dicitonary will only be used when there are options on the response object
+    """
 
     # ------------------------------------------------------
         
@@ -174,25 +181,10 @@ class SeleneNode(models.Model):
                         "subject": "New conversation initiated",
                         "html": "<h1>f'A new conversation has initated with Selene'<h1>",
                     }
-                    }]
-
-    
+                }]
     """
-
-    end_steps:bool = models.BooleanField(default=False)
 
     tokenized_name:str = models.CharField(max_length=255)
-    next_node_on_option :dict = models.JSONField(default=dict)
-
-    """
-        this will be a dictionary with the following structure:
-
-        {
-            'option[str]': node_name[str]  
-        }
-
-        So, this dicitonary will only be used when there are options on the response object
-    """
 
     patterns:list = models.JSONField(default=list)
 
@@ -229,7 +221,11 @@ class SeleneNode(models.Model):
         self.save()
         
 
-    def next(self, option:str='next_node') -> 'SeleneNode':
+    def get_next_node_on_option(self, option:str=None) -> 'SeleneNode':
+        
+        if option is None:
+            return None if not self.next_node_on_option else True
+        
         node_name:str = self.next_node_on_option.get(option)
 
         if node_name:

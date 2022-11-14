@@ -86,8 +86,6 @@ class SeleneChat(AsyncConsumer):
 
     async def websocket_connect(self, event):
         
-        self.in_step:bool = False
-        self.parent_node:SeleneNode = None
         self.current_node:SeleneNode = None
         self.selene_model_object:SeleneModel = None
         self.tf_model:keras.models.Model = None
@@ -116,7 +114,8 @@ class SeleneChat(AsyncConsumer):
         proper_response = False
         object_dict:dict = json.loads(event['text'])
 
-        MESSAGE = object_dict.get("message")        
+        CLIENT_MESSAGE = object_dict.get("message")
+        Print('client message', CLIENT_MESSAGE)     
         
         # intilize the current selene-bot interaction
         if not self.selene_bot and object_dict.get('token'):
@@ -144,76 +143,74 @@ class SeleneChat(AsyncConsumer):
                     
         # save current message
 
+        # firest we get the current node within the message that the user hast entered
         selene_node:SeleneNode = None
-        if not self.in_step:
-            selene_node = self.get_selene_node(MESSAGE)
+        selene_node = self.get_selene_node(CLIENT_MESSAGE)
         
+        # selene_node is going to be false if the percentage is less than 0.95
         if not selene_node:
             text = {'message': 'I am sorry, I do not understand what you mean', 'type': 'text'}
             self.save_message(text)
             await self.send(SeleneResponse(text).response)
             return
             
-            
-        if not self.parent_node or self.current_node and self.current_node != selene_node and selene_node is not None:
-
-            if self.parent_node is None:
-                self.parent_node = selene_node
-            
-            self.current_node = selene_node
-            
-            ### Do before ###
-            # -------------------------------------------------------------------------  
-            functions_to_call = self.current_node.do_before.get('functions_to_call')
-            if functions_to_call:
-                function_res = self.model_functions_to_call(functions_to_call)
-                if function_res:
-                    for res in function_res:
-                        await self.send(SeleneResponse(res).response)
-            
-            try:
-                status_code, in_failure = self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
-                if not is_status_code_valid(status_code):
-                    if in_failure:
-                        await self.send(SeleneResponse(in_failure).response)
-                    else:
-                        await self.send(SeleneResponse(self.selene_bot.default_response_on_webhook_failure).response)
-            except: pass
-            
-            # -------------------------------------------------------------------------  
         
-    # this is the text that selene has to process to be able to send back to the client
+        # Up to this point, we have a selene node that matches the message that the user has entered
+        # we now have to check the different conditions that the node has
+
+        # I think parent node is not longer necessary since steps is deprecated, let's check this out
+        self.current_node = selene_node
+        
+        ### Do before ###
+        # -------------------------------------------------------------------------  
+        functions_to_call = self.current_node.do_before.get('functions_to_call')
+        if functions_to_call:
+            function_res = self.model_functions_to_call(functions_to_call)
+            if function_res:
+                for res in function_res:
+                    await self.send(SeleneResponse(res).response)
+        
+        ### Calling the webhook ###
+        try:
+            status_code, in_failure = self.call_webhook(webhook_object=self.current_node.do_before.get('web_hooks_to_call'))
+            if not is_status_code_valid(status_code):
+                if in_failure:
+                    await self.send(SeleneResponse(in_failure).response)
+                else:
+                    await self.send(SeleneResponse(self.selene_bot.default_response_on_webhook_failure).response)
+        # TODO: we should handle the exception
+        except: pass
+        # -------------------------------------------------------------------------  
+        
+        # this is the text that selene has to process to be able to come back to the client
 
         # self.print_current_session_state()
+
         if self.is_input:
 
             # we need to check the variable introduced
-            if not check_variable(MESSAGE, self.variable_type_to_wait):
+            if not check_variable(CLIENT_MESSAGE, self.variable_type_to_wait):
                 await self.send(SeleneResponse(self.response_on_failure).response)
             else:
 
-                self.variables[f"@V{self.name_to_save_variable}"] = MESSAGE
+                self.variables[f"@V{self.name_to_save_variable}"] = CLIENT_MESSAGE
                 self.is_input = False
                 self.name_to_save_variable = None
                 self.input_object = dict()
 
                 proper_response = True
 
-        if selene_node.name != 'not_found':
-
-            # this should go in the front
-            waiting_time = selene_node.response_time_wait
-
-            response_object = self.get_selene_response(selene_node)
-            
-            # the message field should change to a dictionary with the message and the type of message
-            self.save_message(response_object)
-            
-            await self.send(SeleneResponse(response_object).response)
-            proper_response = True
-                   
+        response_object = self.get_selene_response(selene_node)
         
-        self.save_message(MESSAGE, sender=1)
+        # the message field should change to a dictionary with the message and the type of message
+        self.save_message(response_object)
+
+        await self.send(SeleneResponse(response_object).response)
+        proper_response = True
+
+        self.save_message(CLIENT_MESSAGE, sender=1)
+
+
         if proper_response:
             
             ### Do after ###
@@ -232,22 +229,22 @@ class SeleneChat(AsyncConsumer):
                         await self.send(SeleneResponse(in_failure).response)
                     else:
                         await self.send(SeleneResponse(self.selene_bot.default_response_on_webhook_failure).response)
+            # TODO: we should handle the exception
             except: pass
             # -------------------------------------------------------------------------  
 
                 
-            # check if the current node has a next node, or a following step
-            option_to_look_up = 'next_node'
+            # check if the current node has a next node
+            option_to_look_up = None
 
             if self.options:
-                option_to_look_up = MESSAGE
+                option_to_look_up = CLIENT_MESSAGE
                 self.options = False
 
-            if self.current_node.next(option_to_look_up):
-                self.in_step = True
+            if self.current_node.get_next_node_on_option(option_to_look_up) or self.current_node.next_node:
 
                 if not self.is_input:
-                    self.current_node = self.current_node.next(option_to_look_up)
+                    self.current_node = self.current_node.get_next_node_on_option(option_to_look_up) if option_to_look_up else self.current_node.next_node
                     
                     ### Do before ###
                     # -------------------------------------------------------------------------  
@@ -291,28 +288,6 @@ class SeleneChat(AsyncConsumer):
                     except: pass
                     # -------------------------------------------------------------------------         
 
-                    if not self.current_node.next():
-                        if self.in_step and not self.is_input:
-                            self.in_step = False
-                            self.parent_node = None
-                            
-                            # response_object =[{'message': 'Thank you for your time, I hope I have been able to help you', 'type': 'text'}, 
-                            #             {'message': 'If you have any other questions, please do not hesitate to tell me about it', 'type': 'text'}]
-
-                            # await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})
-
-            # this won't be necessary anymore
-            else:
-                if self.in_step:
-                    self.in_step = False
-                    
-                    # response_object =[{'message': 'Thank you for your time, I hope I have been able to help you', 'type': 'text'}, 
-                    #                   {'message': 'If you have any other questions, please do not hesitate to tell me about it', 'type': 'text'}]
-
-                    # await self.send({"type":"websocket.send", "text":json.dumps({'responses': response_object})})
-
-                    #we need to print a message saying that the conversation has ended within the current node    
-    
         
     async def websocket_disconnect(self, event):
         # when websocket disconnects
@@ -322,7 +297,7 @@ class SeleneChat(AsyncConsumer):
     def initialize_selene_bot(self, token:str):
         
         """
-            This only must be called at the beggining of teh conversation
+            This only must be called at the beggining of the conversation
         
             Get the selene bot for this conversation
             setting it into self.selene_bot and creaters the current interaction, 
@@ -333,9 +308,9 @@ class SeleneChat(AsyncConsumer):
             
         self.interaction:Interaction = Interaction.objects.create(selene_bot=self.selene_bot)
 
-        # when connections occurs, the model is loaded
+        # when connections occurs, the model with the current version is loaded
         self.selene_model_object:SeleneModel = self.selene_bot.model
-        self.tf_model = keras.models.load_model(self.selene_model_object.model_path + 'model')    
+        self.tf_model = keras.models.load_model(self.selene_model_object.current_version.version_model_path + 'model')    
 
     
     def get_selene_response(self, selene_node:SeleneNode) -> dict:

@@ -43,6 +43,13 @@ class SeleneResponse:
         else:
             for message in self.message:
                 res:list[dict] = res_object['text']['responses']
+                if type(message) == str:
+                    res.append({
+                        'type': SeleneResponseType.TEXT.name,
+                        'text': message
+                    })
+                    continue
+                
                 if message['type'] == 'input':
                     res.append({'type': message['type'], 'input_type':'options', 'options':message['options'], 'message': message['message']})
                 else:

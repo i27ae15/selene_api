@@ -27,7 +27,7 @@ class Interaction(models.Model):
 class MessageSent(models.Model):
 
     # Foreign keys -----------------------------------------
-    node:SeleneNode = models.ForeignKey(SeleneNode, on_delete=models.CASCADE)
+    node:SeleneNode = models.ForeignKey(SeleneNode, on_delete=models.CASCADE, null=True, blank=True)
 
     interaction:Interaction = models.ForeignKey(Interaction, on_delete=models.CASCADE)
 

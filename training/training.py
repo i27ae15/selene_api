@@ -64,12 +64,13 @@ def train(data_to_train_model:dict, model_name:str, previous_model_version:Selen
         new_model_version = SeleneModelVersion.objects.create(
         version = data_to_train_model['version'],
         model = model,
+        version_model_path = model_path,
         is_current_version = False)
 
     else:
+        need_to_be_trained = True
         model_serializer = SeleneModelSerializer(data={
             'name': model_name,
-            'model_path': model_path,
             'main_tags': main_tags,
             'token': TOKEN,
         })
@@ -81,6 +82,7 @@ def train(data_to_train_model:dict, model_name:str, previous_model_version:Selen
             new_model_version = SeleneModelVersion.objects.create(
             version = data_to_train_model['version'],
             model = model,
+            version_model_path = model_path,
             is_current_version = True)
         else:
             raise exceptions.ValidationError(model_serializer.errors)
@@ -93,7 +95,7 @@ def train(data_to_train_model:dict, model_name:str, previous_model_version:Selen
         node_data_to_serialize = {
             'model_version': new_model_version.pk,
             'tokenized_name': f'{TOKEN}s--s{node["node"]}',
-            'patterns': node_patterns,
+            'patterns': node['patterns'],
             'responses': node['responses'],
             'random_response': data_to_train_model['random_response'] if 'random_response' in data_to_train_model else True,
             'do_before': node.get('do_before', {}),
@@ -101,7 +103,7 @@ def train(data_to_train_model:dict, model_name:str, previous_model_version:Selen
             'token': 'initial_token',
         }
 
-        Print(node_data_to_serialize)
+        # Print(node_data_to_serialize)
 
         if next_node_name := node.get('next_node'):
             """
@@ -110,7 +112,7 @@ def train(data_to_train_model:dict, model_name:str, previous_model_version:Selen
                 we can use the node
             """
 
-            Print('nodes_created', nodes_created)
+            # Print('nodes_created', nodes_created)
             next_node = next(filter(lambda node: node.name == next_node_name and node.model_version == new_model_version, nodes_created), None)
             node_data_to_serialize['next_node'] = next_node.pk
         
