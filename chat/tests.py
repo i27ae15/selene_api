@@ -47,10 +47,6 @@ from webhook_testing.end_point_simulation import get_properties_test
 from .responses import SeleneResponse, SeleneResponseType
 
 
-
-
-
-
 Faker.seed(115)
 fake:Faker = Faker()
 
@@ -95,9 +91,6 @@ def check_variable(variable, variable_type) -> bool:
 def is_status_code_valid(status_code) -> bool:
     if status_code >= 100 and status_code < 400:
         return True
-
-
-
 
 
 # Functions
